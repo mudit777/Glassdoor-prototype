@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const resumeSchema = new Schema({
-    student_pk: {type: String, required: true},
+    student_id: {type: String, required: true},
     path: {type: String, required: true}
 },
 {
