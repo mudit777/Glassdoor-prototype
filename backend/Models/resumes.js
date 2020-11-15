@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const resumeSchema = new Schema({
     student_id: {type: String, required: true},
-    path: {type: String, required: true}
+    resume_paths: {type: [String], required: true}
 },
 {
     versionKey: false
