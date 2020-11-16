@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var cors = require('cors');
-// var mysql = require('mysql')
+var mysql = require('mysql')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var path = require('path');
@@ -13,7 +13,7 @@ const date = require('date-and-time');
 const mongoConnection = require('./config')
 var passport = require('passport');
 var requireAuth = passport.authenticate('jwt', {session: false});
-// let connection = require("./database")
+let connection = require("./database")
 app.set('view engine', 'ejs');
 var kafka = require('./kafka/client')
 // var mongoose = require('mongoose')
@@ -80,8 +80,13 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
     res.setHeader('Cache-Control', 'no-cache');
     next();
-  });
-  
+});
+
+var company_authentication_router = require('./src/Company/company_authentication');
+var loginRouter = require("./src/Login/login");
+
+app.post("/registerCompany", company_authentication_router.register_company);
+app.post("/login", loginRouter.login);
 
 
 

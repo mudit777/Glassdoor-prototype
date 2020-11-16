@@ -1,0 +1,134 @@
+import React, { Component } from 'react'
+import { Button, Card, Col, Input, notification, Radio, Row } from 'antd';
+import './Login.css'
+import { login } from '../../js/actions';
+import { connect } from "react-redux";
+class Login extends Component {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            email : "",
+            password : "",
+            type : ""
+        }
+    }
+    updateEmail = (e) => {
+        this.setState({
+            email  : e.target.value
+        })
+    }
+    updatePassword = (e) => {
+        this.setState({
+            password : e.target.value
+        })
+    }
+    updateType = (e) => {
+        this.setState({
+            type : e.target.value
+        })
+    }
+    login = () => {
+        var allFilled = false;
+        if(this.state.email === "" || this.state.email === " " || this.state.password === "" || this.state.password === " " ||this.state.type === "" || this.state.type === " ")
+        {
+            notification["error"]({
+                message: 'Empty Fields',
+                description:
+                  'Please complete all the fields',
+              });
+        }
+        else
+        {
+            allFilled = true;
+        }
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var isValidEmail =  re.test(String(this.state.email).toLowerCase());
+        if(!isValidEmail) 
+        {
+            notification["error"]({
+                message: 'Invalid Email',
+                description:
+                  'Please enter a valid email address',
+              });
+        }
+        if(isValidEmail && allFilled)
+        {
+            var myJson = {
+                email : this.state.email,
+                password : this.state.password,
+                type : this.state.type
+            }
+            this.props.login(myJson);
+        }
+    }
+    render() {
+        return (
+            <div>
+                <div>
+                    <div className = "upper">
+                        <Row>
+                            <Col>
+                                <img className = "logo" src = './logo.png' alt = "Logo" />
+                            </Col>
+                        </Row>
+                    </div>
+                    <div style = {{backgroundImage : "./backgroung.png"}}>
+                        <div className = "loginCard">
+                            <Card title = "Login" style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)"}}>
+                                <ul style = {{listStyleType : "none"}}>
+                                    <li>
+                                        <Input style = {{width : "75%"}} value = {this.state.email} onChange = {this.updateEmail} placeholder = "Email"></Input>
+                                    </li>
+                                    <li style = {{marginTop : "2%"}}>
+                                        <Input style = {{width : "75%"}} type  = "password" value = {this.state.password} onChange = {this.updatePassword} placeholder = "Password" ></Input>
+                                    </li>
+                                    <li style = {{marginTop : "2%"}}>
+                                        <Radio.Group onChange = {this.updateType} value = {this.state.type}>
+                                            <Radio value = "student">Student</Radio>
+                                            <Radio value = "company">Company</Radio>
+                                            <Radio value = "Admin">Admin</Radio>
+                                        </Radio.Group>
+                                    </li>
+                                </ul>
+                                <li>
+                                    <Button style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder"}} onClick = {this.login} >Login</Button>
+                                </li>
+                            </Card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+// export default Login;
+function mapDispatchToProps(dispatch) {
+    return {
+      login: user => dispatch(login(user))
+    };
+  }
+  
+function mapStateToProps(store) {
+    if(store.type === 'student')
+    {
+        return {
+            message : store.message,
+            student : store.student
+        }
+    }
+    else if(store.type === 'company')
+    {
+        return {
+            message : store.message,
+            company : store.company
+        }
+    }
+return {
+    message : store.message,
+    
+};
+}
+
+const LoginForm = connect(mapStateToProps, mapDispatchToProps)(Login);
+export default LoginForm;
