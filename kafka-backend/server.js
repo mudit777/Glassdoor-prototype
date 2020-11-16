@@ -1,7 +1,7 @@
 var connection =  new require('./kafka/Connection');
 var database = require('./database')
 //topics files
-var register_company = require('./services/company/company_authentication/register_company');
+var register_company = require('./services/company/register_company');
 var login = require('./services/Login/login');
 
 function handleTopicRequest(topic_name,fname){

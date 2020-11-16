@@ -5,6 +5,7 @@ import CompanyProfilePage from './components/CompanyProfilePage/CompanyProfilePa
 import EditCompanyProfilePage from './components/CompanyProfilePage/EditCompanyProfilePage';
 import CompanySignUp from './components/CompanySignUp/CompanySignUp';
 import Login from './components/Login/Login';
+import StudentProfile from './components/StudentProfile/StudentProfile';
 
 class Main extends Component {
     render(){
@@ -16,6 +17,7 @@ class Main extends Component {
                     <Route path='/companyHeaderBar' component={CompanyHeaderBar}/>
                     <Route path = "/companySignUp" component = {CompanySignUp} />
                     <Route path = "/login" component = {Login} />
+                    <Route path = "/studentProfile" component = {StudentProfile} />
                 </BrowserRouter>
             </div>
         )
