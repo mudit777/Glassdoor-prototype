@@ -2,9 +2,8 @@
 var passport = require('../node_modules/passport');
 var JwtStrategy = require('../node_modules/passport-jwt').Strategy;
 var ExtractJwt = require('../node_modules/passport-jwt').ExtractJwt;
-var Customers = require('../Models/userModel');
-var Restraurants = require('../Models/restraurantModel');
 var config = require('./config');
+var connection = require('../database');
 // Setup work and export for the JWT passport strategy
 var opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
@@ -12,34 +11,38 @@ var opts = {
 };
 passport.use(new JwtStrategy(opts, function (jwt_payload, callback) {
     console.log("jwtPayload is --------------------------- ", jwt_payload);
-    if(jwt_payload.source === "customer")
+    var query = ""
+    if(jwt_payload.source === "company")
     {
-        Customers.findOne({ _id: jwt_payload._id }, function (err, user) {
-            if (err) {
+        query = "SELECT company_id FROM companies WHERE company_id = '"+ jwt_payload.id +"'";
+        connection.query(query, (err, result) => {
+            if(err)
                 return callback(err, false);
-            }
-            if (user) {
-                console.log("user in passport is ---------------", user);
-                delete user.password;
+            if(result.length > 0)
+            {
                 return callback(null, true);
-            } else {
+            }
+            else
+            {
                 return callback(null, false);
             }
-        });
+        })
     }
-    else{
-        Restraurants.findOne({ _id: jwt_payload._id }, function (err, restraurant) {
-            if (err) {
+    else if (jwt_payload.source === "student")
+    {
+        query = "SELECT student_id FROM students WHERE student_id = '"+ jwt_payload.id +"'";
+        connection.query(query, (err, result) => {
+            if(err)
                 return callback(err, false);
-            }
-            if (restraurant) {
-                console.log("user in passport is ---------------", restraurant);
-                delete restraurant.password;
+            if(result.length > 0)
+            {
                 return callback(null, true);
-            } else {
+            }
+            else
+            {
                 return callback(null, false);
             }
-        });
+        })
     }
     
 }));
