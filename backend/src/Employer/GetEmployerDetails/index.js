@@ -1,4 +1,4 @@
-const kafka = require('../../kafka/client')
+const kafka = require('../../../kafka/client')
 
 exports.getEmployerDetails = (req,res) => {
     kafka.make_request('get_employer_details', req.body, function(err, results){

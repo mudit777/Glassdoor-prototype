@@ -21,7 +21,7 @@ module.exports = app
 //use cors to allow cross origin resource sharing
 app.use(express.static('public'))
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-const { getEmployerDetails } = require('./Employer/GetEmployerDetails')
+const { getEmployerDetails } = require('./src/Employer/GetEmployerDetails')
 
 app.use(bodyParser.json());
 const fs = require('fs')
