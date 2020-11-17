@@ -11,9 +11,10 @@ const saltRounds = 10;
 var path = require('path');
 const date = require('date-and-time');
 const mongoConnection = require('./config')
+var passport = require('./Utils/passport');
+let connection = require("./database")
 var passport = require('passport');
 var requireAuth = passport.authenticate('jwt', {session: false});
-let connection = require("./database")
 app.set('view engine', 'ejs');
 var kafka = require('./kafka/client')
 // var mongoose = require('mongoose')
@@ -89,11 +90,16 @@ app.post("/getEmployerDetails", getEmployerDetails)
   
 var company_authentication_router = require('./src/Company/company_authentication');
 var student_authentication_router = require('./src/Student/student_authentication');
+var student_companies_router = require('./src/Student/companies');
 var loginRouter = require("./src/Login/login");
+
+
+
 
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/registerStudent", student_authentication_router.register_student);
 app.post("/login", loginRouter.login);
+app.get("/getAllCompanies", requireAuth, student_companies_router.getAllCompanies);
 
 
 

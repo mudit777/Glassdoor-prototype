@@ -19,6 +19,7 @@ function handle_request(message, callback)
         {
             response.code = 204;
         }
+        callback(null, response);
     })
 }
 exports.handle_request = handle_request;

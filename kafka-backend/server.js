@@ -3,6 +3,8 @@ var database = require('./database')
 //topics files
 var register_company = require('./services/company/register_company');
 var login = require('./services/Login/login');
+var get_all_companies = require('./services/Student/get_all_companies');
+var register_student = require('./services/Student/register_student');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -38,3 +40,5 @@ function handleTopicRequest(topic_name,fname){
 //second argument is a function that will handle this topic request
 handleTopicRequest("register_company", register_company);
 handleTopicRequest("login", login);
+handleTopicRequest("get_all_companies", get_all_companies);
+handleTopicRequest("register_student", register_student);

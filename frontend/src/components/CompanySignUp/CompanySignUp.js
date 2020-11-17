@@ -15,7 +15,8 @@ class CompanySignUp extends Component {
             company : "",
             password : "",
             job_title : "",
-            checked : false
+            checked : false,
+            redirect : false
         }
     }
     updateFirstName = (e) => {
@@ -85,16 +86,41 @@ class CompanySignUp extends Component {
                 company_name : this.state.company,
                 creater_job_title : this.state.job_title,
                 company_email : this.state.email,
-                company_password : this.state.password
+                password : this.state.password
             }
             axios.post(`${BACKEND}/registerCompany`, company).then(response => {
-                console.log(response)
+                if(response.status === 299)
+                {
+                    notification["error"]({
+                        message: 'EmailId exists',
+                        description:
+                          'User with same EmailId is registered',
+                    });
+                    
+                }
+                else if(response.status === 200)
+                {
+                    notification["success"]({
+                        message: 'Student Registered',
+                        description:
+                          'Student successfully registered',
+                    });
+                    this.setState({
+                        redirect : true
+                    })
+                }
             })
         }
     }
     render() {
+        var redirectVar = null;
+        if(this.state.redirect)
+        {
+            redirectVar = <Redirect to = "/login" />
+        }
         return (
             <div>
+                {redirectVar}
                 <div className = "upperDiv">
                     <Row  style = {{marginTop : "1%"}}>
                         <Col>

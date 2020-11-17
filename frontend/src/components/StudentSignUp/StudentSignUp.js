@@ -4,7 +4,7 @@ import {Button, Card, Checkbox, Col, Input, notification, Row} from 'antd';
 import './StudentSignUp.css'
 import 'antd/dist/antd.css';
 import { BACKEND } from '../../Config';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 class StudentSignUp extends Component {
     constructor(props)
     {
@@ -12,8 +12,21 @@ class StudentSignUp extends Component {
         this.state = {
             email : "",
             password : "",
+            first_name : "",
+            last_name : "",
+            redirect : false,
             checked : true
         }
+    }
+    updateFirstName = (e) => {
+        this.setState({
+            first_name : e.target.value
+        })
+    }
+    updateLastName = (e) => {
+        this.setState({
+            last_name : e.target.value
+        })
     }
     updateEmail = (e) => {
         this.setState({
@@ -27,7 +40,7 @@ class StudentSignUp extends Component {
     }
     createStudent = () => {
         var allFilled = false;
-        if(this.state.password === "" || this.state.password === " " || this.state.email === "" || this.state.email === " ")
+        if(this.state.first_name === "" || this.state.first_name === " " || this.state.last_name === "" || this.state.password === "" || this.state.password === " " || this.state.email === "" || this.state.email === " ")
         {
             notification["error"]({
                 message: 'Empty Fields',
@@ -52,17 +65,44 @@ class StudentSignUp extends Component {
         if(allFilled && isValidEmail)
         {
             var student = {
+                student_first_name : this.state.first_name,
+                student_last_name : this.state.last_name,
                 student_email : this.state.email,
-                student_password : this.state.password
+                password : this.state.password
             }
             axios.post(`${BACKEND}/registerStudent`, student).then(response => {
-                console.log(response)
+                if(response.status === 299)
+                {
+                    notification["error"]({
+                        message: 'EmailId exists',
+                        description:
+                          'User with same EmailId is registered',
+                    });
+                    
+                }
+                else if(response.status === 200)
+                {
+                    notification["success"]({
+                        message: 'Student Registered',
+                        description:
+                          'Student successfully registered',
+                    });
+                    this.setState({
+                        redirect : true
+                    })
+                }
             })
         }
     }
     render() {
+        var redirectVar = null;
+        if(this.state.redirect)
+        {
+            redirectVar = <Redirect to = "/login" />
+        }
         return (
             <div>
+                {redirectVar}
                 <div className = "upperDiv">
                     <Row  style = {{marginTop : "1%"}}>
                         <Col>
@@ -76,6 +116,16 @@ class StudentSignUp extends Component {
                 <div className = "lowerDiv">
                     <Card title = "Find The Job That Fits Your Life" style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)"}}>
                         <ul style = {{listStyleType : "none"}}>
+                            <li>
+                                <Row>
+                                    <Col>
+                                        <Input style = {{width : "120%"}} value = {this.state.first_name} onChange = {this.updateFirstName} placeholder = "First Name" />
+                                    </Col>
+                                    <Col style = {{marginLeft : "14%"}}>
+                                        <Input style = {{width : "120%"}} value = {this.state.last_name} onChange = {this.updateLastName} placeholder = "Last Name" />
+                                    </Col>
+                                </Row>
+                            </li>
                             <li style = {{marginTop : "3%"}}>
                                 <Input style = {{width : "93%", marginLeft : "-7%"}} value = {this.state.email} onChange = {this.updateEmail} type = "Email" placeholder = "email"></Input>
                             </li>
