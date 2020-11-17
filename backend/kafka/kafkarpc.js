@@ -24,7 +24,7 @@ KafkaRPC.prototype.makeRequest = function(topic_name, content, callback){
     var tId = setTimeout(function(corr_id){
         //if this ever gets called we didn't get a response in a
         //timely fashion
-        console.log('timeout');
+        // console.log('timeout');
         callback(new Error("timeout " + corr_id));
         //delete the entry from hash
         delete self.requests[corr_id];
@@ -41,7 +41,7 @@ KafkaRPC.prototype.makeRequest = function(topic_name, content, callback){
 
     //make sure we have a response topic
     self.setupResponseQueue(self.producer,topic_name,function(){
-        console.log('in response');
+        // console.log('in response');
         //put the request on a topic
 
         var payloads = [
@@ -51,13 +51,13 @@ KafkaRPC.prototype.makeRequest = function(topic_name, content, callback){
                 data:content}),
                 partition:0}
         ];
-        console.log('in response1');
-        console.log(self.producer.ready);
+        // console.log('in response1');
+        // console.log(self.producer.ready);
         self.producer.send(payloads, function(err, data){
-            console.log('in response2');
+            // console.log('in response2');
             if(err)
                 console.log(err);
-            console.log(data);
+            // console.log(data);
         });
     });
 };

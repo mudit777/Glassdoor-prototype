@@ -1,7 +1,7 @@
 var connection = require('../../database')
 const txtgen = require('txtgen');
 const mysql = require('mysql');
-const client = require('../../redis_config');
+const kafka = require('../../kafka/client');
 
 var between = (min, max) => {
   return Math.floor(
@@ -43,40 +43,26 @@ exports.add10kreviews = (req, res) => {
 };
 
 exports.getCompanyReviews = (req, res) => {
-
-  client.get("company_"+req.params.company_id, function(err, reply){
+  kafka.make_request("get_company_reviews", req.params, (err, results) => {
     if(err){
-      console.log("Redis error")
-      console.log(err)
       res.writeHead(500,{
         'Content-Type' : 'text/plain'
       })
       res.end("Some error occured");
     }
-    else if(reply != null ){
-      // console.log("Fetching data from redis")
-      res.writeHead(200,{
-        'Content-Type' : 'applicaton/json'
-      })
-      res.end(reply);
-    }
     else{
-      var q1 = "SELECT * FROM reviews WHERE company_id = "+req.params.company_id;
-      connection.query(q1, (err, result) => {
-        if(err){
-          throw err;
-        }
-        else{
-          console.log("Fetching data from mysql")
-          // console.log("Result = ")
-          // console.log(result)
-          client.set("company_"+req.params.company_id, JSON.stringify(result))
-          res.writeHead(200,{
-            'Content-Type' : 'applicaton/json'
-          })
-          res.end(JSON.stringify(result));
-        }
-      })
+      res.status(results.code,{
+        'Content-Type' : 'application/json'
+      });
+      // console.log("Type = "+typeof(results.message))
+      if(typeof(results.message) === "object"){
+        // console.log("Stringify")
+        res.end(JSON.stringify(results.message));
+      }
+      else{
+        // console.log("No strngify")
+        res.end(results.message);
+      }      
     }
-  })  
+  })
 }
