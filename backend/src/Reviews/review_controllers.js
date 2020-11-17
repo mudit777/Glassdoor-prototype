@@ -43,20 +43,40 @@ exports.add10kreviews = (req, res) => {
 };
 
 exports.getCompanyReviews = (req, res) => {
-  // console.log("Provide me with all reviews for "+req.params.company_id)
-  // client.set("hola","Hii")
-  var q1 = "SELECT * FROM reviews WHERE company_id = "+req.params.company_id;
-  connection.query(q1, (err, result) => {
+
+  client.get("company_"+req.params.company_id, function(err, reply){
     if(err){
-      throw err;
+      console.log("Redis error")
+      console.log(err)
+      res.writeHead(500,{
+        'Content-Type' : 'text/plain'
+      })
+      res.end("Some error occured");
     }
-    else{
-      // console.log("Result = ")
-      // console.log(result)
+    else if(reply != null ){
+      // console.log("Fetching data from redis")
       res.writeHead(200,{
         'Content-Type' : 'applicaton/json'
       })
-      res.end(JSON.stringify(result));
+      res.end(reply);
     }
-  })
+    else{
+      var q1 = "SELECT * FROM reviews WHERE company_id = "+req.params.company_id;
+      connection.query(q1, (err, result) => {
+        if(err){
+          throw err;
+        }
+        else{
+          console.log("Fetching data from mysql")
+          // console.log("Result = ")
+          // console.log(result)
+          client.set("company_"+req.params.company_id, JSON.stringify(result))
+          res.writeHead(200,{
+            'Content-Type' : 'applicaton/json'
+          })
+          res.end(JSON.stringify(result));
+        }
+      })
+    }
+  })  
 }
