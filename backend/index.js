@@ -86,16 +86,19 @@ app.use(function(req, res, next) {
 app.post("/getEmployerDetails", getEmployerDetails)
 
 
-  
+//imports
 var company_authentication_router = require('./src/Company/company_authentication');
 var student_authentication_router = require('./src/Student/student_authentication');
 var loginRouter = require("./src/Login/login");
-
+var review_controllers = require('./src/Reviews/review_controllers');
+//post paths
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/registerStudent", student_authentication_router.register_student);
 app.post("/login", loginRouter.login);
+app.post("/add10k", review_controllers.add10kreviews);
 
-
+//get paths
+app.get("/getCompanyReviews/:company_id", review_controllers.getCompanyReviews);
 
 
 

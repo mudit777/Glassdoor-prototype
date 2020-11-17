@@ -28,6 +28,8 @@
     "mysql": "^2.18.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "supertest": "^5.0.0"
+    "redis": "^3.0.2",
+    "supertest": "^5.0.0",
+    "txtgen": "^2.2.8"
   }
 }
