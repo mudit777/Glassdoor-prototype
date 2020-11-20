@@ -20,7 +20,7 @@ export function login(payload)
                 delete response.data.token;
                 if(payload.type === "student")
                 {
-                    window.sessionStorage.setItem("studentId", response.data.student_id)
+                    window.sessionStorage.setItem("student_id", response.data.student_id)
                     data = {
                         message : "Successfully logged in",
                         student : response.data,
@@ -29,7 +29,7 @@ export function login(payload)
                 }
                 else if(payload.type === "company")
                 {
-                    window.sessionStorage.setItem("studentId", response.data.company_id)
+                    window.sessionStorage.setItem("company_id", response.data.company_id)
                     data = {
                         message : "Successfully logged in",
                         company : response.data,

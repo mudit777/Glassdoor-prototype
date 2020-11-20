@@ -4,6 +4,8 @@ import {Button, Card, Checkbox, Col, Input, notification, Row} from 'antd';
 import './CompanySignUp.css'
 import 'antd/dist/antd.css';
 import { BACKEND } from '../../Config';
+import { Redirect } from 'react-router-dom';
+
 class CompanySignUp extends Component {
     constructor(props)
     {

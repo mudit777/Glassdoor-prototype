@@ -7,6 +7,7 @@ import CompanySignUp from './components/CompanySignUp/CompanySignUp';
 import Login from './components/Login/Login';
 import StudentProfile from './components/StudentProfile/StudentProfile';
 import StudentSignUp from './components/StudentSignUp/StudentSignUp';
+import UpdateStudentProfile from './components/UpdateStudentProfile/UpdateStudentProfile';
 
 class Main extends Component {
     render(){
@@ -20,6 +21,7 @@ class Main extends Component {
                     <Route path = "/studentSignUp" component = {StudentSignUp} />
                     <Route path = "/login" component = {Login} />
                     <Route path = "/studentProfile" component = {StudentProfile} />
+                    <Route path = "/updateStudentProfile" component = {UpdateStudentProfile} />
                 </BrowserRouter>
             </div>
         )

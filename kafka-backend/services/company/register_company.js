@@ -20,7 +20,7 @@ function handle_request(message, callback){
         }
         else
         {
-            bcrypt.hash(message.company_password, 10, (err, hash) => {
+            bcrypt.hash(message.password, 10, (err, hash) => {
                 if(err)
                 {
                     response.code = 500;
@@ -29,7 +29,7 @@ function handle_request(message, callback){
                 }
                 else
                 {
-                    message.company_password = hash;
+                    message.password = hash;
                     var insertQuery = "INSERT INTO companies SET " + mysql.escape(message); 
                     connection.query(insertQuery, (err, result) => {
                         if(err)
