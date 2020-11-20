@@ -1,9 +1,10 @@
 const date = require('date-and-time');
 const bcrypt = require('bcrypt');
-var connection = require('../../../mysql_database');
+var connection = require('../../mysql_database');
 var mysql = require('mysql')
 
 function handle_request(message, callback){
+    console.log('register student')
     var query = "SELECT * FROM students WHERE student_email = '"+ message.student_email +"';";
     connection.query(query, (err, student) => {
         var response = {};

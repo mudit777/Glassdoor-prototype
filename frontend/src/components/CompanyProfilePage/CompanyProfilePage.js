@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import CompanyHeaderBar from '../CompanyHeaderBar/CompanyHeaderBar';
 import axios from 'axios'
 import {Modal, Button} from 'semantic-ui-react'
+import Company from '../Cards/Company'
+import Job from '../Cards/Job'
+import CompanyBar from '../CompanyHeaderBar/CompanyBar'
 
 class CompanyProfilePage extends Component {
 
@@ -47,13 +50,17 @@ class CompanyProfilePage extends Component {
         return (
             <div>
                 <CompanyHeaderBar/>
-                <h3>Company Profile Page</h3>
-                <Modal
-                    trigger={<Button style ={{backgroundColor:"#00a422", color:"white"}}>Edit Profile</Button>}
-                    header='Edit Company Profile'
-                    content='Call Benjamin regarding the reports.'
-                    actions={['Snooze', { key: 'done', content: 'Done', positive: true }]}
-                />
+                <CompanyBar/>
+                <div style={{display:'flex',justifyContent:'space-between'}}>
+                    <Company/>
+                    {/* loop the jobs */}
+                    <div style={{display:'flex',flexDirection:'column'}}>
+                        <Job/>
+                        <Job/>
+                        <Job/>
+                    </div>
+                </div>
+                
             </div>
         )
     }

@@ -88,19 +88,14 @@ app.post("/getEmployerDetails", getEmployerDetails)
 
   
 var company_authentication_router = require('./src/Company/company_authentication');
+var update_company = require('./src/Company/update_company')
 var student_authentication_router = require('./src/Student/student_authentication');
 var loginRouter = require("./src/Login/login");
 
 app.post("/registerCompany", company_authentication_router.register_company);
+app.post("/updateCompany", update_company.update_company);
 app.post("/registerStudent", student_authentication_router.register_student);
 app.post("/login", loginRouter.login);
-
-
-
-
-
-
-
 
 
 

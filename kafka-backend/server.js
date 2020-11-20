@@ -1,8 +1,10 @@
 var connection =  new require('./kafka/Connection');
 var database = require('./database')
 //topics files
-var register_company = require('./services/company/company_authentication/register_company');
+var register_company = require('./services/company/register_company');
+var update_company = require('./services/company/update_company');
 var login = require('./services/Login/login');
+var register_student = require('./services/Student/register_student');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -37,4 +39,6 @@ function handleTopicRequest(topic_name,fname){
 //first argument is topic name
 //second argument is a function that will handle this topic request
 handleTopicRequest("register_company", register_company);
+handleTopicRequest("update_company", update_company);
+handleTopicRequest("register_student", register_student);
 handleTopicRequest("login", login);
