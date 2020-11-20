@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 var kafka = require('../../kafka/client');
 exports.register_student = (req, res) => {
     kafka.make_request("register_student", req.body, (err, result) => {
+        console.log("result is ~~~~~~~~~~~~~~~~~", result);
         if(result.code === 500)
         {
             res.writeHead(500, {

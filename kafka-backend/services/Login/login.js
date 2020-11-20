@@ -30,7 +30,7 @@ function handle_request(message, callback)
         }
         else
         {
-            bcrypt.compare(message.password, result[0].company_password, (err, isPasswordTrue) => {
+            bcrypt.compare(message.password, result[0].password, (err, isPasswordTrue) => {
                 if(err)
                 {
                     response.code = 500;
@@ -41,6 +41,7 @@ function handle_request(message, callback)
                 {
                     if(isPasswordTrue)
                     {
+                        console.log()
                         delete result[0].password;
                         response.code = 200;
                         response.data = result[0];

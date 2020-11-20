@@ -85,7 +85,6 @@ class CompanyHeaderBar extends Component {
 
                     </div>
                 </div>
-
             </div>
         )
     }

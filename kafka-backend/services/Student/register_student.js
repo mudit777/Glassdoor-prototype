@@ -11,7 +11,7 @@ function handle_request(message, callback){
         if(err)
         {
             response.code = 500;
-            response.date = err;
+            response.data = err;
             callback(null, response);
         }
         else if(student.length > 0)
@@ -21,16 +21,16 @@ function handle_request(message, callback){
         }
         else
         {
-            bcrypt.hash(message.student_password, 10, (err, hash) => {
+            bcrypt.hash(message.password, 10, (err, hash) => {
                 if(err)
                 {
                     response.code = 500;
-                    response.date = err;
+                    response.data = err;
                     callback(null, response);
                 }
                 else
                 {
-                    message.student_password = hash;
+                    message.password = hash;
                     var insertQuery = "INSERT INTO students SET " + mysql.escape(message); 
                     connection.query(insertQuery, (err, result) => {
                         if(err)
