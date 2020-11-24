@@ -1,0 +1,16 @@
+.logo{
+  width: 125px;
+  height: 40px;
+  color: #37a637;
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
+
+.bodySettings{
+  /* background-color:#eaeaea; */
+  height:100%;
+  width: 100%;
+  display: flex;
+  margin: 0px;
+  padding: 0px;
+}
