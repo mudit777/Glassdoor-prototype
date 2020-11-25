@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { BACKEND } from '../../Config';
 import { notification } from 'antd';
-import { LOGIN } from '../constants';
+import { GETALLCOMPANIES, LOGIN, SEARCHCOMPANIES } from '../constants';
 
 export function login(payload)
 {
@@ -68,6 +68,47 @@ export function login(payload)
                   }
                 dispatch({type : LOGIN, data});
             }
+        })
+    }
+}
+
+export function get_all_companies(payload)
+{
+    let data = {}
+    return(dispatch) => {
+        axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+        axios.get(`${BACKEND}/getAllCompanies`).then(response => {
+            if(response.status === 200)
+            {
+                data = {
+                   companies : response.data,
+                   message : "All the companies have been fetched"
+                }
+                dispatch({
+                    type : GETALLCOMPANIES,
+                    data
+                })
+            }
+        })
+    }
+}
+
+export function search_companies(payload)
+{
+    let data = {};
+    return(dispatch) => {
+        axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+        axios.post(`${BACKEND}/searchCompanies`, payload).then(response => {
+            if(response.status === 200)
+            {
+                data = {
+                    companies : response.data
+                }
+            }
+            dispatch({
+                type : SEARCHCOMPANIES,
+                data
+            })
         })
     }
 }

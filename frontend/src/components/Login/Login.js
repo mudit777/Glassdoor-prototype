@@ -71,6 +71,10 @@ class Login extends Component {
             {
                 redirectVar = <Redirect to = "/studentProfile" />
             }
+            else if(this.props.type === 'company')
+            {
+                redirectVar = <Redirect to = '/companyProfile' />
+            }
         }
         return (
             <div>

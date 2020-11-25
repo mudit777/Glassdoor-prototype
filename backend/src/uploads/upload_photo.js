@@ -23,7 +23,7 @@ exports.uploadImage = (req, res) => {
             acl : 'public-read',
             key: function (req, file, cb) {
                 console.log(file);
-                var name = Date.now() + '-' + file.originalname
+                var name = Math.random() + '_' + file.originalname
                 imageName = `https://s3.us-west-1.amazonaws.com/glassdoorcmpe273/${name}`
                 cb(null, name); //use Date.now() for unique file keys
             }
