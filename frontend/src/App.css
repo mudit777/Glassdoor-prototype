@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+.column-left-reviews{
+  float: left;
+  padding: 10px;
+  height: auto;
+  width: 12%;
+}
+
+.column-right-reviews{
+  float: left;
+  padding: 10px;
+  height: auto;
+  width: 88%;
+}
