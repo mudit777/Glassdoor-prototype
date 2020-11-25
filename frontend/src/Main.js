@@ -7,6 +7,10 @@ import EditCompanyProfilePage from './components/CompanyProfilePage/EditCompanyP
 import CompanySignUp from './components/CompanySignUp/CompanySignUp';
 import Login from './components/Login/Login';
 import PostNewJob from './components/PostNewJob/PostNewJob';
+import StudentProfile from './components/StudentProfile/StudentProfile';
+import StudentSignUp from './components/StudentSignUp/StudentSignUp';
+import UpdateStudentProfile from './components/UpdateStudentProfile/UpdateStudentProfile';
+import ViewAllCompanies from './components/ViewAllCompanies/ViewAllCompanies';
 
 class Main extends Component {
     render(){
@@ -14,12 +18,16 @@ class Main extends Component {
             <div>
                 <BrowserRouter>
                     <Route path='/companyProfile' component={CompanyProfilePage}/>
-                    <Route path='/editCompanyProfile' component={EditCompanyProfilePage}/>
+                    <Route path='/updateCompanyProfile' component={EditCompanyProfilePage}/>
                     <Route path='/companyHeaderBar' component={CompanyHeaderBar}/>
                     <Route path = "/companySignUp" component = {CompanySignUp} />
+                    <Route path = "/studentSignUp" component = {StudentSignUp} />
                     <Route path = "/login" component = {Login} />
                     <Route path = "/postNewJob" component = {PostNewJob}/>
                     <Route path = "/addJob" component={AddJob}/>
+                    <Route path = "/studentProfile" component = {StudentProfile} />
+                    <Route path = "/updateStudentProfile" component = {UpdateStudentProfile} />
+                    <Route path = "/allCompanies" component = {ViewAllCompanies} />
                 </BrowserRouter>
             </div>
         )

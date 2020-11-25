@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { BACKEND } from '../../Config';
 import { notification } from 'antd';
-import { LOGIN } from '../constants';
+import { GETALLCOMPANIES, LOGIN, SEARCHCOMPANIES } from '../constants';
 
 export function login(payload)
 {
@@ -20,6 +20,7 @@ export function login(payload)
                 delete response.data.token;
                 if(payload.type === "student")
                 {
+                    window.sessionStorage.setItem("student_id", response.data.student_id)
                     data = {
                         message : "Successfully logged in",
                         student : response.data,
@@ -28,13 +29,13 @@ export function login(payload)
                 }
                 else if(payload.type === "company")
                 {
+                    window.sessionStorage.setItem("company_id", response.data.company_id)
                     data = {
                         message : "Successfully logged in",
                         company : response.data,
                         type : payload.type
                     }
                 }
-                console.log("Data is -------------", data);
                 dispatch({type : LOGIN, data});
             }
             else if(response.status === 209)
@@ -67,6 +68,47 @@ export function login(payload)
                   }
                 dispatch({type : LOGIN, data});
             }
+        })
+    }
+}
+
+export function get_all_companies(payload)
+{
+    let data = {}
+    return(dispatch) => {
+        axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+        axios.get(`${BACKEND}/getAllCompanies`).then(response => {
+            if(response.status === 200)
+            {
+                data = {
+                   companies : response.data,
+                   message : "All the companies have been fetched"
+                }
+                dispatch({
+                    type : GETALLCOMPANIES,
+                    data
+                })
+            }
+        })
+    }
+}
+
+export function search_companies(payload)
+{
+    let data = {};
+    return(dispatch) => {
+        axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+        axios.post(`${BACKEND}/searchCompanies`, payload).then(response => {
+            if(response.status === 200)
+            {
+                data = {
+                    companies : response.data
+                }
+            }
+            dispatch({
+                type : SEARCHCOMPANIES,
+                data
+            })
         })
     }
 }

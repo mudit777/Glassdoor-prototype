@@ -1,36 +1,37 @@
 const date = require('date-and-time');
 const bcrypt = require('bcrypt');
-var connection = require('../../../mysql_database');
+var connection = require('../../mysql_database');
 var mysql = require('mysql')
 
 function handle_request(message, callback){
-    var query = "SELECT * FROM companies WHERE company_email = '"+ message.company_email +"' OR company_name = '"+ message.company_name +"'";
-    connection.query(query, (err, company) => {
+    console.log('register student')
+    var query = "SELECT * FROM students WHERE student_email = '"+ message.student_email +"';";
+    connection.query(query, (err, student) => {
         var response = {};
         if(err)
         {
             response.code = 500;
-            response.date = err;
+            response.data = err;
             callback(null, response);
         }
-        else if(company.length > 0)
+        else if(student.length > 0)
         {
             response.code = 299;
             callback(null, response);
         }
         else
         {
-            bcrypt.hash(message.company_password, 10, (err, hash) => {
+            bcrypt.hash(message.password, 10, (err, hash) => {
                 if(err)
                 {
                     response.code = 500;
-                    response.date = err;
+                    response.data = err;
                     callback(null, response);
                 }
                 else
                 {
-                    message.company_password = hash;
-                    var insertQuery = "INSERT INTO companies SET " + mysql.escape(message); 
+                    message.password = hash;
+                    var insertQuery = "INSERT INTO students SET " + mysql.escape(message); 
                     connection.query(insertQuery, (err, result) => {
                         if(err)
                         {
