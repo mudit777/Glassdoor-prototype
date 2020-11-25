@@ -1,11 +1,5 @@
 .card_style{
-  width: 45%;
-  height: 50rem;
-  margin-left: 3rem;
-  margin-top: 1rem;
-  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  text-align: center;
-  background-color: #eaeaea;
+  
 }
 
 .center {
@@ -23,4 +17,9 @@
 
 .card_text{
   margin-top: 1.5rem;
+}
+
+.approve_image{
+  width: 100%;
+  height: 90%;
 }

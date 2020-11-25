@@ -1,8 +1,16 @@
-import { company } from 'faker';
 import React from 'react';
 import {Card, Divider, Button} from 'semantic-ui-react';
 
-const ReviewCard = ({review}) => {
+const ReviewCard = ({review, handleApprove, handleReject}) => {
+
+  const approveReview = () => {
+    handleApprove();
+  }
+
+  const rejectReview = () => {
+    handleReject();  
+  }
+
   return(
     <Card>
       <Card.Content>
@@ -18,8 +26,8 @@ const ReviewCard = ({review}) => {
       </Card.Content>
       <Card.Content extra>
         <div className="ui two buttons">
-          <Button basic color="green">Approve</Button>
-          <Button basic color="red">Reject</Button>
+          <Button basic color="green" onClick={approveReview}>Approve</Button>
+          <Button basic color="red" onClick={rejectReview}>Reject</Button>
         </div>
       </Card.Content>
     </Card>
