@@ -3,6 +3,7 @@ import { Button, Card, Col, Input, notification, Radio, Row } from 'antd';
 import './Login.css'
 import { login } from '../../js/actions';
 import { connect } from "react-redux";
+import { Redirect } from 'react-router-dom';
 class Login extends Component {
     constructor(props)
     {
@@ -63,8 +64,21 @@ class Login extends Component {
         }
     }
     render() {
+        var redirectVar = null;
+        if(this.props.type)
+        {
+            if(this.props.type === 'student')
+            {
+                redirectVar = <Redirect to = "/studentProfile" />
+            }
+            else if(this.props.type === 'company')
+            {
+                redirectVar = <Redirect to = '/companyProfile' />
+            }
+        }
         return (
             <div>
+                {redirectVar}
                 <div>
                     <div className = "upper">
                         <Row>
@@ -114,19 +128,21 @@ function mapStateToProps(store) {
     {
         return {
             message : store.message,
-            student : store.student
+            student : store.student,
+            type : store.type
         }
     }
     else if(store.type === 'company')
     {
         return {
             message : store.message,
-            company : store.company
+            company : store.company,
+            type : store.type
         }
     }
 return {
     message : store.message,
-    
+    type : store.type
 };
 }
 
