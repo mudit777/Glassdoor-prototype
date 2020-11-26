@@ -86,23 +86,21 @@ app.use(function(req, res, next) {
 app.post("/getEmployerDetails", getEmployerDetails)
 
 
-  
+var admin_review_router = require('./src/Admin/review_controller');
+var admin_photo_router = require('./src/Admin/photo_controller');
+var admin_company_router = require('./src/Admin/company_controller');
+var admin_dashboard_router = require('./src/Admin/dashboard_controller');
 var company_authentication_router = require('./src/Company/company_authentication');
 var student_authentication_router = require('./src/Student/student_authentication');
 var loginRouter = require("./src/Login/login");
 
+
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/registerStudent", student_authentication_router.register_student);
 app.post("/login", loginRouter.login);
-
-
-
-
-
-
-
-
-
+app.get("/getUndecidedReviews", admin_review_router.get_undecided_reviews);
+app.post("/approveReview", admin_review_router.approve_review);
+app.post("/rejectReview", admin_review_router.reject_review);
 
 app.listen(8080)
 console.log("Server Listening on port 8080");
