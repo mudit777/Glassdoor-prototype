@@ -101,6 +101,7 @@ app.post("/searchCompany", admin_get_controllers.searchCompany);
 //get paths
 app.get("/getCompanyReviews/:company_id", review_controllers.getCompanyReviews);
 app.get("/getAllCompaniesAdmin", admin_get_controllers.getAllCompaniesAdmin);
+app.get("/getCompanyReviewsAdmin/:company_id", review_controllers.getCompanyReviewsAdmin);
 
 
 

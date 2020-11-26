@@ -13,6 +13,7 @@ const ManageCompanies = () => {
   const[cards, setCards] = useState([]);
   const[term, setTerm] = useState('');
 
+  //this effect fetches data on mount
   useEffect(()=>{
     axios.get(`${BACKEND}/getAllCompaniesAdmin`)
     .then(response => {  
@@ -29,12 +30,13 @@ const ManageCompanies = () => {
   }, [])
 
 
+  //this effect displays cards
   useEffect( () => {
     let rcards = companies.map(company => {
       return (
         <Segment raised className="segment_div">
           <div className="link_div">
-            <Link className="link_fonts">{company.company_name}</Link>
+            <Link className="link_fonts" to={{pathname:"/showCompanyReviews", state:{company_id:company.company_id}}}>{company.company_name}</Link>
           </div>
           <Button style={{backgroundColor:"#0CAA41", color:"white"}}>Show Stats</Button>
         </Segment>

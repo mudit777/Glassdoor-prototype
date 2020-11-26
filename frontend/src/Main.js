@@ -11,6 +11,7 @@ import Approve from './components/Admin/approve';
 import ApprovePhotos from './components/Admin/ApprovePhotos';
 import ApproveReviews from './components/Admin/ApproveReviews';
 import ManageCompanies from './components/Admin/ManageCompanies';
+import ShowCompanyReviews from './components/Admin/ShowCompanyReviews';
 
 class Main extends Component {
     render(){
@@ -28,6 +29,7 @@ class Main extends Component {
                     <Route path = "/approvePhotos" component = {ApprovePhotos} />
                     <Route path = "/approveReviews" component = {ApproveReviews} />
                     <Route path = "/manageCompanies" component = {ManageCompanies} />
+                    <Route path = "/showCompanyReviews" component = {ShowCompanyReviews} />
                 </BrowserRouter>
             </div>
         )

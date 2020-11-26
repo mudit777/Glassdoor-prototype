@@ -66,3 +66,24 @@ exports.getCompanyReviews = (req, res) => {
     }
   })
 }
+
+exports.getCompanyReviewsAdmin = (req, res) => {
+  console.log("Get me reviews for company_id: ")
+  console.log(req.params);
+
+  let q1 = "SELECT * from `glassdoor`.`reviews` WHERE company_id="+mysql.escape(req.params.company_id);
+
+  connection.query(q1, (err, results) => {
+    if(err){
+      throw err;
+    }
+    else{
+      console.log("Ok, no error")
+      res.status(200,{
+        'Content-Type' : 'application/json'
+      });
+      res.end(JSON.stringify(results));
+    }
+  });  
+
+}
