@@ -17,7 +17,7 @@ const Approve = () => {
         <Card.Group itemsPerRow={2} className="pad_left">
           <ApproveCard img_path={i1} type="Approve Reviews" to="/approveReviews"/>
           <ApproveCard img_path={i2} type="Approve Photos" to="/approvePhotos"/>
-          <ApproveCard img_path={i3} type="Manage Companies" to="/showCompanies"/>
+          <ApproveCard img_path={i3} type="Manage Companies" to="/manageCompanies"/>
           <ApproveCard img_path={i4} type="Analytics Dashboard" to="/showStats"/>
         </Card.Group>
       </div>

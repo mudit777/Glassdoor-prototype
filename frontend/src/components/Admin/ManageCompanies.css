@@ -1,0 +1,30 @@
+.segment_div{
+  width:100%;
+  height:5rem;
+  padding-top: 1.5rem;  
+  text-align: left;
+  padding-left: 2rem;  
+}
+
+.link_div{
+  width:80%;
+  float: left;
+}
+
+.link_fonts{
+  font-size: large;
+  font-weight: 500;
+}
+
+.border{
+  border: 1px solid black;
+}
+
+.search_bar_div{
+  height: 5rem;
+}
+
+.search_bar{
+  width:90%;
+  margin-left: 10rem;
+}

@@ -91,15 +91,16 @@ var company_authentication_router = require('./src/Company/company_authenticatio
 var student_authentication_router = require('./src/Student/student_authentication');
 var loginRouter = require("./src/Login/login");
 var review_controllers = require('./src/Reviews/review_controllers');
+var admin_get_controllers = require('./src/Admin/get_controllers');
 //post paths
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/registerStudent", student_authentication_router.register_student);
 app.post("/login", loginRouter.login);
 app.post("/add10k", review_controllers.add10kreviews);
-
+app.post("/searchCompany", admin_get_controllers.searchCompany);
 //get paths
 app.get("/getCompanyReviews/:company_id", review_controllers.getCompanyReviews);
-
+app.get("/getAllCompaniesAdmin", admin_get_controllers.getAllCompaniesAdmin);
 
 
 
