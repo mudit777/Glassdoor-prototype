@@ -103,42 +103,6 @@ app.post("/getCompanyReviews", (req,res) =>{
     })
 })
 
-// app.post("/saveCompanyReview", (req,res) =>{
-//     console.log("Saving company review!")
-//     console.log(req.body)
-//     var user = "UPDATE reviews SET review_marked_by_company = '0' WHERE review_id = '"+req.body.review_id+"'";
-//     connection.query(user,(err,result) =>{
-//         console.log(result)
-//         if(err) throw err;
-//         if(result.length)
-//         {
-//             console.log(result)
-//             res.writeHead(200,{
-//                 'Content-Type' : "application/json"        
-//             })
-//             res.end(JSON.stringify(result))
-//         }
-//     })
-// })
-
-// app.post("/addReply", (req,res) =>{
-//     console.log("Adding Reply to review!")
-//     console.log(req.body)
-//     var user = "UPDATE reviews SET review_reply = '"+req.body.reply+"' WHERE review_id = '"+req.body.review_id+"'";
-//     connection.query(user,(err,result) =>{
-//         console.log(result)
-//         if(err) throw err;
-//         if(result.length > 0)
-//         {
-//             console.log(result)
-//             res.writeHead(200,{
-//                 'Content-Type' : "application/json"        
-//             })
-//             res.end("Comment Replied")
-//         }
-//     })
-// })
-
 app.post("/postJob", (req,res) =>{
     console.log("Posting New Job!")
     console.log(req.body)
@@ -169,6 +133,8 @@ var student_companies_router = require('./src/Student/companies');
 var loginRouter = require("./src/Login/login");
 var addReplyRoute = require('./src/Company/add_reply');
 var saveCompanyReviewRoute = require('./src/Company/save_company_review')
+var studentJobsRouter = require('./src/Student/jobs');
+
 
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/login", loginRouter.login);
@@ -200,6 +166,7 @@ app.post("/updateStudentDetails", requireAuth, studentDetailsRouter.updateStuden
 app.post("/getStudentJobPreferences", requireAuth, studentDetailsRouter.getStudentJobPreferences);
 app.post("/getCompanyDetails", requireAuth, companyDetailsRouter.getCompanyDetails);
 app.post("/searchCompanies", requireAuth, searchRouter.searchCompanies);
+app.post("/getAllJobs", requireAuth, studentJobsRouter.get_all_jobs);
 
 app.listen(8080)
 console.log("Server Listening on port 8080");

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { BACKEND } from '../../Config';
 import { notification } from 'antd';
-import { GETALLCOMPANIES, LOGIN, SEARCHCOMPANIES } from '../constants';
+import { GETALLCOMPANIES, GETALLSTUDENTJOBS, LOGIN, SEARCHCOMPANIES } from '../constants';
 
 export function login(payload)
 {
@@ -30,6 +30,7 @@ export function login(payload)
                 else if(payload.type === "company")
                 {
                     window.sessionStorage.setItem("company_id", response.data.company_id)
+                    window.sessionStorage.setItem("company_name", response.data.company_name);
                     data = {
                         message : "Successfully logged in",
                         company : response.data,
@@ -102,11 +103,33 @@ export function search_companies(payload)
             if(response.status === 200)
             {
                 data = {
-                    companies : response.data
+                    companies : response.data,
+                    message : "Companies searched"
                 }
             }
             dispatch({
                 type : SEARCHCOMPANIES,
+                data
+            })
+        })
+    }
+}
+
+export function get_all_jobs(payload)
+{
+    let data = {};
+    return(dispatch) => {
+        axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+        axios.post(`${BACKEND}/getAllJobs`, payload).then(response => {
+            if(response.status === 200)
+            {
+                data = {
+                    studentJobs : response.data,
+                    message : "All jobs fetched on student side"
+                }
+            }
+            dispatch({
+                type : GETALLSTUDENTJOBS,
                 data
             })
         })
