@@ -43,10 +43,9 @@ const get_stats = async (company_id) => {
 
         let demographic_result = await query(demographic_query) 
         processed_demo_result = demographic_result.map(row => {
-            return {
-                race: row.student_race,
-                count: row.the_count
-            }
+            let the_row = {};
+            the_row[row.student_race]= row.the_count;
+            return the_row
         });
 
         console.log(processed_demo_result);
