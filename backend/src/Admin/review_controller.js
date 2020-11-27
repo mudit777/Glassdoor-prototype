@@ -25,7 +25,7 @@ exports.get_undecided_reviews = (req, res) => {
 exports.approve_review = (req, res) => {
     kafka.make_request("approve_review", req.body, (err, result) => {
         // req.body format
-        // review_id 
+        // review_id (from mysql)
         if(result.code === 500)
         {
             res.writeHead(500, {
@@ -45,6 +45,8 @@ exports.approve_review = (req, res) => {
 
 exports.reject_review = (req, res) => {
     kafka.make_request("reject_review", req.body, (err, result) => {
+        // req.body format
+        // review_id (from mysql)
         if(result.code === 500)
         {
             res.writeHead(500, {

@@ -1,7 +1,21 @@
-var get_undecided_reviews_controller = require('./get_undecided_reviews');
-var approve_review_controller = require('./approve_review');
-var reject_review_controller = require('./reject_review');
+const get_undecided_reviews_controller = require('./get_undecided_reviews');
+const approve_review_controller = require('./approve_review');
+const reject_review_controller = require('./reject_review');
+const get_undecided_photos_controller = require('./get_undecided_photos');
+const approve_photo_controller = require('./approve_photo');
+const reject_photo_controller = require('./reject_photo');
+const get_all_companies_controller = require('./get_all_companies');
+const search_company_controller = require('./search_company');
+const get_company_reviews_controller = require('./get_company_reviews');
+const get_company_stats_controller = require('./get_company_stats')
 
 exports.get_undecided_reviews = get_undecided_reviews_controller;
 exports.approve_review = approve_review_controller;
 exports.reject_review = reject_review_controller;
+exports.get_undecided_photos = get_undecided_photos_controller;
+exports.approve_photo = approve_photo_controller;
+exports.reject_photo = reject_photo_controller;
+exports.get_all_companies = get_all_companies_controller;
+exports.search_company = search_company_controller;
+exports.get_company_reviews = get_company_reviews_controller;
+exports.get_company_stats = get_company_stats_controller;

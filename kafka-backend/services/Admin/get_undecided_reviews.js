@@ -5,8 +5,8 @@ var mysql = require('mysql')
 
 function handle_request(message, callback){
     var query = `SELECT 
-                    review_id, review_desc, review_headline, review_pros, review_cons, review_desc, review_rating, 
-                    student_first_name, student_last_name, company_name
+                    r.review_id, r.review_desc, r.review_headline, r.review_pros, r.review_cons, r.review_desc, r.review_rating, 
+                    s.student_first_name, s.student_last_name, c.company_name
                 FROM reviews r, students s, companies c
                 WHERE r.student_id = s.student_id and r.company_id = c.company_id
                 and review_status="Undecided"`;

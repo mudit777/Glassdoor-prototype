@@ -86,21 +86,29 @@ app.use(function(req, res, next) {
 app.post("/getEmployerDetails", getEmployerDetails)
 
 
-var admin_review_router = require('./src/Admin/review_controller');
-var admin_photo_router = require('./src/Admin/photo_controller');
-var admin_company_router = require('./src/Admin/company_controller');
-var admin_dashboard_router = require('./src/Admin/dashboard_controller');
-var company_authentication_router = require('./src/Company/company_authentication');
-var student_authentication_router = require('./src/Student/student_authentication');
-var loginRouter = require("./src/Login/login");
+const admin_review_router = require('./src/Admin/review_controller');
+const admin_photo_router = require('./src/Admin/photo_controller');
+const admin_company_router = require('./src/Admin/company_controller');
+const admin_dashboard_router = require('./src/Admin/dashboard_controller');
+const company_authentication_router = require('./src/Company/company_authentication');
+const student_authentication_router = require('./src/Student/student_authentication');
+const loginRouter = require("./src/Login/login");
 
 
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/registerStudent", student_authentication_router.register_student);
 app.post("/login", loginRouter.login);
+
 app.get("/getUndecidedReviews", admin_review_router.get_undecided_reviews);
 app.post("/approveReview", admin_review_router.approve_review);
 app.post("/rejectReview", admin_review_router.reject_review);
+app.get("/getUndecidedPhotos", admin_photo_router.get_undecided_photos);
+app.post("/approvePhoto", admin_photo_router.approve_photo);
+app.post("/rejectPhoto", admin_photo_router.reject_photo);
+app.get("/getAllCompanies", admin_company_router.get_all_companies);
+app.get("/searchCompany/:searchTerm", admin_company_router.search_company);
+app.get("/getCompanyReviews/:company_id", admin_company_router.get_company_reviews);
+app.get("/getCompanyStats/:company_id", admin_company_router.get_company_stats);
 
 app.listen(8080)
 console.log("Server Listening on port 8080");
