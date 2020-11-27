@@ -7,11 +7,19 @@ import './Placeholders.css';
 import {Link} from 'react-router-dom';
 import './ManageCompanies.css';
 import {Grid, Segment, Button, Input} from 'semantic-ui-react';
+import {Pagination} from 'antd';
+import 'antd/dist/antd.css';
 
 const ManageCompanies = () => {
   const[companies, setCompanies] = useState([]);
   const[cards, setCards] = useState([]);
   const[term, setTerm] = useState('');
+  const[offset, setOffset] = useState(0);
+  const[elements, setElements] = useState([]);
+  const[perPage, setPerPage] = useState(5);
+  const[currentPage, setCurrentPage] = useState(1);
+  const[pageCount, setPageCount] = useState(1);
+  const[paginationElement, setPaginationElement] = useState(null);
 
   //this effect fetches data on mount
   useEffect(()=>{
@@ -29,10 +37,27 @@ const ManageCompanies = () => {
     })
   }, [])
 
+  const setElementsForCurrentPage = () => {
+    let elements1 = companies.slice(offset, offset + perPage);
+    setElements(elements1)
+  }
+
+  //this effect adds elements
+  useEffect(()=>{
+    setElementsForCurrentPage()  
+  }, [companies])
+  
+  const handlePageClick = (pageNo) => {
+    const selectedPage = pageNo - 1; 
+    const offset1 = selectedPage * perPage;
+    setCurrentPage(selectedPage);
+    setOffset(offset1);
+    setElementsForCurrentPage();
+  }
 
   //this effect displays cards
   useEffect( () => {
-    let rcards = companies.map(company => {
+    let rcards = elements.map(company => {
       return (
         <Segment raised className="segment_div">
           <div className="link_div">
@@ -42,8 +67,23 @@ const ManageCompanies = () => {
         </Segment>
       )
     })
+
+    if(pageCount>0){
+      let paginationElement1 = (<Pagination
+        defaultCurrent={1}
+        onChange={handlePageClick}
+        size="small"
+        total={companies.length}
+        showTotal={(total, range) => 
+        `${range[0]}-${range[1]} of ${total} items`}
+          defaultPageSize={perPage}
+      />)
+      setPaginationElement(paginationElement1);
+    }
     setCards(rcards);
-  }, [companies])
+
+  }, [elements])
+
 
   const onType = e => {
     setTerm(e.target.value)
@@ -78,9 +118,12 @@ const ManageCompanies = () => {
             <div style={{marginLeft:"10rem"}}>
               {cards.length>0?cards:<div className="no_more">No companies to show</div>}
             </div>
+            <div style={{marginLeft:"10rem"}}>
+              {paginationElement}
+            </div>
           </Grid.Column>
           <Grid.Column width={8}>
-            <div style={{height:"100%", border:"1px solid black"}}>
+            <div className="stats">
               See Stats here
             </div>
           </Grid.Column>

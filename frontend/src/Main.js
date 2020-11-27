@@ -12,6 +12,7 @@ import ApprovePhotos from './components/Admin/ApprovePhotos';
 import ApproveReviews from './components/Admin/ApproveReviews';
 import ManageCompanies from './components/Admin/ManageCompanies';
 import ShowCompanyReviews from './components/Admin/ShowCompanyReviews';
+import stats from './components/Admin/stats';
 
 class Main extends Component {
     render(){
@@ -30,6 +31,7 @@ class Main extends Component {
                     <Route path = "/approveReviews" component = {ApproveReviews} />
                     <Route path = "/manageCompanies" component = {ManageCompanies} />
                     <Route path = "/showCompanyReviews" component = {ShowCompanyReviews} />
+                    <Route path = "/showStats" component = {stats} />
                 </BrowserRouter>
             </div>
         )
