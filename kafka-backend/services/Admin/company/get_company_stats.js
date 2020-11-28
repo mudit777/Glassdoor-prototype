@@ -1,7 +1,7 @@
-const conn = require('../../mysql_database');
+const conn = require('../../../mysql_database');
 const util = require('util');
 const query = util.promisify(conn.query).bind(conn);
-let applications = require('../../Models/applications');
+let applications = require('../../../Models/applications');
 
 const get_stats = async (company_id) => {
     // Get job ids by the company

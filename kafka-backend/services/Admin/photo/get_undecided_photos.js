@@ -1,8 +1,7 @@
-const date = require('date-and-time');
-const bcrypt = require('bcrypt');
-var connection = require('../../mysql_database');
-var mysql = require('mysql')
-var photos = require('../../Models/photos');
+const conn = require('../../../mysql_database');
+const util = require('util');
+const query = util.promisify(conn.query).bind(conn);
+var photos = require('../../../Models/photos');
 
 async function handle_request(message, callback){
     let response = {}
