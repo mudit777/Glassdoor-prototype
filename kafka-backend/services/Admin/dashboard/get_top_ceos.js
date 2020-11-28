@@ -6,7 +6,7 @@ const handle_request = async (message, callback) => {
     let response = {}
     try {
         let the_query = `SELECT
-                            company_id, company_ceo_first_name, company_ceo_last_name, company_avg_ceo_approval_rating, company_profile_photo
+                            company_id, company_name, company_ceo_first_name, company_ceo_last_name, company_avg_ceo_approval_rating, company_profile_photo
                             FROM companies
                             ORDER BY company_avg_ceo_approval_rating DESC
                             LIMIT 5;`
