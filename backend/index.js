@@ -109,6 +109,12 @@ app.get("/getAllCompanies", admin_company_router.get_all_companies);
 app.get("/searchCompany/:searchTerm", admin_company_router.search_company);
 app.get("/getCompanyReviews/:company_id", admin_company_router.get_company_reviews);
 app.get("/getCompanyStats/:company_id", admin_company_router.get_company_stats);
+app.get("/getReviewCounts/:query_date", admin_dashboard_router.get_review_counts);
+app.get("/getMostReviewedCompanies", admin_dashboard_router.get_most_reviewed_companies);
+app.get("/getMostRatedCompanies", admin_dashboard_router.get_most_rated_companies);
+app.get("/getTopCEOs", admin_dashboard_router.get_top_ceos);
+app.get("/getTopStudents", admin_dashboard_router.get_top_students);
+app.get("/getMostViewedCompanies", admin_dashboard_router.get_most_viewed_companies);
 
 app.listen(8080)
 console.log("Server Listening on port 8080");

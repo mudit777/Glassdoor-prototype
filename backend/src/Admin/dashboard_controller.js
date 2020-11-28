@@ -1,8 +1,10 @@
 const date = require('date-and-time');
 const bcrypt = require('bcrypt');
 var kafka = require('../../kafka/client');
-exports.get_undecided_reviews = (req, res) => {
-    kafka.make_request("get_undecided_reviews", req.body, (err, result) => {
+exports.get_review_counts = (req, res) => {
+    kafka.make_request("get_review_counts", req.params, (err, result) => {
+        // req params
+        // query_date: YYYY-MM-DD
         if(result.code === 500)
         {
             res.writeHead(500, {
@@ -13,15 +15,15 @@ exports.get_undecided_reviews = (req, res) => {
         else if(result.code === 200)
         {
             res.writeHead(200, {
-                "Content-Type" : "text/plain"
+                "Content-Type" : "application/json"
             })
             res.end(JSON.stringify(result.data))
         }
     })
 }
 
-exports.approve_review = (req, res) => {
-    kafka.make_request("approve_review", req.body, (err, result) => {
+exports.get_most_reviewed_companies = (req, res) => {
+    kafka.make_request("get_most_reviewed_companies", req.body, (err, result) => {
         // req.body format
         // review_id 
         if(result.code === 500)
@@ -34,15 +36,15 @@ exports.approve_review = (req, res) => {
         else if(result.code === 200)
         {
             res.writeHead(200, {
-                "Content-Type" : "text/plain"
+                "Content-Type" : "application/json"
             })
-            res.end("Approving Review Succesful!")
+            res.end(JSON.stringify(result.data))
         }
     })
 }
 
-exports.reject_review = (req, res) => {
-    kafka.make_request("reject_review", req.body, (err, result) => {
+exports.get_most_rated_companies = (req, res) => {
+    kafka.make_request("get_most_rated_companies", req.body, (err, result) => {
         if(result.code === 500)
         {
             res.writeHead(500, {
@@ -53,9 +55,66 @@ exports.reject_review = (req, res) => {
         else if(result.code === 200)
         {
             res.writeHead(200, {
+                "Content-Type" : "application/json"
+            })
+            res.end(JSON.stringify(result.data))
+        }
+    })
+}
+
+exports.get_top_ceos = (req, res) => {
+    kafka.make_request("get_top_ceos", req.body, (err, result) => {
+        if(result.code === 500)
+        {
+            res.writeHead(500, {
                 "Content-Type" : "text/plain"
             })
-            res.end("Rejecting Review Successfuly!")
+            res.end("Server Side Error")
+        }
+        else if(result.code === 200)
+        {
+            res.writeHead(200, {
+                "Content-Type" : "application/json"
+            })
+            res.end(JSON.stringify(result.data))
+        }
+    })
+}
+
+exports.get_top_students = (req, res) => {
+    kafka.make_request("get_top_students", req.body, (err, result) => {
+        if(result.code === 500)
+        {
+            res.writeHead(500, {
+                "Content-Type" : "text/plain"
+            })
+            res.end("Server Side Error")
+        }
+        else if(result.code === 200)
+        {
+            res.writeHead(200, {
+                "Content-Type" : "application/json"
+            })
+            res.end(JSON.stringify(result.data))
+        }
+    })
+}
+
+exports.get_most_viewed_companies = (req, res) => {
+    kafka.make_request("get_most_viewed_companies", req.body, (err, result) => {
+        if(result.code === 500)
+        {
+            res.writeHead(500, {
+                "Content-Type" : "text/plain"
+            })
+            res.end("Server Side Error")
+        }
+        else if(result.code === 200)
+        {
+            res.writeHead(200, {
+                "Content-Type" : "application/json"
+            })
+            res.end(JSON.stringify(result.data))
         }
     })
 }
