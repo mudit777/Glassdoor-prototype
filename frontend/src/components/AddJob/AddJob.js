@@ -109,15 +109,15 @@ class AddJob extends Component {
             country: this.state.country,
             remote_inperson: this.state.remote_inperson,
             street_address: this.state.street_address,
-            city: this.state.country,
+            city: this.state.city,
             state: this.state.state,
             zipcode: this.state.zipcode,
             job_desc: this.state.job_desc,
             job_qual: this.state.job_qual,
             job_roles: this.state.job_roles,
             salary: this.state.salary,
-            company_id: '1',
-            company_name: "Google"
+            company_id: sessionStorage.getItem("company_id"),
+            company_name: sessionStorage.getItem("company_name")
         }
         console.log("DATA TO BE SENT IS : ", data)
         axios.post('http://localhost:8080/postJob',data)

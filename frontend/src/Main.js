@@ -14,6 +14,7 @@ import StudentReviews from './components/StudentReviews/StudentReviews';
 import StudentSignUp from './components/StudentSignUp/StudentSignUp';
 import UpdateStudentProfile from './components/UpdateStudentProfile/UpdateStudentProfile';
 import ViewAllCompanies from './components/ViewAllCompanies/ViewAllCompanies';
+import ViewJobs from './components/ViewJobs/ViewJobs';
 
 class Main extends Component {
     render(){
@@ -34,6 +35,7 @@ class Main extends Component {
                     <Route path = "/addReview" component = {AddReview}/>
                     <Route path = "/studentReviews" component = {StudentReviews}/>
                     <Route path = "/studentInterviews" component = {StudentInterviews}/>
+                    <Route path = "/allJobs" component = {ViewJobs} />
                 </BrowserRouter>
             </div>
         )

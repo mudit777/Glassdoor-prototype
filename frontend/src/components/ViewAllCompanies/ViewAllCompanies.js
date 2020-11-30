@@ -21,7 +21,17 @@ class ViewAllCompanies extends Component {
             currentPage: 1,
             pageCount: 1
         }
-        this.props.get_all_companies();
+        
+    }
+    componentDidMount(){
+        if(this.props.companies)
+        {
+            console.log("Companies there")
+        }
+        else
+        {
+            this.props.get_all_companies();
+        }
     }
     componentWillReceiveProps() 
     {
