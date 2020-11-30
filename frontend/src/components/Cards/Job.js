@@ -11,13 +11,13 @@ class Job extends Component {
     }
     render() {
         return (
-            <div style = {{marginTop : "5%"}}>
-                <Card title = 'All Jobs' style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '50rem'}}>
+            <div style = {{margin:'2.5rem 3rem'}}>
+                {/* <Card title = 'All Jobs' style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '20rem'}}> */}
                     <div style={{display:'flex',margin:'0.5rem 1rem'}}>
-                        <div style={{marginRight:'4rem',fontWeight:'bold'}}>Job Title:</div>
-                        <div>apply link</div>
+                        <div style={{marginRight:'2rem',fontWeight:'bold'}}> {this.props.job.job_title} </div>
+                        <div>visit</div>
                     </div>
-                </Card>
+                {/* </Card> */}
             </div>
         )
     }

@@ -23,7 +23,7 @@ class Company extends Component {
             redirectVar = <Redirect to = "/updateCompanyProfile" />
         }
         return (
-            <div>
+            <div style={{display:'flex',flexDirection:'column',justifyContent:'center',marginLeft:'15rem',marginTop:'0rem',marginBottom:'5rem'}}>
                 {redirectVar}
             <div style = {{marginTop : "5%"}}>
                 <Card title = {this.props.company.company_name} style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '50rem'}} actions = {[

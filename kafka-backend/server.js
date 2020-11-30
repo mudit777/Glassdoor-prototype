@@ -14,6 +14,7 @@ var update_student_details = require('./services/Student/update_student_details'
 var get_student_job_preferences = require("./services/Student/get_job_preferences");
 var get_company_details = require('./services/company/get_company_details');
 var search_companies = require('./services/Student/search_companies');
+var addSalary = require('./services/Salary/addSalary');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -60,3 +61,4 @@ handleTopicRequest("update_student_details", update_student_details);
 handleTopicRequest("get_student_job_preferences", get_student_job_preferences);
 handleTopicRequest("get_company_details", get_company_details);
 handleTopicRequest("search_companies", search_companies);
+handleTopicRequest("addSalary", addSalary);

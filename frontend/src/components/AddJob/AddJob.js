@@ -116,8 +116,8 @@ class AddJob extends Component {
             job_qual: this.state.job_qual,
             job_roles: this.state.job_roles,
             salary: this.state.salary,
-            company_id: '1',
-            company_name: "Google"
+            company_id: sessionStorage.getItem('company_id'),
+            company_name: "Amazon"
         }
         console.log("DATA TO BE SENT IS : ", data)
         axios.post('http://localhost:8080/postJob',data)
