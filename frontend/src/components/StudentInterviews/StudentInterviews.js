@@ -54,17 +54,28 @@ class StudentInterviews extends Component {
         this.setState({
             visible: false,
         });
-        var data1 = {
-            questions: this.state.questions,
-            answers: this.state.answers,
-            company_name: this.state.company_name,
-            process_rating: this.state.process_rating,
-            job_title: this.state.job_title,
-            description: this.state.description,
-            difficulty: this.state.difficulty,
-            got_offer: this.state.got_offer
+        var qAndA = [];
+        for(let i = 0; i < this.state.length; i++)
+        {
+            var aId = "answer" + i;
+            let qId = "question" + i;
+            let temp = {};
+            temp[document.getElementById(qId).value] = document.getElementById(aId).value;
+            qAndA.push(temp);
         }
-        console.log("DATA1 IS :", data1)
+        console.log("~~~~~~~~~~~~~~` FInal Array of questions ~~~~~~~~~~~~~~",qAndA);
+
+        // var data1 = {
+        //     student_id : window.sessionStorage.getItem("student_id"),
+        //     company_id: "1",
+        //     process_rating: this.state.process_rating,
+        //     job_title: this.state.job_title,
+        //     description: this.state.description,
+        //     interview_difficulty: this.state.difficulty,
+        //     got_offer: this.state.got_offer,
+        //     questions_answers : qAndA
+        // }
+        // console.log("DATA1 IS :", data1)
         // axios.post(`${BACKEND}/addReply', data1)
         //     .then(response => {
         //         console.log("Status Code in Adding Reply : ", response.status);
@@ -144,8 +155,8 @@ class StudentInterviews extends Component {
     }
 
     questionsChangeHandler = (e) => {
-        var a = this.state.questions.push(e.target.value)
-        console.log("Questions are:",a)
+        // var a = this.state.questions.push(e.target.value)
+        // console.log("Questions are:",a)
         this.setState({
             questions: e.target.value
         })
@@ -176,14 +187,17 @@ class StudentInterviews extends Component {
 
 
         var questionsAnswers =  [];
-        var temp =  <div>
-            <p style={{marginTop:10, fontSize:15}}>Interview Question<sup>*</sup> </p>
-            <TextArea id="`${}`" rows={3} onChange={this.questionsChangeHandler}></TextArea>
-            <p style={{marginTop:10, fontSize:15}}>Answer<sup>*</sup></p>
-            <TextArea rows={3} onChange={this.answerChangeHandler}></TextArea>
-        </div> 
+        
         for(let i= 0; i < this.state.length; i++){
-           questionsAnswers.push(temp);
+            let qid = "question" + i;
+            let aid = "answer" + i;
+            let temp = <div>
+                <p style={{marginTop:10, fontSize:15}}>Interview Question<sup>*</sup> </p>
+                <TextArea id={qid} rows={3} onChange={this.questionsChangeHandler}></TextArea>
+                <p style={{marginTop:10, fontSize:15}}>Answer<sup>*</sup></p>
+                <TextArea id = {aid} rows={3} onChange={this.answerChangeHandler}></TextArea>
+            </div> 
+            questionsAnswers.push(temp);
         }
         
 
