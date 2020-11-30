@@ -134,7 +134,7 @@ var loginRouter = require("./src/Login/login");
 var addReplyRoute = require('./src/Company/add_reply');
 var saveCompanyReviewRoute = require('./src/Company/save_company_review')
 var studentJobsRouter = require('./src/Student/jobs');
-
+var studentApplicationsRouter = require('./src/Student/application');
 
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/login", loginRouter.login);
@@ -146,7 +146,7 @@ app.post("/saveCompanyReview", saveCompanyReviewRoute.saveCompanyReview);
 
 
 
-var uploadsRouter = require("./src/uploads/upload_photo");
+var uploadsRouter = require('./src/uploads/uploads');
 var studentDetailsRouter = require('./src/Student/student_details');
 var industriesRouter = require('./src/Student/get_all_industries');
 var companyDetailsRouter = require('./src/Company/company_details');
@@ -167,6 +167,12 @@ app.post("/getStudentJobPreferences", requireAuth, studentDetailsRouter.getStude
 app.post("/getCompanyDetails", requireAuth, companyDetailsRouter.getCompanyDetails);
 app.post("/searchCompanies", requireAuth, searchRouter.searchCompanies);
 app.post("/getAllJobs", requireAuth, studentJobsRouter.get_all_jobs);
+app.post("/updateJobFavourites", requireAuth, studentJobsRouter.updateFavouriteJobs);
+app.post("/getFavouriteJobs", requireAuth, studentJobsRouter.getFavouriteJobs);
+app.post("/uplaodResume", requireAuth, uploadsRouter.uploadResume);
+app.post("/getStudentFiles", requireAuth, studentDetailsRouter.getStudentFiles);
+app.post("/uploadCoverLetters", requireAuth, uploadsRouter.uploadCoverLetter);
+app.post("/applyToJob", requireAuth, studentApplicationsRouter.applyToAJob);
 
 app.listen(8080)
 console.log("Server Listening on port 8080");

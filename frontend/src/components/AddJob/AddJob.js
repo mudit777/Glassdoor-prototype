@@ -109,7 +109,7 @@ class AddJob extends Component {
             country: this.state.country,
             remote_inperson: this.state.remote_inperson,
             street_address: this.state.street_address,
-            city: this.state.country,
+            city: this.state.city,
             state: this.state.state,
             zipcode: this.state.zipcode,
             job_desc: this.state.job_desc,
