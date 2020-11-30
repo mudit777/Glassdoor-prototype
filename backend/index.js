@@ -169,12 +169,19 @@ var student_companies_router = require('./src/Student/companies');
 var loginRouter = require("./src/Login/login");
 var addReplyRoute = require('./src/Company/add_reply');
 var saveCompanyReviewRoute = require('./src/Company/save_company_review')
+var addReviewRoute = require('./src/Student/add_review')
+var getPositiveReviewRoute = require('./src/Student/get_positive_review')
+var getNegativeReviewRoute = require('./src/Student/get_negative_review')
+var addHelpfulRoute = require('./src/Student/add_helpful')
 
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/login", loginRouter.login);
 app.post("/addReply", addReplyRoute.addReply);
 app.post("/saveCompanyReview", saveCompanyReviewRoute.saveCompanyReview);
-
+app.post("/addReview", addReviewRoute.addReview);
+app.post("/getPositiveReview", getPositiveReviewRoute.getPositiveReview);
+app.post("/getNegativeReview", getNegativeReviewRoute.getNegativeReview);
+app.post("/addHelpful", addHelpfulRoute.addHelpfulReview)
 
 
 

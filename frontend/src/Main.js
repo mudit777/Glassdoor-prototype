@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route} from 'react-router-dom';
 import AddJob from './components/AddJob/AddJob';
+import AddReview from './components/AddReview/AddReview';
 import CompanyHeaderBar from './components/CompanyHeaderBar/CompanyHeaderBar';
 import CompanyProfilePage from './components/CompanyProfilePage/CompanyProfilePage'
 import EditCompanyProfilePage from './components/CompanyProfilePage/EditCompanyProfilePage';
 import CompanySignUp from './components/CompanySignUp/CompanySignUp';
 import Login from './components/Login/Login';
 import PostNewJob from './components/PostNewJob/PostNewJob';
+import StudentInterviews from './components/StudentInterviews/StudentInterviews';
 import StudentProfile from './components/StudentProfile/StudentProfile';
+import StudentReviews from './components/StudentReviews/StudentReviews';
 import StudentSignUp from './components/StudentSignUp/StudentSignUp';
 import UpdateStudentProfile from './components/UpdateStudentProfile/UpdateStudentProfile';
 import ViewAllCompanies from './components/ViewAllCompanies/ViewAllCompanies';
@@ -28,6 +31,9 @@ class Main extends Component {
                     <Route path = "/studentProfile" component = {StudentProfile} />
                     <Route path = "/updateStudentProfile" component = {UpdateStudentProfile} />
                     <Route path = "/allCompanies" component = {ViewAllCompanies} />
+                    <Route path = "/addReview" component = {AddReview}/>
+                    <Route path = "/studentReviews" component = {StudentReviews}/>
+                    <Route path = "/studentInterviews" component = {StudentInterviews}/>
                 </BrowserRouter>
             </div>
         )

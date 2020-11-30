@@ -1,10 +1,10 @@
 var mysql = require('mysql')
 let connection = mysql.createConnection({
     // host: 'yelp-rds.cmvrgbslqsml.us-west-1.rds.amazonaws.com',
-    host : '35.233.157.60',
+    host : '35.230.18.97',
     port : "3306",
     user: 'root',
-    password: 'Djjpu@273&av5kskorea2142',
+    password: 'ugt4vwLxkbf5BKOG',
     database: 'glassdoor'
 });
 connection.connect(function(err) {
