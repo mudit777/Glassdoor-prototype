@@ -57,7 +57,6 @@ class CompanyCard extends Component {
             </div>
         </Card>
         }
-        console.log(this.props)
         return (
             <div style = {{marginTop : "5%"}}>
                {temp}

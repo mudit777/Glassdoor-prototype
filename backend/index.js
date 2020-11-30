@@ -118,42 +118,6 @@ app.post("/getStudentReviews", (req,res) =>{
     })
 })
 
-// app.post("/saveCompanyReview", (req,res) =>{
-//     console.log("Saving company review!")
-//     console.log(req.body)
-//     var user = "UPDATE reviews SET review_marked_by_company = '0' WHERE review_id = '"+req.body.review_id+"'";
-//     connection.query(user,(err,result) =>{
-//         console.log(result)
-//         if(err) throw err;
-//         if(result.length)
-//         {
-//             console.log(result)
-//             res.writeHead(200,{
-//                 'Content-Type' : "application/json"        
-//             })
-//             res.end(JSON.stringify(result))
-//         }
-//     })
-// })
-
-// app.post("/addReply", (req,res) =>{
-//     console.log("Adding Reply to review!")
-//     console.log(req.body)
-//     var user = "UPDATE reviews SET review_reply = '"+req.body.reply+"' WHERE review_id = '"+req.body.review_id+"'";
-//     connection.query(user,(err,result) =>{
-//         console.log(result)
-//         if(err) throw err;
-//         if(result.length > 0)
-//         {
-//             console.log(result)
-//             res.writeHead(200,{
-//                 'Content-Type' : "application/json"        
-//             })
-//             res.end("Comment Replied")
-//         }
-//     })
-// })
-
 app.post("/postJob", (req,res) =>{
     console.log("Posting New Job!")
     console.log(req.body)
@@ -205,18 +169,27 @@ var student_companies_router = require('./src/Student/companies');
 var loginRouter = require("./src/Login/login");
 var addReplyRoute = require('./src/Company/add_reply');
 var saveCompanyReviewRoute = require('./src/Company/save_company_review')
+var addReviewRoute = require('./src/Student/add_review')
+var getPositiveReviewRoute = require('./src/Student/get_positive_review')
+var getNegativeReviewRoute = require('./src/Student/get_negative_review')
+var addHelpfulRoute = require('./src/Student/add_helpful')
+var studentJobsRouter = require('./src/Student/jobs');
+var studentApplicationsRouter = require('./src/Student/application');
 
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/login", loginRouter.login);
 app.post("/addReply", addReplyRoute.addReply);
 app.post("/saveCompanyReview", saveCompanyReviewRoute.saveCompanyReview);
+app.post("/addReview", addReviewRoute.addReview);
+app.post("/getPositiveReview", getPositiveReviewRoute.getPositiveReview);
+app.post("/getNegativeReview", getNegativeReviewRoute.getNegativeReview);
+app.post("/addHelpful", addHelpfulRoute.addHelpfulReview)
 
 
 
 
 
-
-var uploadsRouter = require("./src/uploads/upload_photo");
+var uploadsRouter = require('./src/uploads/uploads');
 var studentDetailsRouter = require('./src/Student/student_details');
 var industriesRouter = require('./src/Student/get_all_industries');
 var companyDetailsRouter = require('./src/Company/company_details');
@@ -237,6 +210,13 @@ app.post("/getStudentJobPreferences", requireAuth, studentDetailsRouter.getStude
 app.post("/getCompanyDetails", requireAuth, companyDetailsRouter.getCompanyDetails);
 app.post("/searchCompanies", requireAuth, searchRouter.searchCompanies);
 app.post("/addSalary", addSalary.addSalary);
+app.post("/getAllJobs", requireAuth, studentJobsRouter.get_all_jobs);
+app.post("/updateJobFavourites", requireAuth, studentJobsRouter.updateFavouriteJobs);
+app.post("/getFavouriteJobs", requireAuth, studentJobsRouter.getFavouriteJobs);
+app.post("/uplaodResume", requireAuth, uploadsRouter.uploadResume);
+app.post("/getStudentFiles", requireAuth, studentDetailsRouter.getStudentFiles);
+app.post("/uploadCoverLetters", requireAuth, uploadsRouter.uploadCoverLetter);
+app.post("/applyToJob", requireAuth, studentApplicationsRouter.applyToAJob);
 
 app.listen(8080)
 console.log("Server Listening on port 8080");

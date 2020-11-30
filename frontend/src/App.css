@@ -44,9 +44,61 @@
   width: 12%;
 }
 
-.column-right-reviews{
+.column-left-intervies{
+  float: left;
+  height: auto;
+  width: 50%;
+}
+
+.column-right-intervies{
+  float: left;
+  height: auto;
+  width: 50%;
+}
+
+.column-left-reviews-one{
   float: left;
   padding: 10px;
   height: auto;
+  width: 5%;
+}
+
+.sr-column-left-1 {
+  float: left;
+  width: 210px;
+  height: auto;
+}
+.sr-column-middle-1 {
+  float: left;
+  width: 210px;
+  margin-left: -203px;
+  height: auto;
+}
+.sr-column-right-1 {
+  float: left;
+  width: 210px;
+  margin-left: -35px;
+  height: auto;
+}
+
+.column-right-reviews{
+  float: none;
+  margin-left: 70px;
+  padding: 10px;
+  height: auto;
   width: 88%;
+}
+
+.column-left-add-reviews{
+  float: left;
+  padding: 10px;
+  height: 100%;
+  width: 65%;
+}
+
+.column-right-add-reviews{
+  float:left;
+  padding: 10px;
+  height: 100%;
+  width: 35%;
 }

@@ -1,8 +1,8 @@
 var kafka = require('../../kafka/client');
 
-exports.saveCompanyReview = (req, res) => {
-    kafka.make_request("save_company_review", req.body, (err, result) => {
-        console.log("Inside Saving Company Review")
+exports.addHelpfulReview = (req, res) => {
+    kafka.make_request("add_helpful", req.body, (err, result) => {
+        console.log("Inside Adding Helpful Review")
         console.log(req.body)
         if(err) throw err;
         else{
@@ -10,7 +10,7 @@ exports.saveCompanyReview = (req, res) => {
             res.writeHead(200, {
                 'Content-Type': "application/json"
             })
-            res.end("Review Saved!")
+            res.end("Added Helpful Review!")
         }
     }) 
 }

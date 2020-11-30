@@ -1,4 +1,4 @@
-import { GETALLCOMPANIES, LOGIN, SEARCHCOMPANIES } from "../constants";
+import { GETALLCOMPANIES, GETALLSTUDENTJOBS, LOGIN, SEARCHCOMPANIES } from "../constants";
 
 
 
@@ -38,6 +38,13 @@ function rootReducer(state = initialState, action)
   {
     return Object.assign({}, state, {
       companies : action.data.companies,
+      message : action.data.message
+    })
+  }
+  else if(action.type === GETALLSTUDENTJOBS)
+  {
+    return Object.assign({}, state, {
+      studentJobs : action.data.studentJobs,
       message : action.data.message
     })
   }

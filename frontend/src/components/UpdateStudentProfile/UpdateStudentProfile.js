@@ -192,6 +192,7 @@ class UpdateStudentProfile extends Component {
     uploadImage = (e) => {
         var formData = new FormData();
         formData.append('image', e.target.files[0]);
+        console.log("Form data _____________", formData);
         Axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
         Axios.post(`${BACKEND}/uploadImage`, formData).then(response => {
             if(response.status === 200)
