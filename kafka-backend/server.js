@@ -25,6 +25,8 @@ var upload_resume = require('./services/Student/upload_resume');
 var get_student_files = require('./services/Student/get_student_files');
 var upload_cover_letter = require('./services/Student/upload_cover_letter');
 var apply_to_job = require('./services/Student/apply_to_job');
+var get_company_jobs = require('./services/company/get_company_jobs');
+
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -82,3 +84,4 @@ handleTopicRequest("upload_resume", upload_resume);
 handleTopicRequest("get_student_files", get_student_files);
 handleTopicRequest("upload_cover_letter", upload_cover_letter);
 handleTopicRequest("apply_to_job", apply_to_job);
+handleTopicRequest("get_company_jobs", get_company_jobs);

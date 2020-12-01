@@ -139,6 +139,7 @@ var getNegativeReviewRoute = require('./src/Student/get_negative_review')
 var addHelpfulRoute = require('./src/Student/add_helpful')
 var studentJobsRouter = require('./src/Student/jobs');
 var studentApplicationsRouter = require('./src/Student/application');
+var companyJobsRouter = require('./src/Company/jobs');
 
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/login", loginRouter.login);
@@ -180,14 +181,7 @@ app.post("/uplaodResume", requireAuth, uploadsRouter.uploadResume);
 app.post("/getStudentFiles", requireAuth, studentDetailsRouter.getStudentFiles);
 app.post("/uploadCoverLetters", requireAuth, uploadsRouter.uploadCoverLetter);
 app.post("/applyToJob", requireAuth, studentApplicationsRouter.applyToAJob);
+app.post("/getCompanyJobs", requireAuth, companyJobsRouter.getCompanyJobs);
 
 app.listen(8080)
 console.log("Server Listening on port 8080");
-
-
-
-
-
-
-
-

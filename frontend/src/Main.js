@@ -3,6 +3,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import AddJob from './components/AddJob/AddJob';
 import AddReview from './components/AddReview/AddReview';
 import CompanyHeaderBar from './components/CompanyHeaderBar/CompanyHeaderBar';
+import CompanyJobs from './components/CompanyJobs/CompanyJobs';
 import CompanyProfilePage from './components/CompanyProfilePage/CompanyProfilePage'
 import EditCompanyProfilePage from './components/CompanyProfilePage/EditCompanyProfilePage';
 import CompanySignUp from './components/CompanySignUp/CompanySignUp';
@@ -36,6 +37,7 @@ class Main extends Component {
                     <Route path = "/studentReviews" component = {StudentReviews}/>
                     <Route path = "/studentInterviews" component = {StudentInterviews}/>
                     <Route path = "/allJobs" component = {ViewJobs} />
+                    <Route path = "/companyJobs" component = {CompanyJobs} />
                 </BrowserRouter>
             </div>
         )
