@@ -6,6 +6,8 @@ import Company from '../Cards/Company'
 import Job from '../Cards/Job'
 import CompanyBar from '../CompanyHeaderBar/CompanyBar'
 import { BACKEND } from '../../Config';
+import { Link } from 'react-router-dom'
+
 
 class CompanyProfilePage extends Component {
     constructor(){
@@ -14,7 +16,9 @@ class CompanyProfilePage extends Component {
             firstname : "",
             open: false,
             setOpen: false,
-            company : {}
+            company : {},
+            jobs:[],
+            j:[]
         }
         this.getCompanyDetails();
     }
@@ -32,20 +36,31 @@ class CompanyProfilePage extends Component {
                 })
             }
         })
+        axios.post(`${BACKEND}/getJob`, company).then(response => {
+            if(response.status === 200)
+            {
+                console.log(response.data)
+                this.setState({
+                    jobs : response.data
+                })
+            }
+        })
     }
     render() {
         console.log("The state is ==============", this.state)
         return (
             <div>
                 <CompanyHeaderBar/>
-                <CompanyBar photo = {this.state.company.company_profile_photo}/>
-                <div style={{display:'flex',justifyContent:'space-between'}}>
+                <CompanyBar photo = {this.state.company.company_profile_photo} company = {this.state.company}/>
+                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#EAEAEA',margin:'0 0'}}>
                     <Company company = {this.state.company} />
                     {/* loop the jobs */}
-                    <div style={{display:'flex',flexDirection:'column'}}>
-                        <Job/>
-                        <Job/>
-                        <Job/>
+                    <div style={{display:'flex',flexDirection:'column',justifyContent:'flex-start',alignContent:'flex-start'}}>
+                        
+                        {this.state.jobs.map(a =>{
+                            //console.log(a)
+                            return (<Link to='#' style={{color:"black"}} ><Job job = {a}/></Link>)
+                        })}
                     </div>
                 </div>
                 
