@@ -18,6 +18,11 @@ import StudentSignUp from './components/StudentSignUp/StudentSignUp';
 import UpdateStudentProfile from './components/UpdateStudentProfile/UpdateStudentProfile';
 import ViewAllCompanies from './components/ViewAllCompanies/ViewAllCompanies';
 import ViewJobs from './components/ViewJobs/ViewJobs';
+import CompanyProfilePageForUser from './components/CompanyProfilePage/CompanyProfilePageForUser';
+import Report from './components/Report/Report';
+import ShowApplicants from './components/CompanyJobs/ShowApplicants';
+import ViewResume from './components/Cards/ViewResume';
+import ViewCoverLetter from './components/Cards/ViewCoverLetter';
 
 class Main extends Component {
     render(){
@@ -25,6 +30,7 @@ class Main extends Component {
             <div>
                 <BrowserRouter>
                     <Route path='/companyProfile' component={CompanyProfilePage}/>
+                    <Route path='/companyProfileForUser' component={CompanyProfilePageForUser}/>
                     <Route path='/updateCompanyProfile' component={EditCompanyProfilePage}/>
                     <Route path='/companyHeaderBar' component={CompanyHeaderBar}/>
                     <Route path = "/companySignUp" component = {CompanySignUp} />
@@ -42,6 +48,10 @@ class Main extends Component {
                     <Route path = "/studentInterviews" component = {StudentInterviews}/>
                     <Route path = "/allJobs" component = {ViewJobs} />
                     <Route path = "/companyJobs" component = {CompanyJobs} />
+                    <Route path = "/report" component = {Report} />
+                    <Route path = "/showApplicants" component = {ShowApplicants} />
+                    <Route path = "/viewResume/:resume:resume2" component = {ViewResume} />
+                    <Route path = "/viewCoverLetter" component = {ViewCoverLetter} />
                 </BrowserRouter>
             </div>
         )

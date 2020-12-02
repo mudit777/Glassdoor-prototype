@@ -28,6 +28,9 @@ var upload_cover_letter = require('./services/Student/upload_cover_letter');
 var apply_to_job = require('./services/Student/apply_to_job');
 var get_company_jobs = require('./services/company/get_company_jobs');
 
+var getCompanySalary = require('./services/Salary/getCompanySalary');
+var getApplicants = require('./services/Application/getApplicants');
+var updateStatus = require('./services/Application/updateStatus');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -87,3 +90,6 @@ handleTopicRequest("get_student_files", get_student_files);
 handleTopicRequest("upload_cover_letter", upload_cover_letter);
 handleTopicRequest("apply_to_job", apply_to_job);
 handleTopicRequest("get_company_jobs", get_company_jobs);
+handleTopicRequest("getCompanySalary", getCompanySalary);
+handleTopicRequest("getApplicants", getApplicants);
+handleTopicRequest("updateStatus", updateStatus);

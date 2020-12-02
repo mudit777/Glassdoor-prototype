@@ -7,6 +7,8 @@ import { faBell, faBuilding, faCommentDots, faDotCircle, faEnvelopeSquare, faMon
 import 'semantic-ui-css/semantic.min.css';
 import Axios from 'axios';
 import { BACKEND } from '../../Config';
+import { Link } from 'react-router-dom'
+
 
 class CompanyBar extends Component {
       constructor(props)
@@ -58,19 +60,19 @@ class CompanyBar extends Component {
                               </div>
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
-                                    <div>{this.props.company.company_total_reviews_count}</div>
+                                    <div>{this.props.total_reviews}</div>
                                     <div style={{fontWeight:'bold',color:'#5185CE'}}>Reviews</div>
                               </div>
                               <div style={{ borderLeft: '.1rem solid #777678', height: '4rem', top: '0'}} ></div>
 
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
-                                    <div>remaining</div>
-                                    <div style={{fontWeight:'bold',color:'#5185CE'}}>Jobs</div>
+                                    <div>{this.props.total_jobs}</div>
+                                    <Link to='/companyJobs' style={{fontWeight:'bold',color:'#5185CE'}}>Jobs</Link>
                               </div>
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>
 
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
-                                    <div>remaining</div>
+                                    <div>{this.props.total_salary}</div>
                                     <div style={{fontWeight:'bold',color:'#5185CE'}}>Salaries</div>
                               </div>
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>

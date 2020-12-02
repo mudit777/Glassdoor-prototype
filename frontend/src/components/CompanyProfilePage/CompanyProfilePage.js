@@ -7,6 +7,7 @@ import Job from '../Cards/Job'
 import CompanyBar from '../CompanyHeaderBar/CompanyBar'
 import { BACKEND } from '../../Config';
 import { Link } from 'react-router-dom'
+import { Card } from 'antd';
 
 
 class CompanyProfilePage extends Component {
@@ -17,8 +18,10 @@ class CompanyProfilePage extends Component {
             open: false,
             setOpen: false,
             company : {},
+            salary : [],
             jobs:[],
-            j:[]
+            top_jobs:[],
+            reviews : [],
         }
         this.getCompanyDetails();
     }
@@ -36,6 +39,16 @@ class CompanyProfilePage extends Component {
                 })
             }
         })
+        axios.post(`${BACKEND}/getCompanySalary`, company).then(response => {
+            console.log('salary')
+            if(response.status === 200)
+            {
+                console.log(response.data,'salary')
+                this.setState({
+                    salary : response.data
+                })
+            }
+        })
         axios.post(`${BACKEND}/getJob`, company).then(response => {
             if(response.status === 200)
             {
@@ -43,24 +56,53 @@ class CompanyProfilePage extends Component {
                 this.setState({
                     jobs : response.data
                 })
+                var temp = this.state.jobs.slice(0,5)
+                this.setState({
+                    top_jobs : temp
+                })
             }
         })
+        axios.post(`${BACKEND}/getCompanyReviews`)
+      .then(response => {
+          console.log("Status Code in Getting Reviews : ",response.status);
+          if(response.status === 200){
+              console.log("HERE IN ACTIONS - GETTING REVIEWS!")
+              console.log(response.data);
+              this.setState(
+              {
+                  reviews : response.data
+              })
+              // Object.keys(this.state.reviews).map(i=>{
+              //     console.log("REVIEW IS",this.state.reviews[i].review_cons)
+              // })
+          }else{
+          }
+      })
+      .catch(err => {
+          
+  })
     }
+    
     render() {
-        console.log("The state is ==============", this.state)
+        // console.log("The state is ==============", this.state)
         return (
             <div>
                 <CompanyHeaderBar/>
-                <CompanyBar photo = {this.state.company.company_profile_photo} company = {this.state.company}/>
+                <CompanyBar total_reviews = {this.state.reviews.length} photo = {this.state.company.company_profile_photo} total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} company = {this.state.company}/>
                 <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#EAEAEA',margin:'0 0'}}>
-                    <Company company = {this.state.company} />
+                    <Company user='false' company = {this.state.company} />
                     {/* loop the jobs */}
                     <div style={{display:'flex',flexDirection:'column',justifyContent:'flex-start',alignContent:'flex-start'}}>
-                        
-                        {this.state.jobs.map(a =>{
-                            //console.log(a)
-                            return (<Link to='#' style={{color:"black"}} ><Job job = {a}/></Link>)
-                        })}
+                        <Card title = 'All Jobs Posted' style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '20rem',margin:'2.5rem 3rem'}}>
+                            {this.state.top_jobs.map(a =>{
+                                //console.log(a)
+                                return (<Link to='#' style={{color:"black"}} ><Job job = {a}/></Link>)
+                            })}
+                            <br/>
+                            <Link style={{backgroundColor:"#00a422",color:'white' , height:'2rem', width:'10rem', color:"white",padding:'1rem 1rem' }} to='/companyJobs'>View all jobs</Link>
+
+                        </Card>
+
                     </div>
                 </div>
                 

@@ -211,6 +211,8 @@ app.post("/getStudentJobPreferences", requireAuth, studentDetailsRouter.getStude
 app.post("/getCompanyDetails", requireAuth, companyDetailsRouter.getCompanyDetails);
 app.post("/searchCompanies", requireAuth, searchRouter.searchCompanies);
 app.post("/addSalary", addSalary.addSalary);
+app.post("/getCompanySalary", addSalary.getCompanySalary);
+
 app.post("/getAllJobs", requireAuth, studentJobsRouter.get_all_jobs);
 app.post("/updateJobFavourites", requireAuth, studentJobsRouter.updateFavouriteJobs);
 app.post("/getFavouriteJobs", requireAuth, studentJobsRouter.getFavouriteJobs);
@@ -219,6 +221,8 @@ app.post("/getStudentFiles", requireAuth, studentDetailsRouter.getStudentFiles);
 app.post("/uploadCoverLetters", requireAuth, uploadsRouter.uploadCoverLetter);
 app.post("/applyToJob", requireAuth, studentApplicationsRouter.applyToAJob);
 app.post("/getCompanyJobs", requireAuth, companyJobsRouter.getCompanyJobs);
+app.post("/getApplicants",companyJobsRouter.getApplicants);
+app.post("/updateStatus",companyJobsRouter.updateStatus);
 
 app.listen(8080)
 console.log("Server Listening on port 8080");

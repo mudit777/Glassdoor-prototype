@@ -18,17 +18,20 @@ class Company extends Component {
     }
     render() {
         var redirectVar = null;
+        var button = null;
         if(this.state.redirectToUpdate)
         {
             redirectVar = <Redirect to = "/updateCompanyProfile" />
         }
+        if(this.props.user === 'false')
+        {
+            button = <Button style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder"}} onClick = {this.redirectToUpdateProfile} >Update Profile</Button>
+        }
         return (
-            <div style={{display:'flex',flexDirection:'column',justifyContent:'center',marginLeft:'15rem',marginTop:'0rem',marginBottom:'5rem'}}>
+            <div style={{display:'flex',flexDirection:'column',justifyContent:'center',marginLeft:'15rem',marginTop:'0rem',marginBottom:'2rem'}}>
                 {redirectVar}
             <div style = {{marginTop : "5%"}}>
-                <Card title = {this.props.company.company_name} style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '50rem'}} actions = {[
-                    <Button style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder"}} onClick = {this.redirectToUpdateProfile} >Update Profile</Button>
-                ]}>
+                <Card title = {this.props.company.company_name} style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '50rem'}} actions = {[button]}>
                     <div style={{display:'flex',margin:'0.5rem 1rem'}}>
                         <div style={{marginRight:'4rem',fontWeight:'bold'}}>Website:</div>
                         <div>{this.props.company.company_website}</div>

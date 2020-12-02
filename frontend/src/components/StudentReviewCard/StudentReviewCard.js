@@ -47,7 +47,7 @@ class StudentReviewCard extends Component {
                         <div className="column-right-reviews">
                             <p style={{color:"#636363", marginTop:-15}}>November 3, 2020</p>
                             <p style={{fontSize:20, fontWeight:"bold", color:"#0048b9"}}>"{this.props.review.review_headline}"</p>
-                            <Rate disabled defaultValue={5} style={{color:"#00a422", marginTop:-25}} />Former Employee - Delivery Driver in East Chattanooga, TN
+                            <Rate disabled defaultValue={this.props.review.review_rating} style={{color:"#00a422", marginTop:-25}} />Former Employee - Delivery Driver in East Chattanooga, TN
                             <p style={{marginTop:15}}>I work at Amazon Full-time</p>
                             <p style={{fontWeight:"bold"}}>Pros</p>
                             <p style={{marginTop:-10}}>{this.props.review.review_pros}</p>

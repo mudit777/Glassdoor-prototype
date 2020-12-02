@@ -2,7 +2,7 @@ var connection = require('../../mysql_database');
 
 function handle_request(message, callback)
 {
-    var query = "SELECT * from glassdoor.reviews where review_helpful = (SELECT MAX(review_helpful) FROM glassdoor.reviews where review_rating = (SELECT MIN(review_rating) from glassdoor.reviews)) and company_id = '5';"
+    var query = "SELECT * from glassdoor.reviews where review_helpful = (SELECT MAX(review_helpful) FROM glassdoor.reviews where review_rating = (SELECT MIN(review_rating) from glassdoor.reviews)) and company_id = '1';"
     connection.query(query, (err, result) => {
         var response = {};
         if(err)

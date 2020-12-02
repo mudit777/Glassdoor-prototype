@@ -18,3 +18,16 @@ exports.addSalary = (req, res) => {
         }     
     })
 }
+exports.getCompanySalary = (req, res) => {
+    kafka.make_request("getCompanySalary", req.body, (err, result) => {
+        if(err) throw err;
+        else{
+            console.log("Inside Else")
+            res.writeHead(200,{
+                'Content-Type': "application/json"
+            })
+            console.log(result)
+            res.end(JSON.stringify(result))
+        }    
+    })
+}

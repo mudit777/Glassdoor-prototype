@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BACKEND } from '../../Config';
 import CompanyJobCard from '../CompanyJobCard/CompanyJobCard';
 import CompanyHeaderBarForm from '../CompanyHeaderBar/CompanyHeaderBar';
-import { Col, Row } from 'antd';
+import { Col, Row ,Button} from 'antd';
 import CompanyJobDetails from '../CompanyJobDetails/CompanyJobDetails';
 
 class CompanyJobs extends Component {

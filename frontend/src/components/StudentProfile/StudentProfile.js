@@ -159,7 +159,7 @@ class StudentProfile extends Component {
                     </Row>
                 </li>
                 <li className = "seeAllCompanies">
-                    <h3 style = {{fontWeight : "bolder"}}><Link to ="/allCompanies">See All Companies ></Link></h3>
+                    <h3 style = {{fontWeight : "bolder"}}><Link to ="/allCompanies">See All Companies </Link></h3>
                 </li>
             </ul>
         }
