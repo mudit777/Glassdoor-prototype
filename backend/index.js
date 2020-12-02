@@ -90,7 +90,7 @@ app.post("/getEmployerDetails", getEmployerDetails)
 app.post("/getCompanyReviews", (req,res) =>{
     console.log("GATHERING ALL DATA!")
     console.log(req.boy)
-    var user= "SELECT * from reviews WHERE company_id = 10";
+    var user= "SELECT * from reviews WHERE company_id = 1";
     connection.query(user,(err,result) => {
         if (err) throw err;
         if(result.length > 0)
@@ -139,6 +139,10 @@ var getNegativeReviewRoute = require('./src/Student/get_negative_review')
 var addHelpfulRoute = require('./src/Student/add_helpful')
 var studentJobsRouter = require('./src/Student/jobs');
 var studentApplicationsRouter = require('./src/Student/application');
+var addInterviewRouter = require('./src/Student/add_interview');
+var getCompanyInterviewRouter = require('./src/Student/get_company_interview')
+var getStudentApplicationsRouter = require('./src/Student/get_student_applications')
+var withdrawApplicationRouter = require('./src/Student/withdraw_application')
 
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/login", loginRouter.login);
@@ -147,7 +151,11 @@ app.post("/saveCompanyReview", saveCompanyReviewRoute.saveCompanyReview);
 app.post("/addReview", addReviewRoute.addReview);
 app.post("/getPositiveReview", getPositiveReviewRoute.getPositiveReview);
 app.post("/getNegativeReview", getNegativeReviewRoute.getNegativeReview);
-app.post("/addHelpful", addHelpfulRoute.addHelpfulReview)
+app.post("/addHelpful", addHelpfulRoute.addHelpfulReview);
+app.post("/addInterview", addInterviewRouter.addInterview);
+app.post("/getCompanyInterview", getCompanyInterviewRouter.getCompanyInterviews)
+app.post("/getStudentApplications", getStudentApplicationsRouter.getStudentApplications)
+app.post("/withdrawApplication", withdrawApplicationRouter.withdrawApplications)
 
 
 

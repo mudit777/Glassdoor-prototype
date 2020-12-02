@@ -3,6 +3,7 @@ import { Button, Input, Rate, Checkbox } from 'antd';
 import { StarOutlined } from '@ant-design/icons';
 import { Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
+import { BACKEND } from '../../Config';
 
 const customIcons = {
     1: <StarOutlined/>,
@@ -25,7 +26,9 @@ class AddReview extends Component {
             review_headline:"",
             review_pros:"",
             review_cons:"",
-            review_description:""
+            review_description:"",
+            ceo_approval: "",
+            recommend_to_friend: ""
         }
     }
 
@@ -74,6 +77,41 @@ class AddReview extends Component {
         })  
     }
 
+    ceoApprovalStatusHandler = (event, {values}) =>{
+        var a = document.getElementById("dropdown")
+        console.log(a)
+        console.log("CEO IS", event.target.textContent)
+        // this.setState({
+        //     employment_status: event.target.textContent
+        // })  
+        if(event.target.textContent === "No"){
+            this.setState({
+                ceo_approval: "0"
+            })
+        }
+        else{
+            this.setState({
+                ceo_approval: "1"
+            })
+        }
+    }
+
+    recoToFriendStatusHandler = (event, {values}) =>{
+        var a = document.getElementById("dropdown")
+        console.log(a)
+        console.log("RECO IS", event.target.textContent)
+        if(event.target.textContent === "No"){
+            this.setState({
+                recommend_to_friend: "0"
+            })
+        }
+        else{
+            this.setState({
+                recommend_to_friend: "1"
+            })
+        }  
+    }
+
     submitButtonHandler = (e) => {
         const data = {
             company_name : "Amazon",
@@ -89,9 +127,11 @@ class AddReview extends Component {
             review_marked_by_company: "1",
             company_id: "1",
             student_id: "1",
+            ceo_approval: this.state.ceo_approval,
+            recommend_to_friend: this.state.recommend_to_friend
         }
         console.log("DATA TO BE SENT IS : ", data)
-        axios.post('http://localhost:8080/addReview',data)
+        axios.post(`${BACKEND}/addReview`,data)
             .then(response => {
                 console.log("Status Code in Saving Review : ", response.status);
                 if(response.status === 200){
@@ -116,6 +156,10 @@ class AddReview extends Component {
             { key: 4, text: 'Intern', value: 4},
             { key: 5, text: 'Freelance', value: 5},
         ]
+        const options1 = [
+            { key: 1, text: 'No', value: 1},
+            { key: 2, text: 'Yes', value: 2}
+        ]
         return (
             <div>
                 <div style={{height:42}}>
@@ -131,9 +175,13 @@ class AddReview extends Component {
                             </div>
                             <div className="column-right-reviews">
                                 <p style={{fontWeight:"bold",marginTop: 20}}>Company</p>
-                                <Input defaultValue="Amazon" style={{height:40, width:238, borderRadius:3}}></Input>
+                                <Input defaultValue="Amazon" disabled style={{height:40, width:238, borderRadius:3}}></Input>
                                 <p style={{fontWeight:"bold",marginTop: 20}}>Overall Rating<sup>*</sup></p>
                                 <Rate onChange={this.ratingChangeHandler} style={{color:"#00a422"}} character={({ index }) => { return customIcons[index+1]}}></Rate>
+                                <p style={{fontWeight:"bold",marginTop: 20}}>CEO Approval<sup>*</sup></p>
+                                <Dropdown style={{width:238}} onChange={this.ceoApprovalStatusHandler} id = 'dropdown' options={options1} fluid selection />
+                                <p style={{fontWeight:"bold",marginTop: 20}}>Recommend to a Friend<sup>*</sup></p>
+                                <Dropdown style={{width:238}} onChange={this.recoToFriendStatusHandler} id = 'dropdown' options={options1} fluid selection />
                                 <p style={{fontWeight:"bold",marginTop: 20}}>Employment Status<sup>*</sup></p>
                                 <Dropdown style={{width:238}} onChange={this.changeStatusHandler} id = 'dropdown' options={options} fluid selection />
                                 <p style={{fontWeight:"bold",marginTop: 20}}>Your Title at Amazon</p>
