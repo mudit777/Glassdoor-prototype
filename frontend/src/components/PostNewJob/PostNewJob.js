@@ -5,6 +5,7 @@ import {Button, Card, Checkbox, Col, Input, notification, Row, Rate, Modal, Pagi
 import { FacebookOutlined, TwitterOutlined, MailOutlined, LinkOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import ReviewCard from '../ReviewCard/ReviewCard';
+import { BACKEND } from '../../Config';
 
 
 class PostNewJob extends Component {
@@ -43,7 +44,7 @@ class PostNewJob extends Component {
     });
     };
     componentDidMount(){
-        axios.post('http://localhost:8080/getCompanyReviews')
+        axios.post(`${BACKEND}/getCompanyReviews`)
             .then(response => {
                 console.log("Status Code in Getting Reviews : ",response.status);
                 if(response.status === 200){
@@ -95,10 +96,8 @@ class PostNewJob extends Component {
         console.log(this.state)
         if(this.state.elements.length > 0)
         {
-            console.log("~~~~~~~~~~~~~~~ Hi")
             temp = <div>
                 {this.state.elements.map(i => {
-                    console.log("i~~~~~~~~~~~~~~~~~~~~~~~~~", i)
                     return(
                         <ReviewCard review = {i} key = {i.review_id} />
                     )

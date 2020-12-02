@@ -10,6 +10,7 @@ import EditCompanyProfilePage from './components/CompanyProfilePage/EditCompanyP
 import CompanySignUp from './components/CompanySignUp/CompanySignUp';
 import Login from './components/Login/Login';
 import PostNewJob from './components/PostNewJob/PostNewJob';
+import StudentApplications from './components/StudentApplications/StudentApplications';
 import StudentActivity from './components/StudentActivity/StudentActivity';
 import StudentInterviews from './components/StudentInterviews/StudentInterviews';
 import StudentProfile from './components/StudentProfile/StudentProfile';
@@ -42,6 +43,7 @@ class Main extends Component {
                     <Route path = "/studentReviews" component = {StudentReviews}/>
                     <Route path = "/studentInterviews" component = {StudentInterviews}/>
                     <Route path = "/allJobs" component = {ViewJobs} />
+                    <Route path = "/studentApplications" component = {StudentApplications}/>
                     <Route path = "/companyJobs" component = {CompanyJobs} />
                     <Route path = "/pdf" component = {Pdf} />
                 </BrowserRouter>

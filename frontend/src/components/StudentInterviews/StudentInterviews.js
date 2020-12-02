@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import CompanyHeaderBarForm from '../CompanyHeaderBar/CompanyHeaderBar'
-import { Button, Input, Rate, Checkbox, Progress, Modal } from 'antd';
+import { Button, Input, Rate, Checkbox, Progress, Modal, Card } from 'antd';
 import axios from 'axios';
 import { BACKEND } from '../../Config'
 import DonutChart from "react-svg-donut-chart"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEquals, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faSmile, faFrown, faMeh } from '@fortawesome/free-regular-svg-icons';
 import { Dropdown } from 'semantic-ui-react';
+import InterviewCard from '../InterviewCard/InterviewCard';
 const { Search } = Input;
 
 const dataPie = [
@@ -32,7 +33,11 @@ class StudentInterviews extends Component {
             description: "",
             difficulty: "",
             got_offer: "",
-            length : 1
+            length : 1,
+            interviews: [],
+            iconValue1: false,
+            iconValue2: false,
+            iconValue3: false
         }
     }
 
@@ -63,33 +68,31 @@ class StudentInterviews extends Component {
             temp[document.getElementById(qId).value] = document.getElementById(aId).value;
             qAndA.push(temp);
         }
-        console.log("~~~~~~~~~~~~~~` FInal Array of questions ~~~~~~~~~~~~~~",qAndA);
-
-        // var data1 = {
-        //     student_id : window.sessionStorage.getItem("student_id"),
-        //     company_id: "1",
-        //     process_rating: this.state.process_rating,
-        //     job_title: this.state.job_title,
-        //     description: this.state.description,
-        //     interview_difficulty: this.state.difficulty,
-        //     got_offer: this.state.got_offer,
-        //     questions_answers : qAndA
-        // }
-        // console.log("DATA1 IS :", data1)
-        // axios.post(`${BACKEND}/addReply', data1)
-        //     .then(response => {
-        //         console.log("Status Code in Adding Reply : ", response.status);
-        //         if(response.status === 200){
-        //             console.log("HERE IN ACTIONS - ADDING REPLY!")
-        //             console.log(response.data)
-        //         }
-        //         else{
-        //             console.log("ERROR!!!")
-        //         }
-        //     }) 
-        //     .catch(err => {
-        //         console.log("Error in catch", err)
-        // })
+        var data1 = {
+            student_id : "1",
+            company_id: "1",
+            process_rating: this.state.process_rating,
+            job_title: this.state.job_title,
+            description: this.state.description,
+            interview_difficulty: this.state.difficulty,
+            got_offer: this.state.got_offer,
+            questions_answers : qAndA,
+        }
+        console.log("DATA1 IS :", data1)
+        axios.post(`${BACKEND}/addInterview`, data1)
+            .then(response => {
+                console.log("Status Code in Adding INTERVIEW : ", response.status);
+                if(response.status === 200){
+                    console.log("HERE IN ACTIONS - ADDING INTERVIEW!")
+                    console.log(response.data)
+                }
+                else{
+                    console.log("ERROR!!!")
+                }
+            }) 
+            .catch(err => {
+                console.log("Error in catch", err)
+        })
     };
 
     handleCancel = e => {
@@ -107,19 +110,22 @@ class StudentInterviews extends Component {
 
     processRatingHandler = (e) => {
         this.setState({
-            process_rating : "positive"
+            process_rating : "positive",
+            iconValue1: true
         })
     }
 
     processRatingHandlerTwo = (e) => {
         this.setState({
-            process_rating : "neutral"
+            process_rating : "neutral",
+            iconValue2: true
         })
     }
 
     processRatingHandlerThree = (e) => {
         this.setState({
-            process_rating : "negative"
+            process_rating : "negative",
+            iconValue3: true
         })
         console.log("Process Rating:",this.state.process_rating)
     }
@@ -168,7 +174,44 @@ class StudentInterviews extends Component {
         })
     }
 
+    componentDidMount(){
+        axios.post(`${BACKEND}/getCompanyInterview`)
+            .then(response => {
+                console.log("Status Code in Getting Reviews : ",response.status);
+                if(response.status === 200){
+                    console.log("HERE IN ACTIONS - GETTING INTERVIEWS!")
+                    console.log(response.data);
+                    this.setState(
+                    {
+                        interviews : response.data
+                    })
+                }else{
+                }
+            })
+            .catch(err => {
+                
+        })
+    }
+
     render() {
+
+        var icon1 = <FontAwesomeIcon icon={faSmile} size="2x" style={{marginLeft:50, color:"#cfcfcf"}} onClick = {this.processRatingHandler}/>
+        if(this.state.iconValue1)
+        {
+            icon1 = <FontAwesomeIcon style={{color:"#24b00e", marginLeft:50,}} size="2x" icon={faSmile} onClick = {this.processRatingHandler}/>
+        }
+
+        var icon2 = <FontAwesomeIcon icon={faMeh} size="2x" style={{marginLeft:50, color:"#cfcfcf"}} onClick = {this.processRatingHandlerTwo}/>
+        if(this.state.iconValue2)
+        {
+            icon2 = <FontAwesomeIcon icon={faMeh} size="2x" style={{color:"#3e5dd6", marginLeft:50,}} onClick = {this.processRatingHandlerTwo}/>
+        }
+
+        var icon3 = <FontAwesomeIcon icon={faFrown} size="2x" style={{marginLeft:50, color:"#cfcfcf"}} onClick = {this.processRatingHandlerThree}/>
+        if(this.state.iconValue3)
+        {
+            icon3 = <FontAwesomeIcon icon={faFrown} size="2x" style={{color:"#911e1a", marginLeft:50}} onClick = {this.processRatingHandlerThree}/>
+        }
 
         const options = [
             { key: 1, text: 'Very Easy', value: 1 },
@@ -184,8 +227,6 @@ class StudentInterviews extends Component {
             { key: 3, text: 'Yes, I accepted the offer', value: 3 }
         ]
 
-
-
         var questionsAnswers =  [];
         
         for(let i= 0; i < this.state.length; i++){
@@ -199,8 +240,7 @@ class StudentInterviews extends Component {
             </div> 
             questionsAnswers.push(temp);
         }
-        
-
+    
         return (  
             <div>
                <CompanyHeaderBarForm/>
@@ -218,9 +258,9 @@ class StudentInterviews extends Component {
                             >
                                 <Input onChange={this.companyNameChangeHandler} defaultValue="Amazon" disabled></Input>
                                 <p style={{marginTop:10, fontSize:15}}>Rate Overall Process</p>
-                                <FontAwesomeIcon onClick={this.processRatingHandler} size="2x" style={{marginLeft:50, color:"#cfcfcf"}} icon={faThumbsUp}/>
-                                <span><FontAwesomeIcon onClick={this.processRatingHandlerTwo} size="2x" style={{marginLeft: 30, color:"#cfcfcf"}} icon = {faEquals}/></span>
-                                <span><FontAwesomeIcon onClick={this.processRatingHandlerThree} size="2x" style={{marginLeft: 30, color:"#cfcfcf"}} icon = {faThumbsDown}/></span>
+                                {icon1}
+                                <span>{icon2}</span>
+                                <span>{icon3}</span>
                                 <p style={{marginTop:10, fontSize:15}}>Job Title</p>
                                 <Input onChange={this.jobTitleChangeHandler}></Input>
                                 <p style={{marginTop:10, fontSize:15}}>Describe the Interview Process</p>
@@ -250,7 +290,13 @@ class StudentInterviews extends Component {
                                 </div>
                             </div>
                             <p style={{fontSize: 18, marginTop: 20}}>Interviews for Top Job at Amazon</p>
-
+                            <div style={{marginLeft:-15}}>
+                                {this.state.interviews.map(i => {
+                                    return(
+                                        <InterviewCard interview = {i} key = {i._id} />
+                                    )
+                                })}
+                            </div>
                             <div style={{marginLeft:-15}}>
                                 {/* {this.state.positive_review.map(i=>{
                                     return(

@@ -175,6 +175,10 @@ var getNegativeReviewRoute = require('./src/Student/get_negative_review')
 var addHelpfulRoute = require('./src/Student/add_helpful')
 var studentJobsRouter = require('./src/Student/jobs');
 var studentApplicationsRouter = require('./src/Student/application');
+var addInterviewRouter = require('./src/Student/add_interview');
+var getCompanyInterviewRouter = require('./src/Student/get_company_interview')
+var getStudentApplicationsRouter = require('./src/Student/get_student_applications')
+var withdrawApplicationRouter = require('./src/Student/withdraw_application')
 var companyJobsRouter = require('./src/Company/jobs');
 var filterRouter = require('./src/Student/filter');
 
@@ -188,6 +192,14 @@ app.post("/getNegativeReview", getNegativeReviewRoute.getNegativeReview);
 app.post("/addHelpful", addHelpfulRoute.addHelpfulReview)
 app.post("/salaryFilter", filterRouter.filterSalaryJobs);
 app.post("/jobTypeFilter", filterRouter.filterJobType);
+app.post("/addHelpful", addHelpfulRoute.addHelpfulReview);
+app.post("/addInterview", addInterviewRouter.addInterview);
+app.post("/getCompanyInterview", getCompanyInterviewRouter.getCompanyInterviews)
+app.post("/getStudentApplications", getStudentApplicationsRouter.getStudentApplications)
+app.post("/withdrawApplication", withdrawApplicationRouter.withdrawApplications)
+
+
+
 
 
 var uploadsRouter = require('./src/uploads/uploads');
