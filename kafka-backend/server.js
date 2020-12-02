@@ -14,6 +14,7 @@ var update_student_details = require('./services/Student/update_student_details'
 var get_student_job_preferences = require("./services/Student/get_job_preferences");
 var get_company_details = require('./services/company/get_company_details');
 var search_companies = require('./services/Student/search_companies');
+var addSalary = require('./services/Salary/addSalary');
 var add_review = require('./services/Student/add_review')
 var get_positive_review = require('./services/Student/get_positive_review')
 var get_negative_review = require('./services/Student/get_negative_review')
@@ -29,6 +30,8 @@ var add_interview = require('./services/Student/add_interview');
 var get_company_interview = require('./services/Student/get_company_interview');
 var get_student_applications = require('./services/Student/get_student_applications');
 var withdraw_applications = require('./services/Student/withdraw_application');
+var get_company_jobs = require('./services/company/get_company_jobs');
+
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -75,6 +78,7 @@ handleTopicRequest("update_student_details", update_student_details);
 handleTopicRequest("get_student_job_preferences", get_student_job_preferences);
 handleTopicRequest("get_company_details", get_company_details);
 handleTopicRequest("search_companies", search_companies);
+handleTopicRequest("addSalary", addSalary);
 handleTopicRequest("add_review", add_review);
 handleTopicRequest("get_positive_review", get_positive_review);
 handleTopicRequest("get_negative_review", get_negative_review);
@@ -90,3 +94,4 @@ handleTopicRequest("add_interview", add_interview);
 handleTopicRequest("get_company_interview", get_company_interview);
 handleTopicRequest("get_student_applications", get_student_applications);
 handleTopicRequest("withdraw_applications", withdraw_applications);
+handleTopicRequest("get_company_jobs", get_company_jobs);

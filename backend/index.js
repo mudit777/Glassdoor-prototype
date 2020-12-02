@@ -102,6 +102,21 @@ app.post("/getCompanyReviews", (req,res) =>{
         }
     })
 })
+app.post("/getStudentReviews", (req,res) =>{
+    console.log("GATHERING ALL DATA!")
+    console.log(req.boy)
+    var user= "SELECT * from reviews WHERE student_id = "+ req.body.student_id +"";
+    connection.query(user,(err,result) => {
+        if (err) throw err;
+        if(result.length > 0)
+        {
+            res.writeHead(200,{
+                'Content-Type' : 'application/json'
+            })
+            res.end(JSON.stringify(result))
+        }
+    })
+})
 
 app.post("/postJob", (req,res) =>{
     console.log("Posting New Job!")
@@ -124,11 +139,32 @@ app.post("/postJob", (req,res) =>{
     }
     });
 })
+app.post("/getJob", (req,res) =>{
+    console.log("Get jobs!")
+    console.log(req.body)
+    var user = "SELECT * FROM glassdoor.jobs where company_id="+ req.body.company_id +";";
+    connection.query(user, function (err, result, fields) {
+        if(err) throw err;
+        console.log(result)
+        if (err) {
+            res.writeHead(400,{
+                'Content-Type' : 'text/plain'
+            })
+        }else{
+        console.log("no error")
+        res.writeHead(200,{
+            'Content-Type' : 'application/json'
+        })
+        res.end(JSON.stringify(result))
+    }
+    });
+})
 
 
   
 var company_authentication_router = require('./src/Company/company_authentication');
 var student_authentication_router = require('./src/Student/student_authentication');
+var addSalary = require('./src/Salary/addSalary');
 var student_companies_router = require('./src/Student/companies');
 var loginRouter = require("./src/Login/login");
 var addReplyRoute = require('./src/Company/add_reply');
@@ -143,6 +179,7 @@ var addInterviewRouter = require('./src/Student/add_interview');
 var getCompanyInterviewRouter = require('./src/Student/get_company_interview')
 var getStudentApplicationsRouter = require('./src/Student/get_student_applications')
 var withdrawApplicationRouter = require('./src/Student/withdraw_application')
+var companyJobsRouter = require('./src/Company/jobs');
 
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/login", loginRouter.login);
@@ -181,6 +218,7 @@ app.post("/updateStudentDetails", requireAuth, studentDetailsRouter.updateStuden
 app.post("/getStudentJobPreferences", requireAuth, studentDetailsRouter.getStudentJobPreferences);
 app.post("/getCompanyDetails", requireAuth, companyDetailsRouter.getCompanyDetails);
 app.post("/searchCompanies", requireAuth, searchRouter.searchCompanies);
+app.post("/addSalary", addSalary.addSalary);
 app.post("/getAllJobs", requireAuth, studentJobsRouter.get_all_jobs);
 app.post("/updateJobFavourites", requireAuth, studentJobsRouter.updateFavouriteJobs);
 app.post("/getFavouriteJobs", requireAuth, studentJobsRouter.getFavouriteJobs);
@@ -188,14 +226,7 @@ app.post("/uplaodResume", requireAuth, uploadsRouter.uploadResume);
 app.post("/getStudentFiles", requireAuth, studentDetailsRouter.getStudentFiles);
 app.post("/uploadCoverLetters", requireAuth, uploadsRouter.uploadCoverLetter);
 app.post("/applyToJob", requireAuth, studentApplicationsRouter.applyToAJob);
+app.post("/getCompanyJobs", requireAuth, companyJobsRouter.getCompanyJobs);
 
 app.listen(8080)
 console.log("Server Listening on port 8080");
-
-
-
-
-
-
-
-

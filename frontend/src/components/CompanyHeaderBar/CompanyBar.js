@@ -33,7 +33,7 @@ class CompanyBar extends Component {
                               company_profile_photo : this.state.photo
                         }
                         Axios.post(`${BACKEND}/updateCompanyDetails`, company).then(response => {
-                              console.log(response)
+                              console.log(response,'-------GOT')
                         })
                   }
             })
@@ -43,11 +43,12 @@ class CompanyBar extends Component {
       }
       render() {
             return (
-                  <div>
+                  <div style={{backgroundColor:'#EAEAEA',margin:'-1rem 0'}}>
+                  <div style={{display:'flex',flexDirection:'column',justifyContent:'center',margin:'1rem 15rem',backgroundColor:'white'}}>
                         <input type = 'file' id = "image" style = {{display : "none"}} onChange = {this.uploadImage}/>
-                        <img src = {this.props.photo} style={{height:'15rem',width:'100%'}} onClick = {this.triggerUpload}></img>
+                        <img src = {this.props.photo} style={{height:'15rem'}} onClick = {this.triggerUpload}></img>
                         
-                        <div  style={{fontSize:'2rem',fontWeight:'bold'}}>Company Name</div>
+                        <div  style={{fontSize:'2rem',fontWeight:'bold',marginLeft:'1rem',background:'none',fontWeight:'bold',colo:'black'}}>{this.props.company.company_name}</div>
                         
                         <div style={{display:'flex',margin:'.5rem 1rem',justifyContent:'space-between',alignContent:'center',alignItems:'center'}}>
                               
@@ -57,25 +58,25 @@ class CompanyBar extends Component {
                               </div>
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
-                                    <div>1.4k</div>
+                                    <div>{this.props.company.company_total_reviews_count}</div>
                                     <div style={{fontWeight:'bold',color:'#5185CE'}}>Reviews</div>
                               </div>
                               <div style={{ borderLeft: '.1rem solid #777678', height: '4rem', top: '0'}} ></div>
 
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
-                                    <div>5.6k</div>
+                                    <div>remaining</div>
                                     <div style={{fontWeight:'bold',color:'#5185CE'}}>Jobs</div>
                               </div>
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>
 
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
-                                    <div>2.1k</div>
+                                    <div>remaining</div>
                                     <div style={{fontWeight:'bold',color:'#5185CE'}}>Salaries</div>
                               </div>
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>
 
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
-                                    <div>591</div>
+                                    <div>remaining</div>
                                     <div style={{fontWeight:'bold',color:'#5185CE'}}>Interviews</div>
                               </div>
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>
@@ -87,10 +88,11 @@ class CompanyBar extends Component {
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>
 
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
-                                    <div>50</div>
+                                    <div>view</div>
                                     <div style={{fontWeight:'bold',color:'#5185CE'}}>Photos</div>
                               </div>
                         </div>
+                  </div>
                   </div>
             )
       }

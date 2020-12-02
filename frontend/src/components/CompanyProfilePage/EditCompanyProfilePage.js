@@ -183,9 +183,9 @@ class EditCompanyProfilePage extends Component {
             <div >
                 {redirectVar}
                 <CompanyHeaderBar/>
-                <CompanyBar/>
-                <div style={{display:'flex'}}>
-                    <Company company = {this.state.company}/>
+                {/* <CompanyBar company = {this.state.company}/> */}
+                <div style={{display:'flex',justifyContent:'center'}}>
+                    {/* <Company company = {this.state.company}/> */}
                     {/* loop the jobs */}
                     <div style={{display:'flex',flexDirection:'column'}}>
                         <div style={{margin:'1rem 4rem',marginTop:'5rem'}}>
