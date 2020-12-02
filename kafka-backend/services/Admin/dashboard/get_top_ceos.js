@@ -9,7 +9,7 @@ const handle_request = async (message, callback) => {
                             company_id, company_name, company_ceo_first_name, company_ceo_last_name, company_avg_ceo_approval_rating, company_profile_photo
                             FROM companies
                             ORDER BY company_avg_ceo_approval_rating DESC
-                            LIMIT 5;`
+                            LIMIT 10;`
 
         let rows = await query(the_query);
 
