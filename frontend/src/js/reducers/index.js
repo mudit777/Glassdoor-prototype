@@ -1,4 +1,4 @@
-import { GETALLCOMPANIES, GETALLSTUDENTJOBS, LOGIN, SEARCHCOMPANIES } from "../constants";
+import { FILTERJOBS, GETALLCOMPANIES, GETALLSTUDENTJOBS, LOGIN, SEARCHCOMPANIES, SEARCHJOBS } from "../constants";
 
 
 
@@ -41,7 +41,21 @@ function rootReducer(state = initialState, action)
       message : action.data.message
     })
   }
+  else if(action.type === SEARCHJOBS)
+  {
+    return Object.assign({}, state, {
+      studentJobs : action.data.studentJobs,
+      message : action.data.message
+    })
+  }
   else if(action.type === GETALLSTUDENTJOBS)
+  {
+    return Object.assign({}, state, {
+      studentJobs : action.data.studentJobs,
+      message : action.data.message
+    })
+  }
+  else if(action.type === FILTERJOBS)
   {
     return Object.assign({}, state, {
       studentJobs : action.data.studentJobs,

@@ -18,6 +18,7 @@ import StudentSignUp from './components/StudentSignUp/StudentSignUp';
 import UpdateStudentProfile from './components/UpdateStudentProfile/UpdateStudentProfile';
 import ViewAllCompanies from './components/ViewAllCompanies/ViewAllCompanies';
 import ViewJobs from './components/ViewJobs/ViewJobs';
+import Pdf from './components/Pdf/Pdf';
 
 class Main extends Component {
     render(){
@@ -42,6 +43,7 @@ class Main extends Component {
                     <Route path = "/studentInterviews" component = {StudentInterviews}/>
                     <Route path = "/allJobs" component = {ViewJobs} />
                     <Route path = "/companyJobs" component = {CompanyJobs} />
+                    <Route path = "/pdf" component = {Pdf} />
                 </BrowserRouter>
             </div>
         )

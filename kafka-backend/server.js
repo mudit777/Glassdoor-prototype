@@ -27,7 +27,10 @@ var get_student_files = require('./services/Student/get_student_files');
 var upload_cover_letter = require('./services/Student/upload_cover_letter');
 var apply_to_job = require('./services/Student/apply_to_job');
 var get_company_jobs = require('./services/company/get_company_jobs');
-
+var filter_jobs_via_salary = require('./services/Student/sort_jobs_via_salary');
+var filter_jobs_via_job_type = require('./services/Student/filter_jobs_via_job_type');
+var set_primary_resume = require('./services/Student/set_primary_resume');
+var search_jobs = require('./services/Student/search_jobs');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -87,3 +90,7 @@ handleTopicRequest("get_student_files", get_student_files);
 handleTopicRequest("upload_cover_letter", upload_cover_letter);
 handleTopicRequest("apply_to_job", apply_to_job);
 handleTopicRequest("get_company_jobs", get_company_jobs);
+handleTopicRequest("filter_jobs_via_salary", filter_jobs_via_salary);
+handleTopicRequest("filter_jobs_via_job_type", filter_jobs_via_job_type);   
+handleTopicRequest("set_primary_resume", set_primary_resume);
+handleTopicRequest("search_jobs", search_jobs);
