@@ -175,7 +175,12 @@ var getNegativeReviewRoute = require('./src/Student/get_negative_review')
 var addHelpfulRoute = require('./src/Student/add_helpful')
 var studentJobsRouter = require('./src/Student/jobs');
 var studentApplicationsRouter = require('./src/Student/application');
+var addInterviewRouter = require('./src/Student/add_interview');
+var getCompanyInterviewRouter = require('./src/Student/get_company_interview')
+var getStudentApplicationsRouter = require('./src/Student/get_student_applications')
+var withdrawApplicationRouter = require('./src/Student/withdraw_application')
 var companyJobsRouter = require('./src/Company/jobs');
+var filterRouter = require('./src/Student/filter');
 
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/login", loginRouter.login);
@@ -185,6 +190,13 @@ app.post("/addReview", addReviewRoute.addReview);
 app.post("/getPositiveReview", getPositiveReviewRoute.getPositiveReview);
 app.post("/getNegativeReview", getNegativeReviewRoute.getNegativeReview);
 app.post("/addHelpful", addHelpfulRoute.addHelpfulReview)
+app.post("/salaryFilter", filterRouter.filterSalaryJobs);
+app.post("/jobTypeFilter", filterRouter.filterJobType);
+app.post("/addHelpful", addHelpfulRoute.addHelpfulReview);
+app.post("/addInterview", addInterviewRouter.addInterview);
+app.post("/getCompanyInterview", getCompanyInterviewRouter.getCompanyInterviews)
+app.post("/getStudentApplications", getStudentApplicationsRouter.getStudentApplications)
+app.post("/withdrawApplication", withdrawApplicationRouter.withdrawApplications)
 
 
 
@@ -197,7 +209,7 @@ var companyDetailsRouter = require('./src/Company/company_details');
 var searchRouter = require('./src/Student/search');
 
 
-
+app.post("/setPrimaryResume", studentDetailsRouter.setPrimaryResume)
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/updateCompanyDetails", requireAuth, companyDetailsRouter.updateCompanyDetails);
 app.post("/registerStudent", student_authentication_router.register_student);
@@ -223,6 +235,7 @@ app.post("/applyToJob", requireAuth, studentApplicationsRouter.applyToAJob);
 app.post("/getCompanyJobs", requireAuth, companyJobsRouter.getCompanyJobs);
 app.post("/getApplicants",companyJobsRouter.getApplicants);
 app.post("/updateStatus",companyJobsRouter.updateStatus);
+app.post("/searchJobs", searchRouter.searchJobs);
 
 app.listen(8080)
 console.log("Server Listening on port 8080");

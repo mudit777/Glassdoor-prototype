@@ -1,4 +1,3 @@
-
 var applications = require('../../Models/applicationModel');
 
 

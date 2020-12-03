@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import {Button, Card, Checkbox, Col, Input, notification, Row, Rate, Modal} from 'antd';
 import { FacebookOutlined, TwitterOutlined, MailOutlined, LinkOutlined } from '@ant-design/icons';
 import axios from 'axios'
+import { BACKEND } from '../../Config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquare } from '@fortawesome/free-solid-svg-icons';
+
 
 class ReviewCard extends Component {
 
@@ -29,7 +33,7 @@ class ReviewCard extends Component {
             review_id: e
         }
         console.log("DATA1 IS :", data1)
-        axios.post('http://localhost:8080/addReply', data1)
+        axios.post(`${BACKEND}/addReply`, data1)
             .then(response => {
                 console.log("Status Code in Adding Reply : ", response.status);
                 if(response.status === 200){
@@ -82,6 +86,27 @@ class ReviewCard extends Component {
     }
 
     render() {
+
+        var icon2 = <FontAwesomeIcon icon={faSquare}/>
+        if(this.props.review.ceo_approval === "0")
+        {
+            icon2 = <FontAwesomeIcon icon={faSquare} style={{color:"#bf0808"}}/>
+        }
+        else if(this.props.review.ceo_approval === "1")
+        {
+            icon2 = <FontAwesomeIcon icon={faSquare} style={{color:"#24b00e"}}/>
+        }
+
+        var icon1 = <FontAwesomeIcon icon={faSquare}/>
+        if(this.props.review.recommend_to_friend === "0")
+        {
+            icon1 = <FontAwesomeIcon icon={faSquare} style={{color:"#bf0808"}}/>
+        }
+        else if(this.props.review.recommend_to_friend === "1")
+        {
+            icon1 = <FontAwesomeIcon icon={faSquare} style={{color:"#24b00e"}}/>
+        }
+
         return (
             <div>
                 <Card title = "" style={{width:676}}>
@@ -89,11 +114,19 @@ class ReviewCard extends Component {
                         <img style ={{height:50,width:50}}src="https://media.glassdoor.com/sql/6036/amazon-squarelogo-1552847650117.png" alt=""></img>
                     </div>
                     <div className="column-right-reviews">
-                        <p style={{color:"#636363", marginTop:-15}}>November 3, 2020</p>
+                        <p style={{color:"#636363", marginTop:-15}}>{this.props.review.review_date.substring(0,10)}</p>
                         <p style={{fontSize:20, fontWeight:"bold", color:"#0048b9"}}>"{this.props.review.review_headline}"</p>
-                        <Rate disabled defaultValue={5} style={{color:"#00a422", marginTop:-25}} />Former Employee - Delivery Driver in East Chattanooga, TN
-                        <p style={{marginTop:15}}>I work at Amazon Full-time</p>
-                        <p style={{fontWeight:"bold"}}>Pros</p>
+                        <Rate disabled defaultValue={this.props.review.review_rating} style={{color:"#00a422", marginTop:-25}} />
+                        <div style={{marginTop:7}}>
+                            <div className="column-left-intervies">
+                                {icon1} Recommends
+                            </div>
+                            <div className="column-right-intervies">
+                                {icon2} CEO Approval
+                            </div>
+                        </div>
+                        <p style={{marginTop: 40}}>{this.props.review.review_desc}</p>
+                        <p style={{fontWeight:"bold", marginTop: 7}}>Pros</p>
                         <p style={{marginTop:-10}}>{this.props.review.review_pros}</p>
                         <p style={{fontWeight:"bold"}}>Cons</p>
                         <p style={{marginTop:-10}}>{this.props.review.review_cons}</p>

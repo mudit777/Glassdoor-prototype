@@ -1,5 +1,6 @@
-import { Button, Card, Col, Pagination, Row } from 'antd';
+import { Button, Card, Col, notification, Pagination, Row } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
+import Modal from 'antd/lib/modal/Modal';
 import Axios from 'axios';
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
@@ -27,11 +28,42 @@ class StudentProfile extends Component {
             photo: "",
             disability: "",
             veteran : "",
-            email : ""
+            email : "",
+            resumes: [],
+            resumeModel: false,
+            resume: "Upload first Resume",
         }
         this.getAllCompanies();
         this.getStudentJobPreferences();
         this.getStudentDetails();
+        this.getStudentFiles();
+    }
+    getStudentFiles = () => {
+        var student = {
+            student_id : window.sessionStorage.getItem("student_id")
+        }
+        Axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+        Axios.post(`${BACKEND}/getStudentFiles`, student).then(response => {
+            if(response.status === 200)
+            {
+                if(response.data !== null)
+                {
+                  
+                   if(response.data.primary_resume)
+                   {
+                        this.setState({
+                            resumes: response.data.resumes,
+                            resume : response.data.primary_resume
+                        })
+                   }
+                   else{
+                        this.setState({
+                            resumes: response.data.resumes,
+                        })
+                   }
+                }
+            }
+        })
     }
     getAllCompanies = () => {
         Axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
@@ -122,7 +154,85 @@ class StudentProfile extends Component {
             updateProfile : true
         })
     }
+    resumeShow = () => {
+        this.setState({
+            resumeModel : true
+        })
+    }
+    handleCancel = () => {
+        this.setState({
+            resumeModel : false
+        })
+    }
+    triggerResume = () => {
+        document.getElementById("resumeUpload").click();
+    }
+    uploadResume = (e) => {
+        var formData = new FormData();
+        formData.append('file', e.target.files[0]);
+        formData.append('student_id', window.sessionStorage.getItem("student_id"));
+        Axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+        Axios.post(`${BACKEND}/uplaodResume`, formData).then(response => {
+            if(response.status === 200)
+            {
+                this.setState({
+                    resumes : response.data.resumes
+                })
+            }
+        })
+    }
+    selectResume = (resume) => {
+        var myJson = {
+            student_id : window.sessionStorage.getItem('student_id'),
+            primary_resume : resume[0]
+        }
+        Axios.post(`${BACKEND}/setPrimaryResume`, myJson).then(response => {
+            if(response.status === 200)
+            {
+                notification["success"]({
+                    message: 'Updated',
+                    description:
+                      'Primary resume updated',
+                  });
+                this.setState({
+                    resumeModel : false,
+                    resume : resume
+                });
+            }
+        })
+       
+
+    }
     render() {
+        var resumes = <h2>No Resumes Uploaded yet</h2>;
+        if(this.state.resumes.length > 0)
+        {
+            resumes = 
+                this.state.resumes.map(i => {
+                    let disabled = false
+                    if(this.state.resume === Object.keys(i)[0])
+                    {
+                        disabled = true
+                    }
+                    return(
+                            <ul style = {{listStyleType : "none"}}>
+                                <li style = {{marginBottom : "1px solid lightGrey"}}>
+                                    <div >
+                                        <Row>
+                                            <Col>
+                                                <h3>{Object.keys(i)}</h3>
+                                            </Col>
+                                            <Col style = {{position : "absolute", marginLeft : "50%"}}>
+                                                
+                                                <Button disabled = {disabled} style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder"}} onClick = {() => this.selectResume(Object.keys(i))}>Make Primary resume</Button>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </li>
+                            </ul>
+                        )
+                })
+        }
         var email = ""
         var name =  this.state.first_name +" " + this.state.last_name;
         var redirectVar = null;
@@ -163,6 +273,7 @@ class StudentProfile extends Component {
                 </li>
             </ul>
         }
+        
         return (
             <div>
                 {redirectVar}
@@ -215,7 +326,7 @@ class StudentProfile extends Component {
                                             <h4 style = {{fontWeight : "bolder"}}><Link to = "">Primary resume</Link></h4>
                                         </Col>
                                         <Col style = {{marginLeft : "37%"}}>
-                                            <Button style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder"}}>Upload a resume</Button>
+                                            <Button style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder"}} onClick = {this.resumeShow}>Manage resumes</Button>
                                         </Col>
                                     </Row>
                                 </div>
@@ -229,6 +340,20 @@ class StudentProfile extends Component {
                 </div>
                 <div style = {{marginLeft : "75%", marginTop : "3%"}}>
                 </div>
+                <Modal
+                        title="Select Resume"
+                        visible={this.state.resumeModel}
+                        onCancel = {this.handleCancel}
+                        footer = {[
+                            <Button onClick = {this.triggerResume} style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder"}} >Upload new Resume</Button>
+                        ]}
+                    >
+                        {resumes}
+                        <div style = {{float : "right"}}>
+                            <input id = "resumeUpload" type = "file" accept = ".pdf, .doc, .docx" style = {{display : "none"}} onChange = {this.uploadResume}/>
+                            
+                        </div>
+                    </Modal>
             </div>
         )
     }

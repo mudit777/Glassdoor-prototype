@@ -10,6 +10,7 @@ import EditCompanyProfilePage from './components/CompanyProfilePage/EditCompanyP
 import CompanySignUp from './components/CompanySignUp/CompanySignUp';
 import Login from './components/Login/Login';
 import PostNewJob from './components/PostNewJob/PostNewJob';
+import StudentApplications from './components/StudentApplications/StudentApplications';
 import StudentActivity from './components/StudentActivity/StudentActivity';
 import StudentInterviews from './components/StudentInterviews/StudentInterviews';
 import StudentProfile from './components/StudentProfile/StudentProfile';
@@ -23,6 +24,7 @@ import Report from './components/Report/Report';
 import ShowApplicants from './components/CompanyJobs/ShowApplicants';
 import ViewResume from './components/Cards/ViewResume';
 import ViewCoverLetter from './components/Cards/ViewCoverLetter';
+import Pdf from './components/Pdf/Pdf';
 
 class Main extends Component {
     render(){
@@ -47,11 +49,13 @@ class Main extends Component {
                     <Route path = "/studentReviews" component = {StudentReviews}/>
                     <Route path = "/studentInterviews" component = {StudentInterviews}/>
                     <Route path = "/allJobs" component = {ViewJobs} />
+                    <Route path = "/studentApplications" component = {StudentApplications}/>
                     <Route path = "/companyJobs" component = {CompanyJobs} />
                     <Route path = "/report" component = {Report} />
                     <Route path = "/showApplicants" component = {ShowApplicants} />
                     <Route path = "/viewResume/:resume:resume2" component = {ViewResume} />
                     <Route path = "/viewCoverLetter" component = {ViewCoverLetter} />
+                    <Route path = "/pdf" component = {Pdf} />
                 </BrowserRouter>
             </div>
         )

@@ -1,15 +1,21 @@
-const e = require('express');
 var kafka = require('../../kafka/client');
 
-exports.searchCompanies = (req, res) => {
-    kafka.make_request("search_companies", req.body, (err, result) => {
-        if(result.code === 500)
+exports.filterSalaryJobs = (req, res) => {
+    kafka.make_request("filter_jobs_via_salary", req.body, (err, result) => {
+        if(err)
         {
             res.writeHead(500, {
                 "Content-Type" : "text/plain"
             })
             res.end("Server Side Error")
-        } 
+        }
+        else if(result.code === 500)
+        {
+            res.writeHead(500, {
+                "Content-Type" : "text/plain"
+            })
+            res.end("Server Side Error")
+        }
         else if(result.code === 200)
         {
             res.writeHead(200,{
@@ -18,17 +24,25 @@ exports.searchCompanies = (req, res) => {
             res.end(JSON.stringify(result.data));
         }
     })
+    
 }
 
-exports.searchJobs = (req, res) => {
-    kafka.make_request("search_jobs", req.body, (err, result) => {
-        if(result.code === 500)
+exports.filterJobType = (req, res) => {
+    kafka.make_request("filter_jobs_via_job_type", req.body, (err, result) => {
+        if(err)
         {
             res.writeHead(500, {
                 "Content-Type" : "text/plain"
             })
             res.end("Server Side Error")
-        } 
+        }
+        else if(result.code === 500)
+        {
+            res.writeHead(500, {
+                "Content-Type" : "text/plain"
+            })
+            res.end("Server Side Error")
+        }
         else if(result.code === 200)
         {
             res.writeHead(200,{

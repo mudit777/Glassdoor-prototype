@@ -98,10 +98,22 @@ class StudentJobDetails extends Component {
             {
                 if(response.data !== null)
                 {
-                   this.setState({
-                        resumes: response.data.resumes,
-                        coverLetters: response.data.cover_letters
-                   })
+                    if(response.data.primary_resume)
+                    {
+                        this.setState({
+                            resumes: response.data.resumes,
+                            coverLetters: response.data.cover_letters,
+                            resume : response.data.primary_resume
+                       })
+                    }
+                    else
+                    {
+                        this.setState({
+                            resumes: response.data.resumes,
+                            coverLetters: response.data.cover_letters
+                       })
+                    }
+                   
                 }
             }
         })
@@ -134,10 +146,23 @@ class StudentJobDetails extends Component {
             let resume = "";
             let coverLetter = "";
             this.state.resumes.map(i => {
-                if(Object.keys(i)[0] === this.state.resume[0])
+                console.log("resume is -------------", this.state.resume[0].length)
+                if(this.state.resume[0].length === 1)
                 {
-                    resume = Object.values(i)[0];
+                    if(Object.keys(i)[0] === this.state.resume)
+                    {
+                        resume = Object.values(i)[0];
+                    }
+                    
                 }
+                else
+                {
+                    if(Object.keys(i)[0] === this.state.resume[0])
+                    {
+                        resume = Object.values(i)[0];
+                    }
+                }
+                
             })
             this.state.coverLetters.map(i => {
                 if(Object.keys(i)[0] === this.state.coverLetter[0])
@@ -393,7 +418,7 @@ class StudentJobDetails extends Component {
                         </div>
                     </Modal>
                     <Modal
-                        title="Select Resume"
+                        title="Select Cover Letter"
                         visible={this.state.coverModel}
                         footer = {[
                             <Button onClick = {this.triggerCover} style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder"}} >Upload new coverLetter</Button>

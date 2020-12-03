@@ -26,11 +26,19 @@ var upload_resume = require('./services/Student/upload_resume');
 var get_student_files = require('./services/Student/get_student_files');
 var upload_cover_letter = require('./services/Student/upload_cover_letter');
 var apply_to_job = require('./services/Student/apply_to_job');
+var add_interview = require('./services/Student/add_interview');
+var get_company_interview = require('./services/Student/get_company_interview');
+var get_student_applications = require('./services/Student/get_student_applications');
+var withdraw_applications = require('./services/Student/withdraw_application');
 var get_company_jobs = require('./services/company/get_company_jobs');
 
 var getCompanySalary = require('./services/Salary/getCompanySalary');
 var getApplicants = require('./services/Application/getApplicants');
 var updateStatus = require('./services/Application/updateStatus');
+var filter_jobs_via_salary = require('./services/Student/sort_jobs_via_salary');
+var filter_jobs_via_job_type = require('./services/Student/filter_jobs_via_job_type');
+var set_primary_resume = require('./services/Student/set_primary_resume');
+var search_jobs = require('./services/Student/search_jobs');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -93,3 +101,12 @@ handleTopicRequest("get_company_jobs", get_company_jobs);
 handleTopicRequest("getCompanySalary", getCompanySalary);
 handleTopicRequest("getApplicants", getApplicants);
 handleTopicRequest("updateStatus", updateStatus);
+handleTopicRequest("filter_jobs_via_salary", filter_jobs_via_salary);
+handleTopicRequest("filter_jobs_via_job_type", filter_jobs_via_job_type);   
+handleTopicRequest("set_primary_resume", set_primary_resume);
+handleTopicRequest("search_jobs", search_jobs);
+handleTopicRequest("add_interview", add_interview);
+handleTopicRequest("get_company_interview", get_company_interview);
+handleTopicRequest("get_student_applications", get_student_applications);
+handleTopicRequest("withdraw_applications", withdraw_applications);
+handleTopicRequest("get_company_jobs", get_company_jobs);
