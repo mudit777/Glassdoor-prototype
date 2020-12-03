@@ -25,6 +25,8 @@ import ShowApplicants from './components/CompanyJobs/ShowApplicants';
 import ViewResume from './components/Cards/ViewResume';
 import ViewCoverLetter from './components/Cards/ViewCoverLetter';
 import Pdf from './components/Pdf/Pdf';
+import SearchedInterviews from './components/SearchInterviews/SearchedInterviews';
+
 
 class Main extends Component {
     render(){
@@ -56,6 +58,7 @@ class Main extends Component {
                     <Route path = "/viewResume/:resume:resume2" component = {ViewResume} />
                     <Route path = "/viewCoverLetter" component = {ViewCoverLetter} />
                     <Route path = "/pdf" component = {Pdf} />
+                    <Route path = "/searchedInterviews" component = {SearchedInterviews} />
                 </BrowserRouter>
             </div>
         )

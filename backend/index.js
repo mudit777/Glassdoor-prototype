@@ -236,6 +236,7 @@ app.post("/getCompanyJobs", requireAuth, companyJobsRouter.getCompanyJobs);
 app.post("/getApplicants",companyJobsRouter.getApplicants);
 app.post("/updateStatus",companyJobsRouter.updateStatus);
 app.post("/searchJobs", searchRouter.searchJobs);
+app.post("/searchInterviews", searchRouter.searchInterviews);
 
 app.listen(8080)
 console.log("Server Listening on port 8080");

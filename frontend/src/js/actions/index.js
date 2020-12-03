@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { BACKEND } from '../../Config';
 import { notification } from 'antd';
-import { FILTERJOBS, GETALLCOMPANIES, GETALLSTUDENTJOBS, LOGIN, SEARCHCOMPANIES, SEARCHJOBS } from '../constants';
+import { FILTERJOBS, GETALLCOMPANIES, GETALLSTUDENTJOBS, LOGIN, SEARCHCOMPANIES, SEARCHINTERVIEWS, SEARCHJOBS } from '../constants';
 
 export function login(payload)
 {
@@ -134,7 +134,29 @@ export function search_jobs(payload)
         })
     }
 }
-
+export function search_interviews(payload)
+{
+    console.log("Searching interviews")
+    let data = {};
+    return(dispatch) => {
+        axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+        axios.post(`${BACKEND}/searchInterviews`, payload).then(response => {
+            if(response.status === 200)
+            {
+                data = {
+                    interviews : response.data,
+                    message : "Interviews searched"
+                }
+                dispatch({
+                    type : SEARCHINTERVIEWS,
+                    data
+                })
+            }
+            console.log(data);
+           
+        })
+    }
+}
 export function get_all_jobs(payload)
 {
     let data = {};
@@ -243,3 +265,18 @@ export function filterJobType(payload)
         })
     }
 }
+// export function get_all_interviews(payload)
+// {
+//     let data = {};
+//     return(dispatch) => {
+//         axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+//         axios.post(`${BACKEND}/searchInterviews`, payload).then(response => {
+//             if(response.status === 200)
+//             {
+//                 data = {
+//                     interviews : 
+//                 }
+//             }
+//         })
+//     }
+// }

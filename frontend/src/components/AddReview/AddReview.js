@@ -126,7 +126,7 @@ class AddReview extends Component {
             review_status: "Undecided",
             review_marked_by_company: "1",
             company_id: "1",
-            student_id: "1",
+            student_id: window.sessionStorage.getItem("student_id"),
             ceo_approval: this.state.ceo_approval,
             recommend_to_friend: this.state.recommend_to_friend
         }

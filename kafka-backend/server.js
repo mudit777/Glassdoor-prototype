@@ -39,6 +39,7 @@ var filter_jobs_via_salary = require('./services/Student/sort_jobs_via_salary');
 var filter_jobs_via_job_type = require('./services/Student/filter_jobs_via_job_type');
 var set_primary_resume = require('./services/Student/set_primary_resume');
 var search_jobs = require('./services/Student/search_jobs');
+var search_interviews = require('./services/Student/search_company_intervies');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -110,3 +111,4 @@ handleTopicRequest("get_company_interview", get_company_interview);
 handleTopicRequest("get_student_applications", get_student_applications);
 handleTopicRequest("withdraw_applications", withdraw_applications);
 handleTopicRequest("get_company_jobs", get_company_jobs);
+handleTopicRequest("search_interviews", search_interviews)
