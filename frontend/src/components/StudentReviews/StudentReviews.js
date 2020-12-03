@@ -7,6 +7,9 @@ import axios from 'axios';
 import { BACKEND } from '../../Config'
 import StudentReviewCard from '../StudentReviewCard/StudentReviewCard';
 import DonutChart from "react-svg-donut-chart"
+import CompanyBar from '../CompanyHeaderBar/CompanyBar'
+import { Link } from 'react-router-dom'
+
 
 
 const { Search } = Input;
@@ -17,7 +20,12 @@ class StudentReviews extends Component {
         super(props);
         this.state = { 
             positive_review: [],
-            negative_review: []
+            negative_review: [],
+            company: {},
+            salary : [],
+            jobs:[],
+            top_jobs:[],
+            reviews : [],
         }
         console.log(props)
     }
@@ -26,6 +34,40 @@ class StudentReviews extends Component {
         var company = {
             company_id : this.props.location.state.company_id
         }
+        // console.log(this.props)
+        axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+        axios.post(`${BACKEND}/getCompanyDetails`, company).then(response => {
+            if(response.status === 200)
+            {
+                console.log(response.data)
+                this.setState({
+                    company : response.data
+                })
+            }
+        })
+        axios.post(`${BACKEND}/getCompanySalary`, company).then(response => {
+            console.log('salary')
+            if(response.status === 200)
+            {
+                console.log(response.data,'salary')
+                this.setState({
+                    salary : response.data
+                })
+            }
+        })
+        axios.post(`${BACKEND}/getJob`, company).then(response => {
+            if(response.status === 200)
+            {
+                console.log(response.data)
+                this.setState({
+                    jobs : response.data
+                })
+                var temp = this.state.jobs.slice(0,5)
+                this.setState({
+                    top_jobs : temp
+                })
+            }
+        })
         axios.post(`${BACKEND}/getPositiveReview`,company)
             .then(response => {
                 console.log("Status Code in Getting Positive Reviews : ",response.status);
@@ -120,12 +162,13 @@ class StudentReviews extends Component {
         return (
             <div>
                 <CompanyHeaderBarForm/>
+                <CompanyBar student='true' total_reviews = {this.state.reviews.length} company_id={this.props.location.state.company_id} total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} company = {this.state.company}/>
                 <div style={{display:'flex',backgroundColor:'#f2f2f2'}} >
                     <div className="column-left-add-reviews" style={{backgroundColor:"#f2f2f2"}}> 
                         <div style={{marginLeft: 208, width:676, backgroundColor:"white", marginTop: 7, padding: 15}}>
-                            <p style={{fontSize: 20}}>Amazon Reviews</p>
+                            <p style={{fontSize: 20}}>Reviews</p>
                             <Search placeholder="Search Job Titles" allowClear size="large" style={{width:505}}/>
-                            <span><Button style={{height: 40, backgroundColor:"#004fb4", color:"white", borderRadius:5, fontWeight:"bold", marginLeft:10}}>Find Reviews</Button></span>
+                            <span><Link to={{pathname:'/addReview',state:{company:this.state.company}}}  style={{height: 40, backgroundColor:"#004fb4", color:"white", borderRadius:5, fontWeight:"bold", marginLeft:10,padding:'1rem'}}>Add a Review</Link></span>
                             
                             <div style={{height:66,marginBottom:'5rem',marginTop:'3rem'}}>
                                 <div style={{display:'flex',justifyContent:'flex-start'}}>
@@ -146,14 +189,14 @@ class StudentReviews extends Component {
                             <div style={{marginLeft:-15}}>
                                 {this.state.positive_review.map(i=>{
                                     return(
-                                        <StudentReviewCard review = {i} key={i.review_id}/>
+                                        <StudentReviewCard photo={this.state.company.company_profile_photo} review = {i} key={i.review_id}/>
                                     )
                                 })}
                             </div>
                             <div style={{marginLeft:-15}}>
                                 {this.state.negative_review.map(i=>{
                                     return(
-                                        <StudentReviewCard review = {i} key={i.review_id}/>
+                                        <StudentReviewCard photo={this.state.company.company_profile_photo} review = {i} key={i.review_id}/>
                                     )
                                 })}
                             </div>
@@ -161,7 +204,7 @@ class StudentReviews extends Component {
                     </div>
                     <div className="column-right-add-reviews" style={{backgroundColor:"#f2f2f2"}}>
                         <div style={{backgroundColor:"white", width: 300, padding: 10, marginLeft: -15, marginTop: 7}}>
-                            <p style={{fontSize:18, fontWeight:500}}>Amazon Careers</p>
+                            <p style={{fontSize:18, fontWeight:500}}>Careers</p>
                             <img src="https://media.glassdoor.com/banner/bh/6036/amazon-banner-1578695809222.jpg" style={{width:300, height:55, marginLeft:-10}}></img>
                             <div style={{borderBottomWidth:1, borderBottomStyle:"solid", borderColor:"#cfcfcf", padding: 5}}>
                                 <p style={{marginTop:10}}>Our mission: To be Earth's most customer-centric company.</p>

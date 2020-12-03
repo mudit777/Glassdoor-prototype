@@ -85,7 +85,7 @@ class CompanyProfilePageForUser extends Component {
       .catch(err => {
           
   })
-      axios.post(`${BACKEND}/getPositiveReview`)
+      axios.post(`${BACKEND}/getPositiveReview`,company)
       .then(response => {
           console.log("Status Code in Getting Reviews : ",response.status);
           if(response.status === 200){
@@ -104,7 +104,7 @@ class CompanyProfilePageForUser extends Component {
       .catch(err => {
           
   })
-      axios.post(`${BACKEND}/getNegativeReview`)
+      axios.post(`${BACKEND}/getNegativeReview`,company)
       .then(response => {
           console.log("Status Code in Getting Reviews : ",response.status);
           if(response.status === 200){
@@ -180,20 +180,21 @@ class CompanyProfilePageForUser extends Component {
         return (
             <div>
                 <CompanyHeaderBar/>
-                <CompanyBar photo = {this.state.company.company_profile_photo} total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} total_reviews = {this.state.reviews.length} company = {this.state.company}/>
-                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#EAEAEA',margin:'0 0'}}>
+                <CompanyBar student='true' company_id={this.props.location.state.company_id}  total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} total_reviews = {this.state.reviews.length} company = {this.state.company}/>
+                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#f2f2f2',margin:'0 0'}}>
                     <Company user='true' company = {this.state.company} />
                     {/* loop the jobs */}
                     <div style={{display:'flex',flexDirection:'column',justifyContent:'flex-start',alignContent:'flex-start'}}>
                         <Card title = 'All Jobs Posted' style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '20rem',marginTop:'2.5rem',marginLeft:'3rem'}}>
                             {this.state.top_jobs.map(a =>{
-                                return (<Link to='#' style={{color:"black"}} ><Job job = {a}/></Link>)
+                                return (<Job job = {a}/>)
                             })}
+                            <Link to={{pathname:'/companyJobs',state:{company_id:this.props.location.state.company_id,type:'student'}}} >View all jobs</Link>
                         </Card>
                     </div>
                 </div>
                 
-                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#EAEAEA',margin:'0 0'}}>
+                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#f2f2f2',margin:'0 0'}}>
                   <Card title = 'Average reviews' style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '52rem',marginBottom:'2rem',marginLeft:'15rem'}} actions = {[
                         ]}>
                               <div style={{display:'flex',justifyContent:'flex-start'}}>
@@ -215,12 +216,12 @@ class CompanyProfilePageForUser extends Component {
 
 
                 
-                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#EAEAEA',margin:'0 0'}}>
+                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#f2f2f2',margin:'0 0'}}>
                   <Card title = 'User reviews' style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '52rem',marginTop:'0rem',marginLeft:'15rem'}} actions = {[
                   ]}>
                         <div>
-                              <StudentReviewCard review = {this.state.positive_review} />
-                              <StudentReviewCard review = {this.state.negative_review} />
+                              <StudentReviewCard com photo={this.state.company.company_profile_photo} review = {this.state.positive_review} />
+                              <StudentReviewCard  photo={this.state.company.company_profile_photo} review = {this.state.negative_review} />
                         </div>
                   </Card>
                 </div>

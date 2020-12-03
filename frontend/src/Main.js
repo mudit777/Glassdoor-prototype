@@ -40,7 +40,7 @@ class Main extends Component {
                     <Route path = "/companySignUp" component = {CompanySignUp} />
                     <Route path = "/studentSignUp" component = {StudentSignUp} />
                     <Route path = "/login" component = {Login} />
-                    <Route path = "/postNewJob" component = {PostNewJob}/>
+                    <Route path = "/companyReviews" component = {PostNewJob}/>
                     <Route path = "/addJob" component={AddJob}/>
                     <Route path = "/addSalary" component={AddSalary}/>
                     <Route path = "/studentProfile" component = {StudentProfile} />

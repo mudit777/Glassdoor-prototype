@@ -2,7 +2,9 @@ var connection = require('../../mysql_database');
 
 function handle_request(message, callback)
 {
-    var query = "SELECT * from glassdoor.reviews where review_helpful = (SELECT MAX(review_helpful) FROM glassdoor.reviews where review_rating = (SELECT MAX(review_rating) from glassdoor.reviews)) and company_id = "+ message.company_id +" ;"
+    console.log('xxxxxxxxxxxxxxxxxxxxxx')
+    var query = "SELECT * from glassdoor.reviews where review_helpful = (SELECT MAX(review_helpful) FROM glassdoor.reviews where review_rating = (SELECT MAX(review_rating) from glassdoor.reviews where company_id="+ message.company_id +") and company_id="+ message.company_id +") and company_id = "+ message.company_id +" and review_rating= (Select MAX(review_rating) from glassdoor.reviews where company_id="+ message.company_id +") Limit 1 ;"
+    console.log(query)
     connection.query(query, (err, result) => {
         var response = {};
         if(err)
@@ -19,6 +21,7 @@ function handle_request(message, callback)
         {
             response.code = 204;
         }
+        console.log(response.data)
         callback(null, response);
     })
 }
