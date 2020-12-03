@@ -90,7 +90,7 @@ app.post("/getEmployerDetails", getEmployerDetails)
 app.post("/getCompanyReviews", (req,res) =>{
     console.log("GATHERING ALL DATA!")
     console.log(req.boy)
-    var user= "SELECT * from reviews WHERE company_id = 1";
+    var user= "SELECT * from reviews WHERE company_id = "+ req.body.company_id +" ";
     connection.query(user,(err,result) => {
         if (err) throw err;
         if(result.length > 0)

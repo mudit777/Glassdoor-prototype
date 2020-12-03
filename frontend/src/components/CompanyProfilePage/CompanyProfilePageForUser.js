@@ -39,7 +39,10 @@ class CompanyProfilePageForUser extends Component {
       //       company_id: window.sessionStorage.getItem("company_id")
       //   }
       this.getCompanyDetails();
-      axios.post(`${BACKEND}/getCompanyReviews`)
+      var company = {
+        company_id : this.props.location.state.company_id
+    }
+      axios.post(`${BACKEND}/getCompanyReviews`,company)
       .then(response => {
           console.log("Status Code in Getting Reviews : ",response.status);
           if(response.status === 200){

@@ -61,7 +61,7 @@ class CompanyBar extends Component {
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
                                     <div>{this.props.total_reviews}</div>
-                                    <div style={{fontWeight:'bold',color:'#5185CE'}}>Reviews</div>
+                                    <Link to={{pathname:'/studentReviews',state:{company_id:this.props.company.company_id}}} style={{fontWeight:'bold',color:'#5185CE'}}>Reviews</Link>
                               </div>
                               <div style={{ borderLeft: '.1rem solid #777678', height: '4rem', top: '0'}} ></div>
 
@@ -79,7 +79,7 @@ class CompanyBar extends Component {
 
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
                                     <div>remaining</div>
-                                    <div style={{fontWeight:'bold',color:'#5185CE'}}>Interviews</div>
+                                    <Link to={{pathname:'/studentInterviews',state:{company_id:this.props.company.company_id}}} style={{fontWeight:'bold',color:'#5185CE'}}>Interviews</Link>
                               </div>
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>
 

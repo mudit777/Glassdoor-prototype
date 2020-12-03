@@ -69,8 +69,8 @@ class StudentInterviews extends Component {
             qAndA.push(temp);
         }
         var data1 = {
-            student_id : "1",
-            company_id: "1",
+            student_id : sessionStorage.getItem('student_id'),
+            company_id: this.props.location.state.company_id,
             process_rating: this.state.process_rating,
             job_title: this.state.job_title,
             description: this.state.description,
@@ -175,7 +175,11 @@ class StudentInterviews extends Component {
     }
 
     componentDidMount(){
-        axios.post(`${BACKEND}/getCompanyInterview`)
+        var data1 = {
+            student_id : sessionStorage.getItem('student_id'),
+            company_id: this.props.location.state.company_id,
+        }
+        axios.post(`${BACKEND}/getCompanyInterview`,data1)
             .then(response => {
                 console.log("Status Code in Getting Reviews : ",response.status);
                 if(response.status === 200){
