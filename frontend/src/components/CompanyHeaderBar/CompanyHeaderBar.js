@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faBuilding, faCommentDots, faEnvelopeSquare, faMoneyBillWave, faShoppingCart, faSuitcase, faUser } from '@fortawesome/free-solid-svg-icons';
 import 'semantic-ui-css/semantic.min.css';
 import { Redirect } from 'react-router-dom';
-import { search_companies, search_jobs } from '../../js/actions';
+import { search_companies, search_jobs, search_interviews } from '../../js/actions';
 import { connect } from 'react-redux';
 import { Select } from 'antd';
 
@@ -37,19 +37,17 @@ class CompanyHeaderBar extends Component {
         }
         if(this.state.searchType === "Companies")
         {
-            this.setState({
-                companiesRedirect : true
-            })
             this.props.search_companies(myJson);
         }
         else if(this.state.searchType === "Jobs")
         {
             this.props.search_jobs(myJson);
-            // this.setState({
-            //     jobsRedirect : true
-            // })
         }
-        
+        else if(this.state.searchType === "Interviews")
+        {
+            console.log("Hiiii searchin")
+            this.props.search_interviews(myJson)
+        }
         
     }
     render() {
@@ -62,6 +60,10 @@ class CompanyHeaderBar extends Component {
         {
             redirectVar = <Redirect to = '/allJobs' />
         }
+        else if(this.props.message === "Interviews searched")
+        {
+            redirectVar = <Redirect to = "/searchedInterviews" />
+        }
         return (
             <div>
                 {redirectVar}
@@ -70,13 +72,6 @@ class CompanyHeaderBar extends Component {
                         <div>
                             <Input value = {this.state.searchValue} onChange = {this.updateSearch} icon='search' iconPosition='left' placeholder="Job Title, Keywords, or Company" style={{width:350, color:"#00a422"}}/>
                             <Input>
-                                {/* <Dropdown placeholder='Jobs' value = {this.state.searchType} style={{marginLeft:20, width: 100}} search selection onClick = {this.searchType}>
-                                    <Dropdown.Menu>
-                                        <Dropdown.Item text='Companies'/>
-                                        <Dropdown.Item text='Salaries'/>
-                                        <Dropdown.Item text='Interviews'/>
-                                    </Dropdown.Menu>
-                                </Dropdown> */}
                                 <Select style = {{width : 200, marginLeft : 15}} defaultValue = {this.state.searchType} value = {this.state.searchType} onChange = {this.updateSearchType}>
                                     <Select.Option value = "Companies">Companies</Select.Option>
                                     <Select.Option value = "Jobs">Jobs</Select.Option>
@@ -155,7 +150,8 @@ class CompanyHeaderBar extends Component {
 function mapDispatchToProps(dispatch) {
     return {
         search_companies: user => dispatch(search_companies(user)),
-        search_jobs: user => dispatch(search_jobs(user))
+        search_jobs: user => dispatch(search_jobs(user)),
+        search_interviews: user => dispatch(search_interviews(user))
     };
   }
   
