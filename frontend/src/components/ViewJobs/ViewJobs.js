@@ -7,6 +7,7 @@ import JobCard from '../JobCard/JobCard';
 import Axios from 'axios';
 import { BACKEND } from '../../Config';
 import StudentJobDetails from '../StudentJobDetails/StudentJobDetails';
+import JobsFilter from '../JobsFilter/JobsFilter';
 
 class ViewJobs extends Component {
     constructor(props)
@@ -14,15 +15,43 @@ class ViewJobs extends Component {
         super(props);
         this.state = {
             favourites : [],
-            selectedJob : {}
+            selectedJob : {},
+            jobs : []
         }
         
+
     }
     componentDidMount(){
-        this.props.get_all_jobs();
+        setTimeout(() => {
+            if(this.props.studentJobs)
+            {
+                console.log("Hi there are jobs here")
+            }
+            else
+            {
+                console.log("no jobs")
+            }
+        }, );
+        console.log("STUDENT jobs `~~~~~~~~", this.props.studentJobs)
     }
     componentWillReceiveProps()
     {
+        
+        setTimeout(() => {
+            if(this.props.studentJobs)
+            {
+                console.log("jobs in recieve method")
+                // this.props.studentJobs.sort((a, b) => (a.event_date > b.event_date) ? 1 : (a.event_date === b.event_date) ? ((a.event_time > b.event_time) ? 1 : -1) : -1 )
+                // this.setState({
+                //     jobs : this.props.studentJobs
+                // })
+            }
+            else{
+                console.log("No jobs in recieve")
+                this.props.get_all_jobs();
+            }
+            
+        }, );
         this.getFavouriteJobs();
     }
     getFavouriteJobs = () => {
@@ -78,10 +107,17 @@ class ViewJobs extends Component {
                }
            })
         }
+        else
+        {
+            this.props.get_all_jobs();
+        }
         return (
             <div>
                 <div>
                     <CompanyHeaderBarForm />
+                </div>
+                <div>
+                    <JobsFilter />
                 </div>
                 <div>
                     <Row>

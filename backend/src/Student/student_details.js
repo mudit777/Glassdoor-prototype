@@ -75,3 +75,21 @@ exports.getStudentFiles = (req, res) => {
         }     
     })
 }
+exports.setPrimaryResume = (req, res) => {
+    kafka.make_request("set_primary_resume", req.body, (err, result) => {
+        if(result.code === 500)
+        {
+            res.writeHead(500, {
+                "Content-Type" : "text/plain"
+            })
+            res.end("Server Side Error")
+        }   
+        else if(result.code === 200)
+        {
+            res.writeHead(200,{
+                "Content-Type" : "text/plain"
+            })
+            res.end("Details have been updated");
+        }    
+    })
+}
