@@ -45,14 +45,17 @@ class StudentApplications extends Component {
         return (
             <div>
                 <CompanyHeaderBarForm/>
-                <div>
-                    {this.state.applications.map(i => {
-                        console.log(i)
-                        return(
-                            <ApplicationCard applications = {i} key = {i._id} />
-                        )
-                    })}
+                <div style={{backgroundColor:"#cfcfcf"}}>
+                    <div style={{marginLeft: 200}}>
+                        {this.state.applications.map(i => {
+                            console.log(i)
+                            return(
+                                <ApplicationCard applications = {i} key = {i._id} />
+                            )
+                        })}
+                    </div>
                 </div>
+                
             </div>
         )
     }
