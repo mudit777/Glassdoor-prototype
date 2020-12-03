@@ -15,7 +15,7 @@ const ReviewCard = ({review, handleApprove, handleReject}) => {
     <Card>
       <Card.Content>
         <Card.Header>{review.review_headline}</Card.Header>
-        <Card.Meta>Posted by {review.student_name} for {review.company_name}</Card.Meta>
+        <Card.Meta>Posted by {review.student_first_name} {review.student_last_name} for {review.company_name}</Card.Meta>
         <Card.Description>Desc: {review.review_desc}</Card.Description>
         <Divider/>
         <Card.Content>

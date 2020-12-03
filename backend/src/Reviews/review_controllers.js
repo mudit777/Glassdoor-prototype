@@ -20,10 +20,10 @@ exports.add10kreviews = (req, res) => {
       'review_pros': txtgen.sentence(),
       'review_cons': txtgen.sentence(),
       'review_helpful':1,
-      'review_status': 'Approved',
+      'review_status': 'Undecided',
       'review_marked_by_company':1,
-      'company_id': between(1, 10),
-      'student_id':between(6, 16)
+      'company_id': between(3, 12),
+      'student_id':between(5, 12)
     }
 
     console.log(review)

@@ -1,0 +1,45 @@
+.gd_button{
+  background-color: #fff!important;
+  color:#1861BF!important;
+}
+
+.Change:hover {
+  background-color: #1861BF!important;
+  color: #fff!important;
+}
+
+.border{
+  border: 1px solid black;
+}
+
+
+.photos_body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1rem 15rem;
+  background-color: white;
+  padding-top: 1rem;
+  padding-left: 2rem;
+  padding-bottom: 3rem;
+  padding-right: 2rem;
+}
+
+.main_div{
+  background-color: #EAEAEA;
+  margin: -1rem 0;
+}
+
+.divider{
+  width: 100%;
+  height: 0.5rem;
+}
+
+.card_image{
+  width:100%;
+  height: 100%;
+}
+
+.extra_margin{
+  margin-left: 2rem;
+}

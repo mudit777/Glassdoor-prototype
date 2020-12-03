@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Card} from 'semantic-ui-react';
+import {Card,  Grid} from 'semantic-ui-react';
 import Footer from '../Placeholders/Footer';
 import AdminHeader from './AdminHeader';
 import './approve.css';
@@ -9,56 +9,55 @@ import ReviewCard from './ReviewCard';
 import {NotificationManager, NotificationContainer} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import './Placeholders.css';
-
-var between = (min, max) => {
-  return Math.floor(
-    Math.random() * (max-min+1)+min
-  )
-}
-var reviews_array = []
-
-for(let i=0;i<10;i++){
-  let review = {
-    'review_id': i,
-    'review_headline': txtgen.sentence(),
-    'review_desc': txtgen.sentence(),
-    'review_rating': between(1,5),
-    'review_pros': txtgen.sentence(),
-    'review_cons': txtgen.sentence(),
-    'review_helpful':1,
-    'review_status': 'Undecided',
-    'review_marked_by_company':1,
-    'company_id': between(1, 10),
-    'student_id':between(1, 10),
-    'student_name': faker.name.findName(),
-    'company_name': faker.company.companyName()
-  }
-
-  reviews_array.push(review)
-}
+import axios from 'axios';
+import {BACKEND} from '../../Config';
 
 const ApproveReviews = () => {
 
-  const[reviews, setReviews] = useState(reviews_array)
+  const[reviews, setReviews] = useState([])
   const[cards, setCards] = useState([])
+
+  useEffect(()=>{
+    axios.get(`${BACKEND}/getUndecidedReviews`)
+    .then(response=>{
+      setReviews(response.data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }, []);
 
   const removeReview = review_id => {
     setReviews(reviews.filter((review)=>(review.review_id !== review_id)))
   }
 
   const reviewApproved = review_id => {
-    removeReview(review_id);
-    NotificationManager.success('Operation performed', 'Review Approved', 1000)
+    axios.post(`${BACKEND}/approveReview`, {review_id})
+    .then(response => {      
+      if(response.status === 200){
+        removeReview(review_id);
+        NotificationManager.success('Operation performed', 'Review Approved', 1000)
+      }
+      else{
+        NotificationManager.error('Server error', 'Review Not Approved. Try Again', 1000)
+      }
+    })
   }
 
   const reviewRejected = review_id => {
-    removeReview(review_id);
-    NotificationManager.success('Operation performed', 'Review Rejected', 1000)
+    axios.post(`${BACKEND}/rejectReview`, {review_id})
+    .then(response => {      
+      if(response.status === 200){
+        removeReview(review_id);
+        NotificationManager.success('Operation performed', 'Review Rejected', 1000)
+      }
+      else{
+        NotificationManager.error('Server error', 'Review Not Rejected. Try Again', 1000)
+      }
+    })
   }
 
   useEffect(() => {
-    console.log("Re running")
-
     let rcards = reviews.map(review => {
       return (
         <ReviewCard review={review} id={review.review_id} handleApprove={() => {reviewApproved(review.review_id)}} handleReject={() => {reviewRejected(review.review_id)}} />
@@ -71,11 +70,17 @@ const ApproveReviews = () => {
     <div>
       <AdminHeader/>
       <NotificationContainer/>
-      <div style={{padding:"6px"}}>
-        <Card.Group>
-          {cards.length>0?cards:<div className="no_more">No more images</div>}
-        </Card.Group>
-      </div>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={1}></Grid.Column>
+          <Grid.Column width={14}>
+            <Card.Group itemsPerRow={3}>
+              {cards.length>0?cards:<div className="no_more">No more reviews</div>}
+            </Card.Group>
+          </Grid.Column>
+          <Grid.Column width={1}></Grid.Column>
+        </Grid.Row>
+      </Grid>
       <Footer/>
     </div>
   )

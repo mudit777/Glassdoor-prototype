@@ -5,31 +5,32 @@ import {NotificationManager, NotificationContainer} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import PhotoCard from './PhotoCard';
 import Footer from '../Placeholders/Footer';
-import {Card} from 'semantic-ui-react';
+import {Card, Grid} from 'semantic-ui-react';
 import './Placeholders.css';
+import {BACKEND} from '../../Config';
+import axios from 'axios';
 //remove these imports
 
 //till here
-var photos_array = []
-
-for(let i=0;i<10;i++){
-  let photo = {
-    'photo_id':i,
-    'photo_path': "i"+(i+5)+".jpg",
-    'student_name': faker.name.findName()
-  }
-
-  photos_array.push(photo)
-}
 
 const ApprovePhotos = () => {
 
-  const[photos, setPhotos] = useState(photos_array);
+  const[photos, setPhotos] = useState([]);
   const[cards, setCards] = useState([])
 
-  useEffect(() => {
-    console.log("Re running")
+  useEffect(()=>{
+    console.log("Fetching undecided photos")
+    axios.get(`${BACKEND}/getUndecidedPhotos`)
+    .then(response=>{
+      console.log(response)
+      setPhotos(response.data);
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+  }, [])
 
+  useEffect(() => {
     let rcards = photos.map(photo => {
       return (
         <PhotoCard photo={photo} id={photo.photo_id} handleApprove={() => {photoApproved(photo.photo_id)}} handleReject={() => {photoRejected(photo.photo_id)}} />
@@ -43,24 +44,46 @@ const ApprovePhotos = () => {
   }
 
   const photoApproved = photo_id => {
-    removePhoto(photo_id);
-    NotificationManager.success('Operation performed', 'Photo Approved', 1000)
+    axios.post(`${BACKEND}/approvePhoto`, {photo_id})
+    .then(response => {      
+      if(response.status === 200){
+        removePhoto(photo_id);
+        NotificationManager.success('Operation performed', 'Photo Approved', 1000)
+      }
+      else{
+        NotificationManager.error('Server error', 'Photo Not Approved. Try Again', 1000)
+      }
+    })
   }
 
   const photoRejected = photo_id => {
-    removePhoto(photo_id);
-    NotificationManager.success('Operation performed', 'Photo Rejected', 1000)
+    axios.post(`${BACKEND}/rejectPhoto`, {photo_id})
+    .then(response => {      
+      if(response.status === 200){
+        removePhoto(photo_id);
+        NotificationManager.success('Operation performed', 'Photo Rejected', 1000)
+      }
+      else{
+        NotificationManager.error('Server error', 'Photo Not Rejected. Try Again', 1000)
+      }
+    })    
   }
 
   return (
     <div>
       <AdminHeader/>
       <NotificationContainer/>
-      <div style={{padding:"6px"}}>
-        <Card.Group>
-          {cards.length>0?cards:<div className="no_more">No more images</div>}
-        </Card.Group>
-      </div>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={1}></Grid.Column>
+          <Grid.Column width={14}>
+            <Card.Group itemsPerRow={3}>
+              {cards.length>0?cards:<div className="no_more">No more images</div>}
+            </Card.Group>
+          </Grid.Column>
+          <Grid.Column width={1}></Grid.Column>
+        </Grid.Row>
+      </Grid>
       <Footer/>
     </div>
   )

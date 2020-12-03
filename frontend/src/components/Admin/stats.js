@@ -4,6 +4,9 @@ import AdminHeader from './AdminHeader';
 import {Line} from 'react-chartjs-2';
 import {Bar} from 'react-chartjs-2';
 import {Grid} from 'semantic-ui-react';
+import axios from 'axios';
+import {BACKEND} from '../../Config';
+import _ from 'lodash';
 
 const stats = () => {
   const[g1_data, setG1_data] = useState({});
@@ -14,7 +17,7 @@ const stats = () => {
   const[g6_data, setG6_data] = useState({});
 
   //effect to fetch data
-  useEffect(()=>{
+  useEffect(()=>{    
 
     //set data for graph 1
     const d1 = {
@@ -35,129 +38,200 @@ const stats = () => {
     setG1_data(d1);
 
     //set data for graph 2
-    const d2 = {
-      labels: ['Google', 'Amazon', 'Microsoft', 'Apple', 'Facebook'],
-      datasets: [
-        {
-          label: 'Reviews',
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-          ],
-          borderWidth: 2,
-          data: [800, 700, 650, 625, 610]
-        }
-      ]
-    }
+    axios.get(`${BACKEND}/getMostReviewedCompanies`)
+    .then(response => {
+      if(response.status == 200){        
+        let companies = [];
+        let counts = []
+        _.forEach(response.data, company => {
+          companies.push(company.company_name)
+          counts.push(company.the_count)
+        })
 
-    setG2_data(d2);
+        const d2 = {
+          labels: companies,
+          datasets: [
+            {
+              label: 'Reviews',
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+              ],
+              borderWidth: 2,
+              data: counts
+            }
+          ]
+        }
+    
+        setG2_data(d2);
+      }      
+    })    
 
     //set data for graph 3
-    const d3 = {
-      labels: ['Google', 'Amazon', 'Microsoft', 'Apple', 'Facebook'],
-      datasets: [
-        {
-          label: 'Reviews',
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-          ],
-          borderWidth: 2,
-          data: [4.8, 4.2, 3.9, 3.5, 2.8]
-        }
-      ]
-    }
+    axios.get(`${BACKEND}/getMostRatedCompanies`)
+    .then(response => {
+      if(response.status == 200){
 
-    setG3_data(d3);
+        let l3 = []
+        let g3d = []
+        _.forEach(response.data.avg_overall_rating, company=>{
+          l3.push(company.company_name)
+          g3d.push(company.the_rating)
+        })
+
+        const d3 = {
+          labels: l3,
+          datasets: [
+            {
+              label: 'Reviews',
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+              ],
+              borderWidth: 2,
+              data: g3d
+            }
+          ]
+        }
+    
+        setG3_data(d3);
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })    
 
     //set data for graph 4
-    const d4 = {
-      labels: ['Baburao', 'Raju', 'Shyam', 'Totla', 'Kabira'],
-      datasets: [
-        {
-          label: 'Students',
-          backgroundColor: [
-            'rgba(153, 102, 255, 0.2)',            
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',            
-          ],
-          borderColor: [
-            'rgba(153, 102, 255, 1)',            
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-          ],
-          borderWidth: 2,
-          data: [381, 298, 291, 120, 89]
-        }
-      ]
-    }
+    axios.get(`${BACKEND}/getTopStudents`)
+    .then(response => {
+      if(response.status == 200){
 
-    setG4_data(d4);
+        let l4 = []
+        let g4d = []
+
+        _.forEach(response.data, student=>{
+          l4.push(student.student_first_name+" "+student.student_last_name)
+          g4d.push(student.num_of_approved_reviews)
+        })
+        const d4 = {
+          labels: l4,
+          datasets: [
+            {
+              label: 'Students',
+              backgroundColor: [
+                'rgba(153, 102, 255, 0.2)',            
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',            
+              ],
+              borderColor: [
+                'rgba(153, 102, 255, 1)',            
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+              ],
+              borderWidth: 2,
+              data: g4d
+            }
+          ]
+        }
+    
+        setG4_data(d4);
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })    
 
     //set data for graph 4
-    const d5 = {
-      labels: ['Deviprasad', 'Harshad Mehta', 'Vijay Maliya', 'Nirav Modi', 'Sundar Pichai', 'Tim Cook', 'Bill Gates', 'Lebron James', 'Mark Zuckerberg', 'Xi Jinping'],
-      datasets: [
-        {
-          label: 'Company Rating',
-          backgroundColor: [
-            'rgba(153, 102, 255, 0.2)',            
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            
-            'rgba(255, 0, 71, 0.2)',            
-            'rgba(17, 0, 255, 0.2)',
-            'rgba(0, 255, 195, 0.2)',
-            'rgba(255, 33, 10, 0.2)',
-            'rgba(0, 40, 10, 0.2)',
-          ],
-          borderColor: [
-            'rgba(153, 102, 255, 1)',            
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(255, 0, 71, 1)',
-            'rgba(17, 0, 255, 1)',
-            'rgba(0, 255, 195, 1)',
-            'rgba(255, 33, 10, 1)',
-            'rgba(0, 40, 10, 1)',
-          ],
-          borderWidth: 2,
-          data: [4.8, 4.7, 4.7, 4.3, 4.23, 4.1, 3.9, 3.87, 3.5, 3.44]
-        }
-      ]
-    }
+    axios.get(`${BACKEND}/getTopCEOs`)
+    .then(response => {
+      console.log(response.data);
+      if(response.status == 200){
 
-    setG5_data(d5);
+        let l5 = []
+        let g5d = []
+
+        _.forEach(response.data, ceo => {
+          if(ceo.company_ceo_first_name == null){
+            l5.push("John Doe")
+          }
+          else{
+            l5.push(ceo.company_ceo_first_name+" "+ceo.company_ceo_last_name)
+          }
+          g5d.push(ceo.company_avg_ceo_approval_rating)
+        })
+
+        const d5 = {
+          labels: l5,
+          datasets: [
+            {
+              label: 'Company Rating',
+              backgroundColor: [
+                'rgba(153, 102, 255, 0.2)',            
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                
+                'rgba(255, 0, 71, 0.2)',            
+                'rgba(17, 0, 255, 0.2)',
+                'rgba(0, 255, 195, 0.2)',
+                'rgba(255, 33, 10, 0.2)',
+                'rgba(0, 40, 10, 0.2)',
+              ],
+              borderColor: [
+                'rgba(153, 102, 255, 1)',            
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 0, 71, 1)',
+                'rgba(17, 0, 255, 1)',
+                'rgba(0, 255, 195, 1)',
+                'rgba(255, 33, 10, 1)',
+                'rgba(0, 40, 10, 1)',
+              ],
+              borderWidth: 2,
+              data: g5d
+            }
+          ]
+        }
+    
+        setG5_data(d5);
+      }      
+    })
+    .catch(err => {
+      console.log(err);
+    })
 
     //set data for graph 6
+    axios.get(`${BACKEND}/getMostViewedCompanies`)
+    .then(response => {
+      console.log(response.data)
+    })
     const d6 = {
       labels: ['Google', 'Foogle', 'Amazon', 'Scamazon', 'Microsoft', 'Macrohard', 'Netflix', 'Letflix', 'Apple', 'Kidney'],
       datasets: [

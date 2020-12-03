@@ -23,7 +23,7 @@ const ManageCompanies = () => {
 
   //this effect fetches data on mount
   useEffect(()=>{
-    axios.get(`${BACKEND}/getAllCompaniesAdmin`)
+    axios.get(`${BACKEND}/getAllCompanies`)
     .then(response => {  
       if(response.status === 200){
         setCompanies(response.data);
@@ -55,6 +55,17 @@ const ManageCompanies = () => {
     setElementsForCurrentPage();
   }
 
+  const showCompanyStats = company_id => {
+    console.log("Company clicked with id = "+company_id);
+    axios.get(`${BACKEND}/getCompanyStats/`+company_id)
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+  }
+
   //this effect displays cards
   useEffect( () => {
     let rcards = elements.map(company => {
@@ -63,7 +74,7 @@ const ManageCompanies = () => {
           <div className="link_div">
             <Link className="link_fonts" to={{pathname:"/showCompanyReviews", state:{company_id:company.company_id}}}>{company.company_name}</Link>
           </div>
-          <Button style={{backgroundColor:"#0CAA41", color:"white"}}>Show Stats</Button>
+          <Button style={{backgroundColor:"#0CAA41", color:"white"}} onClick={()=>{showCompanyStats(company.company_id)}}>Show Stats</Button>
         </Segment>
       )
     })
@@ -91,7 +102,7 @@ const ManageCompanies = () => {
 
   const search = e => {
     e.preventDefault();    
-    axios.post(`${BACKEND}/searchCompany/`, {term:term})
+    axios.post(`${BACKEND}/searchCompany/`, {searchTerm:term})
     .then(response => {
       console.log(response)
       setCompanies(response.data);
