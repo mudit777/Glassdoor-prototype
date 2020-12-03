@@ -9,6 +9,8 @@ import './ManageCompanies.css';
 import {Grid, Segment, Button, Input} from 'semantic-ui-react';
 import {Pagination} from 'antd';
 import 'antd/dist/antd.css';
+import {Pie, Bar} from 'react-chartjs-2';
+import _ from 'lodash';
 
 const ManageCompanies = () => {
   const[companies, setCompanies] = useState([]);
@@ -20,6 +22,10 @@ const ManageCompanies = () => {
   const[currentPage, setCurrentPage] = useState(1);
   const[pageCount, setPageCount] = useState(1);
   const[paginationElement, setPaginationElement] = useState(null);
+  const[g1_data, setG1_data] = useState({});
+  const[g2_data, setG2_data] = useState({});
+  const[g1, setG1] = useState('');
+  const[buttonText, setButtonText] = useState('View Demographics');
 
   //this effect fetches data on mount
   useEffect(()=>{
@@ -60,6 +66,77 @@ const ManageCompanies = () => {
     axios.get(`${BACKEND}/getCompanyStats/`+company_id)
     .then(response => {
       console.log(response.data);
+      if(response.status == 200){
+        let g1l = []
+        let g1d = []
+        
+        _.forOwn(response.data.app_status_and_count, (value, key) => {
+          g1l.push(key);
+          g1d.push(value);
+        });
+
+        const d1 = {
+          labels: g1l,
+          datasets: [
+            {
+              label: 'App Status',
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+              ],
+              borderWidth: 2,
+              data: g1d
+            }
+          ]
+        }
+
+        let d2 = {};
+        if(typeof(response.data.demographics) !== 'string'){
+          let g2l = []
+          let g2d = []
+          _.forEach(response.data.demographics, d => {
+            g2l.push(Object.keys(d)[0])
+            g2d.push(d[Object.keys(d)[0]])
+          })
+          
+          d2 = {
+            labels: g2l,
+            datasets: [
+              {
+                label: 'Race',
+                backgroundColor: [
+                  '#B21F00',
+                  '#C9DE00',
+                  '#2FDE00',
+                  '#00A6B4',
+                  '#6800B4'
+                ],
+                hoverBackgroundColor: [
+                '#501800',
+                '#4B5000',
+                '#175000',
+                '#003350',
+                '#35014F'
+                ],
+                data: g2d
+              }
+            ]
+          }
+        }
+        setG1_data(d1);
+        setG2_data(d2);
+
+      }
     })
     .catch(err=>{
       console.log(err);
@@ -70,7 +147,7 @@ const ManageCompanies = () => {
   useEffect( () => {
     let rcards = elements.map(company => {
       return (
-        <Segment raised className="segment_div">
+        <Segment key={company.company_id} raised className="segment_div">
           <div className="link_div">
             <Link className="link_fonts" to={{pathname:"/showCompanyReviews", state:{company_id:company.company_id}}}>{company.company_name}</Link>
           </div>
@@ -104,12 +181,24 @@ const ManageCompanies = () => {
     e.preventDefault();    
     axios.post(`${BACKEND}/searchCompany/`, {searchTerm:term})
     .then(response => {
-      console.log(response)
       setCompanies(response.data);
     })
     .catch(err => {
       console.log(err)
     })     
+  }
+
+  const changeGraphs = e => {
+    e.preventDefault();
+
+    if(g1 === ""){
+      setG1("none");
+      setButtonText("View Application Stats");
+    }
+    else{
+      setG1("");
+      setButtonText("View Demographics");
+    }   
   }
 
   return(
@@ -135,7 +224,48 @@ const ManageCompanies = () => {
           </Grid.Column>
           <Grid.Column width={8}>
             <div className="stats">
-              See Stats here
+              <div style={{display:`${g1}`}}>
+                <Bar
+                  data={g1_data}
+                  options={{
+                    title:{
+                      display:true,
+                      text:'Application status and count',
+                      fontSize:20
+                    },
+                    legend:{
+                      display:false,
+                      position:'right'
+                    },
+                    scales: {
+                      yAxes: [
+                        {
+                          ticks: {
+                            beginAtZero: true,
+                          },
+                        },
+                      ],
+                    }
+                  }}
+                />
+              </div>
+              <div style={{display:`${g1?"":"none"}`}}>
+                <Pie
+                  data={g2_data}
+                  options={{
+                    title:{
+                      display:true,
+                      text:'Applicants Race',
+                      fontSize:20
+                    },
+                    legend:{
+                      display:true,
+                      position:'right'
+                    }
+                  }}
+                />
+              </div>
+              <Button content={buttonText} onClick={changeGraphs} style={{backgroundColor:"#0CAA41", color:"white", marginTop:"1rem", marginLeft:"40%"}}/>
             </div>
           </Grid.Column>
         </Grid.Row>

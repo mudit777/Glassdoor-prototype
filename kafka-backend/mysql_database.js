@@ -1,20 +1,17 @@
 var mysql = require('mysql')
-
-let connection = mysql.createPool({
-  host : '35.197.63.173',
-  port : "3306",
-  user: 'root',
-  password: 'admin',
-  database: 'glassdoor'
+let connection = mysql.createConnection({
+    // host: 'yelp-rds.cmvrgbslqsml.us-west-1.rds.amazonaws.com',
+    host : '35.230.18.97',
+    port : "3306",
+    user: 'root',
+    password: 'ugt4vwLxkbf5BKOG',
+    database: 'glassdoor'
 });
-
-connection.getConnection(function(err) {
-  if (err) {
-    return console.error('db error: ' + err.message);
-  }
-
-  console.log('Connected to the MySQL server.');
+connection.connect(function(err) {
+    if (err) {
+      return console.error('db error: ' + err.message);
+    }
+    console.log('Connected to the MySQL server.');
 });
 
 module.exports = connection
-  

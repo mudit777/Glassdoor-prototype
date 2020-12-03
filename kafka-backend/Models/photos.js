@@ -7,7 +7,7 @@ const photoSchema = new Schema({
     photo_owner_role: {type: String, required: true, enum: ["User", "Company"]},
     photo_owner_id: {type: String, required: true}, // userID or companyID from MySQL
     photo_owner_name: {type: String, required: true},
-    photo_uploaded_for: {type:String, required:true, default:"self"} //uploaded by user for company
+    photo_uploaded_for:{type: String, required: true, default:"self"}
     // If "User", concat first and last name with space
     // If "Company", just company name
 },

@@ -60,7 +60,7 @@ const ApproveReviews = () => {
   useEffect(() => {
     let rcards = reviews.map(review => {
       return (
-        <ReviewCard review={review} id={review.review_id} handleApprove={() => {reviewApproved(review.review_id)}} handleReject={() => {reviewRejected(review.review_id)}} />
+        <ReviewCard review={review} key={review.review_id} handleApprove={() => {reviewApproved(review.review_id)}} handleReject={() => {reviewRejected(review.review_id)}} />
       )
     })
     setCards(rcards);

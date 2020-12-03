@@ -1,6 +1,5 @@
 import React from 'react';
 import {Card, Button, Image} from 'semantic-ui-react';
-const faker = require('faker');
 const PhotoCard = ({photo, handleApprove, handleReject}) => {
 
   const approveReview = () => {
@@ -13,9 +12,9 @@ const PhotoCard = ({photo, handleApprove, handleReject}) => {
 
   return(
     <Card>
-      <Image src={faker.image.people()}/>
+      <Image src={photo.photo_path}/>
       <Card.Content>
-        <Card.Header>{photo.student_name}</Card.Header>
+        <Card.Header>{photo.photo_owner_name}</Card.Header>
       </Card.Content>        
       <Card.Content extra>
         <div className="ui two buttons">

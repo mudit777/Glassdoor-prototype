@@ -1,6 +1,5 @@
 import React,{useState, useEffect} from 'react';
 import AdminHeader from './AdminHeader';
-const faker = require('faker')
 import {NotificationManager, NotificationContainer} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import PhotoCard from './PhotoCard';
@@ -22,7 +21,6 @@ const ApprovePhotos = () => {
     console.log("Fetching undecided photos")
     axios.get(`${BACKEND}/getUndecidedPhotos`)
     .then(response=>{
-      console.log(response)
       setPhotos(response.data);
     })
     .catch(err=>{
@@ -33,18 +31,18 @@ const ApprovePhotos = () => {
   useEffect(() => {
     let rcards = photos.map(photo => {
       return (
-        <PhotoCard photo={photo} id={photo.photo_id} handleApprove={() => {photoApproved(photo.photo_id)}} handleReject={() => {photoRejected(photo.photo_id)}} />
+        <PhotoCard photo={photo} key={photo._id} handleApprove={() => {photoApproved(photo._id)}} handleReject={() => {photoRejected(photo._id)}} />
       )
     })
     setCards(rcards);
   }, [photos])
 
   const removePhoto = photo_id => {
-    setPhotos(photos.filter((photo)=>(photo.photo_id !== photo_id)))
+    setPhotos(photos.filter((photo)=>(photo._id !== photo_id)))
   }
 
   const photoApproved = photo_id => {
-    axios.post(`${BACKEND}/approvePhoto`, {photo_id})
+    axios.post(`${BACKEND}/approvePhoto`, {_id:photo_id})
     .then(response => {      
       if(response.status === 200){
         removePhoto(photo_id);
@@ -57,7 +55,7 @@ const ApprovePhotos = () => {
   }
 
   const photoRejected = photo_id => {
-    axios.post(`${BACKEND}/rejectPhoto`, {photo_id})
+    axios.post(`${BACKEND}/rejectPhoto`, {_id:photo_id})
     .then(response => {      
       if(response.status === 200){
         removePhoto(photo_id);
