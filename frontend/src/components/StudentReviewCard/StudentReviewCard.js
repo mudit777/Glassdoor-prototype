@@ -59,35 +59,41 @@ class StudentReviewCard extends Component {
         {
             icon1 = <FontAwesomeIcon icon={faSquare} style={{color:"#24b00e"}}/>
         }
-
+        var display=null;
+        // if(this.props.review.review_id !== undefined)
+        // {console.log(this.props.review)}
+        if(this.props.review.review_id !== undefined){
+            display=<Card title = "" style={{width:676}}>
+            <div className="column-left-reviews">
+                <img style ={{height:50,width:50}}src="https://media.glassdoor.com/sql/6036/amazon-squarelogo-1552847650117.png" alt=""></img>
+            </div>
+            <div className="column-right-reviews">
+                <p style={{color:"#636363", marginTop:-15}}>{this.props.review.review_date.substring(0,10)}</p>
+                <p style={{fontSize:20, fontWeight:"bold", color:"#0048b9"}}>"{this.props.review.review_headline}"</p>
+                <Rate disabled defaultValue={this.props.review.review_rating} style={{color:"#00a422", marginTop:-25}} />
+                <div style={{marginTop:7}}>
+                    <div className="column-left-intervies">
+                        {icon1} Recommends
+                    </div>
+                    <div className="column-right-intervies">
+                        {icon2} CEO Approval
+                    </div>
+                </div>
+                <p style={{marginTop: 40}}>{this.props.review.review_desc}</p>
+                <p style={{fontWeight:"bold", marginTop: 7}}>Pros</p>
+                <p style={{marginTop:-10}}>{this.props.review.review_pros}</p>
+                <p style={{fontWeight:"bold", marginTop: 7}}>Cons</p>
+                <p style={{marginTop:-10}}>{this.props.review.review_cons}</p>
+                <FacebookOutlined style={{fontSize:30, backgroundColor:"#cfcfcf", color:"white"}}/><TwitterOutlined style={{fontSize:30, marginLeft:30, backgroundColor:"#cfcfcf", color:"white"}}/><MailOutlined style={{fontSize:30, marginLeft:30, backgroundColor:"#cfcfcf", color:"white"}}/><LinkOutlined style={{fontSize:30, marginLeft:30, backgroundColor:"#cfcfcf", color:"white"}}/>
+                <Button onClick = { () =>this.submitHelpful(this.props.review.review_id)} style={{backgroundColor:"white", color:"#0048b9", fontWeight:700, borderRadius:5, borderColor:"#0048b9", marginLeft:150}}>Helpful({this.props.review.review_helpful})</Button>
+            </div> 
+        </Card>
+        }
         return (
+            
             <div>
                 <div>
-                    <Card title = "" style={{width:676}}>
-                        <div className="column-left-reviews">
-                            <img style ={{height:50,width:50}}src="https://media.glassdoor.com/sql/6036/amazon-squarelogo-1552847650117.png" alt=""></img>
-                        </div>
-                        <div className="column-right-reviews">
-                            <p style={{color:"#636363", marginTop:-15}}>{this.props.review.review_date.substring(0,10)}</p>
-                            <p style={{fontSize:20, fontWeight:"bold", color:"#0048b9"}}>"{this.props.review.review_headline}"</p>
-                            <Rate disabled defaultValue={this.props.review.review_rating} style={{color:"#00a422", marginTop:-25}} />
-                            <div style={{marginTop:7}}>
-                                <div className="column-left-intervies">
-                                    {icon1} Recommends
-                                </div>
-                                <div className="column-right-intervies">
-                                    {icon2} CEO Approval
-                                </div>
-                            </div>
-                            <p style={{marginTop: 40}}>{this.props.review.review_desc}</p>
-                            <p style={{fontWeight:"bold", marginTop: 7}}>Pros</p>
-                            <p style={{marginTop:-10}}>{this.props.review.review_pros}</p>
-                            <p style={{fontWeight:"bold", marginTop: 7}}>Cons</p>
-                            <p style={{marginTop:-10}}>{this.props.review.review_cons}</p>
-                            <FacebookOutlined style={{fontSize:30, backgroundColor:"#cfcfcf", color:"white"}}/><TwitterOutlined style={{fontSize:30, marginLeft:30, backgroundColor:"#cfcfcf", color:"white"}}/><MailOutlined style={{fontSize:30, marginLeft:30, backgroundColor:"#cfcfcf", color:"white"}}/><LinkOutlined style={{fontSize:30, marginLeft:30, backgroundColor:"#cfcfcf", color:"white"}}/>
-                            <Button onClick = { () =>this.submitHelpful(this.props.review.review_id)} style={{backgroundColor:"white", color:"#0048b9", fontWeight:700, borderRadius:5, borderColor:"#0048b9", marginLeft:150}}>Helpful({this.props.review.review_helpful})</Button>
-                        </div> 
-                    </Card>
+                    {display}
                 </div>
             </div>
         )

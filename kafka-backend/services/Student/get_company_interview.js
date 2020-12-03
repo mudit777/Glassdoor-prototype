@@ -2,7 +2,7 @@ var interviews = require('../../Models/interviewModel');
 
 function handle_request(message, callback)
 {
-    interviews.find({company_id : "1"}, (err, result) => {
+    interviews.find({company_id : message.company_id}, (err, result) => {
         var response = {};
         if(err)
         {

@@ -6,6 +6,7 @@ import ReviewCard from '../ReviewCard/ReviewCard'
 import Axios from 'axios'
 import { BACKEND } from '../../Config';
 import { Card, Button } from 'antd';
+import StudentReviewCard from '../StudentReviewCard/StudentReviewCard'
 
 
 
@@ -52,7 +53,7 @@ export default class StudentActivity extends Component {
                                           {this.state.reviews.map(i=>{
                                           return(
                                                 <div>
-                                                      <ReviewCard review = {i} key={i.review_id}/>
+                                                      <StudentReviewCard review = {i} key={i.review_id}/>
                                                 </div>
                                           )
                                           })}

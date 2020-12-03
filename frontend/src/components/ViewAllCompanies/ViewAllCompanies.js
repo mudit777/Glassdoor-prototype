@@ -68,9 +68,9 @@ class ViewAllCompanies extends Component {
                 return(
                     <ul style = {{listStyleType : "none"}}>
                         <li>
-                            <Link>
+                            
                                 <CompanyCard company = {i} key = {i.company_id} />
-                            </Link>
+                            
                         </li>
                     </ul>
                    

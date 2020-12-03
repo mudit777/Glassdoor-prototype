@@ -6,6 +6,7 @@ import { Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 import { BACKEND } from '../../Config'
 import StudentReviewCard from '../StudentReviewCard/StudentReviewCard';
+import DonutChart from "react-svg-donut-chart"
 
 
 const { Search } = Input;
@@ -20,9 +21,12 @@ class StudentReviews extends Component {
         }
         console.log(props)
     }
-
+    
     componentDidMount(){
-        axios.post(`${BACKEND}/getPositiveReview`)
+        var company = {
+            company_id : this.props.location.state.company_id
+        }
+        axios.post(`${BACKEND}/getPositiveReview`,company)
             .then(response => {
                 console.log("Status Code in Getting Positive Reviews : ",response.status);
                 if(response.status === 200){
@@ -38,7 +42,7 @@ class StudentReviews extends Component {
             .catch(err => {
                 
         })
-        axios.post(`${BACKEND}/getNegativeReview`)
+        axios.post(`${BACKEND}/getNegativeReview`,company)
             .then(response => {
                 console.log("Status Code in Getting Negative Reviews : ",response.status);
                 if(response.status === 200){
@@ -54,37 +58,90 @@ class StudentReviews extends Component {
             .catch(err => {
                 
         })
+
+        axios.post(`${BACKEND}/getCompanyReviews`,company)
+      .then(response => {
+          console.log("Status Code in Getting Reviews : ",response.status);
+          if(response.status === 200){
+              console.log("HERE IN ACTIONS - GETTING REVIEWS!")
+              console.log(response.data);
+              var average_ratings=0;
+              var recommend_to_friend=0;
+              var ceo_approval=0;
+              for(var i=0;i<response.data.length;i++)
+              {
+                  average_ratings+=response.data[i].review_rating;
+                  if(response.data[i].recommend_to_friend === '1')
+                  {
+                        recommend_to_friend++;
+                  }
+                  if(response.data[i].ceo_approval === '1')
+                  {
+                        ceo_approval++;
+                  }
+                  
+              }
+              average_ratings/=response.data.length
+              recommend_to_friend = (recommend_to_friend*100)/response.data.length
+                  ceo_approval = (ceo_approval*100)/response.data.length
+            //   console.log('this is itttttttttttttt',average_ratings,recommend_to_friend,ceo_approval)
+              this.setState(
+              {
+                  reviews : response.data,
+                  average_ratings : average_ratings,
+                  recommend_to_friend : recommend_to_friend,
+                  ceo_approval : ceo_approval,
+                  
+              })
+              // Object.keys(this.state.reviews).map(i=>{
+              //     console.log("REVIEW IS",this.state.reviews[i].review_cons)
+              // })
+          }else{
+          }
+      })
+      .catch(err => {
+          
+  })
     }
 
     render() {
+        var datapie1 = [
+            {value: this.state.average_ratings, stroke: "#dcee95", strokeWidth: 5},
+            {value: 5-this.state.average_ratings, stroke: "#0caa41", strokeWidth: 5},
+        ]
+        var datapie2 = [
+            {value: this.state.recommend_to_friend, stroke: "#dcee95", strokeWidth: 5},
+            {value: 100-this.state.recommend_to_friend, stroke: "#0caa41", strokeWidth: 5},
+        ]
+        var datapie3 = [
+            {value: this.state.ceo_approval, stroke: "#dcee95", strokeWidth: 5},
+            {value: 100-this.state.ceo_approval, stroke: "#0caa41", strokeWidth: 5},
+        ]
         return (
             <div>
                 <CompanyHeaderBarForm/>
-                <div style={{backgroundColor: "#f2f2f2"}}>
+                <div style={{display:'flex',backgroundColor:'#f2f2f2'}} >
                     <div className="column-left-add-reviews" style={{backgroundColor:"#f2f2f2"}}> 
                         <div style={{marginLeft: 208, width:676, backgroundColor:"white", marginTop: 7, padding: 15}}>
                             <p style={{fontSize: 20}}>Amazon Reviews</p>
                             <Search placeholder="Search Job Titles" allowClear size="large" style={{width:505}}/>
                             <span><Button style={{height: 40, backgroundColor:"#004fb4", color:"white", borderRadius:5, fontWeight:"bold", marginLeft:10}}>Find Reviews</Button></span>
-                            <p style={{fontWeight:"bold", marginTop:10}}>48921 Reviews</p>
-                            <div style={{marginLeft:200}}>
-                                <div className="column-left-reviews">
-                                    <p style={{color:"#00a422", fontWeight:400, fontSize:24}}>4.5</p>
-                                </div>
-                                <div className="column-right-reviews">
-                                    <Rate style={{color:"#00a422"}} defaultValue={4.5} allowHalf/>
-                                </div>
-                            </div>
-                            <div style={{height:66}}>
-                                <div className="sr-column-left-1">
-                                    <Progress type="circle" percent={700} width={66} style={{marginLeft:-200}}/> Recommend Friend
-                                </div>
-                                <div className="sr-column-middle-1">
-                                    <Progress type="circle" percent={60} width={66} style={{marginLeft:0}}/> Approve of CEO
-                                </div>
-                                <div className="sr-column-right-1">
-                                    <p>CEO Name</p>
-                                </div>                      
+                            
+                            <div style={{height:66,marginBottom:'5rem',marginTop:'3rem'}}>
+                                <div style={{display:'flex',justifyContent:'flex-start'}}>
+                                        <div style={{width:'4rem',height:'8rem',marginRight:'5rem'}}>
+                                            <DonutChart data={datapie1} />
+                                            <p>Average ratings</p>
+                                        </div>
+                                        <div style={{width:'4rem',height:'8rem',marginRight:'5rem'}}>
+                                            <DonutChart data={datapie2} />
+                                            <p>Recommend to Friend</p>
+                                        </div>
+                                        <div style={{width:'4rem',height:'8rem',marginRight:'5rem'}}>
+                                            <DonutChart data={datapie3} />
+                                            <p>CEO approval</p>
+                                        </div>
+                                </div>                   
                             </div>
                             <div style={{marginLeft:-15}}>
                                 {this.state.positive_review.map(i=>{
