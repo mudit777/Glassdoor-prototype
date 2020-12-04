@@ -94,15 +94,15 @@ const admin_dashboard_router = require('./src/Admin/dashboard_controller');
 var company_authentication_router = require('./src/Company/company_authentication');
 var student_authentication_router = require('./src/Student/student_authentication');
 var loginRouter = require("./src/Login/login");
-var review_controllers = require('./src/Reviews/review_controllers');
+// var review_controllers = require('./src/Reviews/review_controllers');
 var admin_get_controllers = require('./src/Admin/get_controllers');
 var photo_controllers = require('./src/Photos/photo_controllers');
 
 //post paths
-app.post("/registerCompany", company_authentication_router.register_company);
-app.post("/registerStudent", student_authentication_router.register_student);
-app.post("/login", loginRouter.login);
-app.post("/add10k", review_controllers.add10kreviews);
+// app.post("/registerCompany", company_authentication_router.register_company);
+// app.post("/registerStudent", student_authentication_router.register_student);
+// app.post("/login", loginRouter.login);
+// app.post("/add10k", review_controllers.add10kreviews);
 app.post("/uploadImageCompany", photo_controllers.uploadImageCompany);
 app.post("/uploadImageByUserForCompany", photo_controllers.uploadImageByUserForCompany);
 app.post("/searchCompany", admin_company_router.search_company);
@@ -111,9 +111,8 @@ app.post("/rejectPhoto", admin_photo_router.reject_photo);
 app.post("/approveReview", admin_review_router.approve_review);
 app.post("/rejectReview", admin_review_router.reject_review);
 //get paths
-app.get("/getCompanyReviews/:company_id", review_controllers.getCompanyReviews);
 app.get("/getAllCompaniesAdmin", admin_get_controllers.getAllCompaniesAdmin);
-app.get("/getCompanyReviewsAdmin/:company_id", review_controllers.getCompanyReviewsAdmin);
+// app.get("/getCompanyReviewsAdmin/:company_id", review_controllers.getCompanyReviewsAdmin);
 app.get("/getCompanyPhotos/:company_id", photo_controllers.getCompanyPhotos);
 app.get("/getUndecidedReviews", admin_review_router.get_undecided_reviews);
 app.get("/getUndecidedPhotos", admin_photo_router.get_undecided_photos);

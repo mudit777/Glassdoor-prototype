@@ -1,5 +1,3 @@
-const date = require('date-and-time');
-const bcrypt = require('bcrypt');
 var kafka = require('../../kafka/client');
 exports.get_all_companies = (req, res) => {
     kafka.make_request("get_all_companies", req.body, (err, result) => {
@@ -11,11 +9,11 @@ exports.get_all_companies = (req, res) => {
             res.end("Server Side Error")
         }
         else if(result.code === 200)
-        {
+        {            
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
-            res.end(JSON.stringify(result.data))
+            res.end(result.data);            
         }
     })
 }
@@ -42,6 +40,7 @@ exports.search_company = (req, res) => {
 }
 
 exports.get_company_reviews = (req, res) => {
+    console.log("Get company reviews new")
     kafka.make_request("get_company_reviews", req.params, (err, result) => {
         if(result.code === 500)
         {

@@ -13,10 +13,11 @@ const ShowCompanyReviews = ({location}) => {
 
   //this effect fetches data on mount
   useEffect(()=>{
+    console.log("Fetch data for company_id: "+location.state.company_id)
     if(location.state.company_id !== undefined){
-      axios.get(`${BACKEND}/getCompanyReviewsAdmin/`+location.state.company_id)
-      .then(response => {  
-        setReviews(response.data)
+      axios.get(`${BACKEND}/getCompanyReviews/`+location.state.company_id)
+      .then(response => {
+        setReviews(JSON.parse(response.data))
       })
       .catch(err => {
         console.log("Axios err", err);
@@ -27,7 +28,7 @@ const ShowCompanyReviews = ({location}) => {
   useEffect(() => {
     let rcards = reviews.map(review => {
       return (
-        <CompanyReviewCard review={review} id={review.review_id}/>
+        <CompanyReviewCard review={review} key={review.review_id}/>
       )
     })
     setCards(rcards);
