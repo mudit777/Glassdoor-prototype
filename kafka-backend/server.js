@@ -66,4 +66,4 @@ handleTopicRequest("get_most_reviewed_companies", admin_service.get_most_reviewe
 handleTopicRequest("get_most_rated_companies", admin_service.get_most_rated_companies);
 handleTopicRequest("get_top_ceos", admin_service.get_top_ceos);
 handleTopicRequest("get_top_students", admin_service.get_top_students);
-// handleTopicRequest("get_most_viewed_companies", admin_service.get_most_viewed_companies);
+handleTopicRequest("get_most_viewed_companies", admin_service.get_most_viewed_companies);
