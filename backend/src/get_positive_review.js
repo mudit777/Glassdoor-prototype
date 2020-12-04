@@ -1,7 +1,8 @@
 var kafka = require('../../kafka/client');
 
-exports.getNegativeReview = (req, res) => {
-    kafka.make_request("get_negative_review", req.body, (err, result) => {
+exports.getPositiveReview = (req, res) => {
+    console.log("Get me positive reviews");
+    kafka.make_request("get_positive_review", req.body, (err, result) => {
         if(result.code === 500)
         {
             res.writeHead(500, {

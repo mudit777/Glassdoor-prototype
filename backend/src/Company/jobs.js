@@ -15,7 +15,7 @@ exports.getCompanyJobs = (req, res) => {
             res.writeHead(200,{
                 'Content-Type' : 'applicaton/json'
             })
-            res.end(JSON.stringify(result.data));
+            res.end(result.data);
         }     
     })
 }

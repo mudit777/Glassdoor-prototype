@@ -207,6 +207,7 @@ app.post("/getJob", getJobRouter.getJob)
 
 
 
+var get_company_applications_router = require('./src/Company/get_company_applications');
 
 var uploadsRouter = require('./src/uploads/uploads');
 var studentDetailsRouter = require('./src/Student/student_details');
@@ -218,6 +219,8 @@ var collectionRouter = require('./src/Student/collection');
 var getStudentReviewsRouter = require('./src/Student/get_student_reviews');
 var getStudentInterviewsRouter = require('./src/Student/get_student_interviews');
 var getStudentSalairesRouter = require('./src/Student/get_student_salaries');
+
+app.post("/getCompanyApplications", get_company_applications_router.get_company_applications);
 
 app.post("/getAllReviews", collectionRouter.allReviews);
 app.post("/getAllInterviews", collectionRouter.allInterviews);

@@ -1,21 +1,46 @@
 var connection = require('../../mysql_database');
+const util = require('util');
+const query = util.promisify(connection.query).bind(connection);
+const client = require('../../redis_config');
+const get = util.promisify(client.get).bind(client);
+const set = util.promisify(client.set).bind(client);
 
-function handle_request(message, callback)
+const handle_request = async (message, callback) => 
 {
-    var query = "SELECT * FROM glassdoor.jobs where company_id="+ message.company_id +";";
-    connection.query(query, (err, jobs) => {
-        var response = {};
-        if(err)
-        {
-            response.code = 500;
-            response.data = err
+    let response = {};
+    try {
+        let the_query = "SELECT * FROM glassdoor.jobs where company_id="+ message.company_id +";";
+
+        console.log(the_query);
+        let redis_result = await get('get_job_'+message.company_id);
+        
+        if(redis_result == null){
+            let rows = await query(the_query);
+            console.log("SQL result")
+            console.log(rows,'[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]]]]]]');
+            if(rows.length > 0)
+            {
+                response.code = 200;
+                response.data = JSON.stringify(rows);
+                set('get_job_'+message.company_id, JSON.stringify(rows));
+            }
+            else
+            {
+                response.code = 204;
+            }
+            callback(null, response)
         }
-        else 
-        {
+        else{
+            console.log("Fetching from redis");
+            console.log(redis_result)
             response.code = 200;
-            response.data = jobs
+            response.data = redis_result;
+            callback(null, response)
         }
+    } catch (e) {
+        response.code = 500;
+        response.data = e;
         callback(null, response);
-    })
+    }
 }
 exports.handle_request = handle_request;

@@ -2,6 +2,7 @@ var kafka = require('../../kafka/client');
 
 exports.getAllCompanies = (req, res) => {
     kafka.make_request("get_all_companies", req.body, (err, result) => {
+        console.log(result.data)
         if(err)
         {
             res.writeHead(500, {
@@ -28,7 +29,7 @@ exports.getAllCompanies = (req, res) => {
             res.writeHead(200,{
                 'Content-Type' : 'applicaton/json'
             })
-            res.end(JSON.stringify(result.data));
+            res.end(result.data);
         }
     })
 }

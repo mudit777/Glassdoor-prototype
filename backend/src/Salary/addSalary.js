@@ -27,7 +27,7 @@ exports.getCompanySalary = (req, res) => {
                 'Content-Type': "application/json"
             })
             console.log(result)
-            res.end(JSON.stringify(result))
+            res.end(JSON.stringify(result.data))
         }    
     })
 }

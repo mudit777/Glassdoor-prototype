@@ -52,6 +52,8 @@ var get_company_applications = require('./services/company/get_company_applicati
 
 var post_job = require('./services/company/post_job');
 var get_job = require('./services/company/get_job');
+var get_company_applications = require('./services/company/get_company_applications');
+
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';

@@ -16,7 +16,16 @@ class CompanyCard extends Component {
             reviewLength : 0,
             salaryLength : 0
         }
-        
+        // this.getCompanyReviews();
+        // this.getCompanyInterview();
+        // this.getCompanySalary();
+    }
+    componentDidMount(){
+        if(this.props.company){
+            this.getCompanyReviews();
+            this.getCompanyInterview();
+            this.getCompanySalary();
+        }
     }
     getCompanyReviews = () => {
         var company = {

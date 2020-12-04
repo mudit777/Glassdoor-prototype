@@ -6,6 +6,8 @@ function handle_request(message, callback)
 {
     var studentId = message.student.student_id;
     delete message.student.student_id;
+    // let gender = 1?message.student.gender==='Male':0
+    console.log(message,'[[[[[[[[[]]]]]]]]]]]]]')
     var query = "UPDATE glassdoor.students SET "+ " " + mysql.escape(message.student) + " " + " WHERE student_id = '"+ studentId +"'";
     connection.query(query, (err, result) => {
         var response = {};
