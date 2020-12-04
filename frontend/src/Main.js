@@ -27,6 +27,7 @@ import ViewCoverLetter from './components/Cards/ViewCoverLetter';
 import Pdf from './components/Pdf/Pdf';
 import SearchedInterviews from './components/SearchInterviews/SearchedInterviews';
 import SearchedSalaries from './components/SearchedSalaries/SearchedSalaries';
+import GetAllReviews from './components/GetAllReviews/GetAllReviews';
 
 
 class Main extends Component {
@@ -61,6 +62,7 @@ class Main extends Component {
                     <Route path = "/pdf" component = {Pdf} />
                     <Route path = "/searchedInterviews" component = {SearchedInterviews} />
                     <Route path = "/searchedSalaries" component = {SearchedSalaries} />
+                    <Route path = "/allReviews" component = {GetAllReviews}/>
                 </BrowserRouter>
             </div>
         )

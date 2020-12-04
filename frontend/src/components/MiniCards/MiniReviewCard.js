@@ -13,7 +13,8 @@ class MiniReviewCard extends Component {
         super(props);
         this.state = {
             visible: false,
-            reply: ""
+            reply: "",
+            company: []
         }
     }
 
@@ -23,7 +24,7 @@ class MiniReviewCard extends Component {
             <div>
                 <Card title = "" style={{width:676}}>
                     <div className="column-left-reviews">
-                        <img style ={{height:50,width:50}} src={this.props.photo} alt=""></img>
+                        <img style ={{height:50,width:50}} src={this.state.company.company_photo} alt=""></img>
                     </div>
                     <div className="column-right-reviews">
                         <p style={{color:"#636363", marginTop:-15}}>{this.props.review.review_date.substring(0,10)}</p>
