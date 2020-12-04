@@ -3,6 +3,7 @@ const util = require('util');
 const query = util.promisify(conn.query).bind(conn);
 
 const handle_request = async (message, callback) => {
+    console.log(message)
     let response = {};
     try {
         let the_query = `UPDATE reviews SET review_status="Approved" WHERE review_id=${message.review_id}`;

@@ -21,7 +21,7 @@ exports.get_all_companies = (req, res) => {
 }
 
 exports.search_company = (req, res) => {
-    kafka.make_request("search_company", req.params, (err, result) => {
+    kafka.make_request("search_company", req.body, (err, result) => {
         // req.body format
         // review_id 
         if(result.code === 500)

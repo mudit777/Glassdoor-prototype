@@ -1,0 +1,18 @@
+.extreme{
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+.left{
+  text-align: left;
+}
+
+.logo_footer{
+  width: 230px;
+  height: 180px;
+  margin-left: 50%;
+}
+
+.grid_top{
+  margin-top: 2rem;
+}

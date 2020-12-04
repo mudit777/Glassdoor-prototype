@@ -1,5 +1,3 @@
-const date = require('date-and-time');
-const bcrypt = require('bcrypt');
 var kafka = require('../../kafka/client');
 exports.get_undecided_photos = (req, res) => {
     kafka.make_request("get_undecided_photos", req.body, (err, result) => {
@@ -21,6 +19,8 @@ exports.get_undecided_photos = (req, res) => {
 }
 
 exports.approve_photo = (req, res) => {
+    console.log("Approve this photo")
+    console.log(req.body)
     kafka.make_request("approve_photo", req.body, (err, result) => {
         // req.body format
         // _id (from Mongo Atlas)
@@ -48,6 +48,7 @@ exports.approve_photo = (req, res) => {
 }
 
 exports.reject_photo = (req, res) => {
+    console.log("Reject this photo")
     kafka.make_request("reject_photo", req.body, (err, result) => {
         // req.body format
         // _id (from Mongo Atlas)

@@ -1,5 +1,3 @@
-const date = require('date-and-time');
-const bcrypt = require('bcrypt');
 var kafka = require('../../kafka/client');
 
 exports.get_undecided_reviews = (req, res) => {
