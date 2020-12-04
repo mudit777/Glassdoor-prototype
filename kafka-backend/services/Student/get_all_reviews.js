@@ -2,7 +2,7 @@ var connection = require('../../mysql_database');
 
 function handle_request(message, callback)
 {
-    var query = "SELECT * FROM reviews";
+    var query = "SELECT * FROM reviews where review_status='Approved'";
     connection.query(query, (err, reviews) => {
         var response = {}
         if(err)

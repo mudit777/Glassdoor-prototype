@@ -8,7 +8,7 @@ const set = util.promisify(client.set).bind(client);
 const handle_request = async (message, callback) => {
     let response = {};
     try {
-        let the_query = "SELECT * FROM reviews where student_id = "+ message.student_id+"";
+        let the_query = "SELECT * FROM reviews where student_id = "+ message.student_id+" and review_status='Approved'";
         let redis_key = "get_student_reviews_" + message.student_id;
         let redis_result = await get(redis_key);
 
