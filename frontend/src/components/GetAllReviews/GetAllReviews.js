@@ -15,6 +15,7 @@ class GetAllReviews extends Component {
             perPage: 5,
             currentPage: 1,
             pageCount: 1
+        }
     }
 
     setElementsForCurrentPage = () => {
