@@ -37,9 +37,9 @@ class ApplicationCard extends Component {
 
     render() {
         return (
-            <div>
-                <div>
-                    <Card title = "" style={{width:676}}>
+            <div >
+                <div style={{backgroundColor:'#f2f2f2',padding:'1rem 0'}}>
+                    <Card style={{width:'60rem',margin:'1rem 7rem'}}>
                         <div className="column-left-intervies">
                             <p style={{fontWeight:"bold", marginTop: 0}}>Job Title:</p>
                             <p style={{marginTop:-8}}>{this.props.applications.job_title}</p>

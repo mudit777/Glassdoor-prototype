@@ -18,7 +18,7 @@ class CompanyJobCard extends Component {
     }
     render() {
         return (
-            <div>
+            <div style={{backgroundColor:'#f2f2f2'}}>
                 <Card actions = {[<Button style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder"}} onClick = {this.openJob}>Show Job</Button>]} style = {{marginTop: "2%", boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)"}}>
                     <Row>
                         <Col>

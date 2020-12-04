@@ -17,6 +17,7 @@ class CompanyBar extends Component {
             console.log(props);
             this.state = {
                   company:{},
+                  interviews:[],
                   photo:null,
             }
             // "https://blog.nscsports.org/wp-content/uploads/2014/10/default-img.gif"
@@ -34,6 +35,15 @@ class CompanyBar extends Component {
                       this.setState({
                           company : response.data,
                               photo: response.data.company_profile_photo
+                      })
+                  }
+              })
+              Axios.post(`${BACKEND}/getCompanyInterview`, company).then(response => {
+                  if(response.status === 200)
+                  {
+                      console.log(response.data)
+                      this.setState({
+                          interviews : response.data,
                       })
                   }
               })
@@ -109,12 +119,12 @@ class CompanyBar extends Component {
 
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
                                     <div>{this.props.total_salary}</div>
-                                    <div style={{fontWeight:'bold',color:'#5185CE'}}>Salaries</div>
+                                    <Link to={{pathname:'/salary',state:{company_id:this.props.company_id,type:t}}} style={{fontWeight:'bold',color:'#5185CE'}}>Salaries</Link>
                               </div>
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>
 
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
-                                    <div>remaining</div>
+                                    <div>{this.state.interviews.length}</div>
                                     <Link to={{pathname:'/studentInterviews',state:{company_id:this.props.company.company_id,type:t}}} style={{fontWeight:'bold',color:'#5185CE'}}>Interviews</Link>
                               </div>
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>

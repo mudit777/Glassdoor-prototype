@@ -57,7 +57,7 @@ class AddSalary extends Component {
       Submit = e =>{
             // console.log('clicked',this.state)
             var salary = {
-                company_id : sessionStorage.getItem("company_id"),
+                company_id : this.props.location.state.company_id,
                   BaseSalary : this.state.BaseSalary,
                   Bonus : this.state.Bonus,
                   JobTitle  : this.state.JobTitle,
@@ -78,12 +78,13 @@ class AddSalary extends Component {
                       });
                   }
               })
+              window.location.replace('/studentProfile')
       }
       render() {
             return (
             <div>
                 <div>
-                    <CompanyHeaderBar />
+                    <CompanyHeaderBar type='student'/>
                 </div>
                 <div>
                     <Row style = {{marginTop : "5%", marginLeft : "10%"}}> 

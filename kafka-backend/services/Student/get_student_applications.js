@@ -6,7 +6,7 @@ function handle_request(message, callback)
     var response = {};
     var job_title = [];
     var answer = [];
-    applications.find({student_id : "1"}, (err, result) => {
+    applications.find({student_id : message.student_id}, (err, result) => {
         if(err)
         {
             response.code = 500;

@@ -22,7 +22,10 @@ class StudentApplications extends Component {
     }
 
     componentDidMount(){
-        axios.post(`${BACKEND}/getStudentApplications`)
+        var myJson = {
+            student_id : window.sessionStorage.getItem('student_id'),
+        }
+        axios.post(`${BACKEND}/getStudentApplications`,myJson)
             .then(response => {
                 console.log("Status Code in Getting Student Applications : ",response.status);
                 if(response.status === 200){
@@ -44,8 +47,8 @@ class StudentApplications extends Component {
     render() {
         return (
             <div>
-                <CompanyHeaderBarForm/>
-                <div style={{backgroundColor:"#cfcfcf"}}>
+                <CompanyHeaderBarForm type='student'/>
+                <div style={{backgroundColor:"#f2f2f2"}}>
                     <div style={{marginLeft: 200}}>
                         {this.state.applications.map(i => {
                             console.log(i)

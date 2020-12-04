@@ -26,7 +26,7 @@ class ViewAllCompanies extends Component {
     componentDidMount(){
         if(this.props.companies)
         {
-            console.log("Companies there")
+            // console.log("Companies there")
         }
         else
         {
@@ -40,7 +40,7 @@ class ViewAllCompanies extends Component {
                 companies : this.props.companies
             })
             this.setElementsForCurrentPage();
-        }, );
+        } );
     }
     setElementsForCurrentPage = () => {
         let elements = this.props.companies.slice(this.state.offset, this.state.offset + this.state.perPage);
@@ -49,7 +49,7 @@ class ViewAllCompanies extends Component {
         });
     }
     showCatalogicData = () => {
-        console.log("Inside show catolgocal data function", this.state.elements);
+        // console.log("Inside show catolgocal data function", this.state.elements);
         return <CompanyCard company = {this.state.elements[0]} />
     }
     handlePageClick = (pageNo) => {
@@ -61,25 +61,13 @@ class ViewAllCompanies extends Component {
     }
     render() {
         var temp = null;
-        console.log(this.state.elements);
         if(this.state.elements.length > 0)
         {
-            temp = this.state.elements.map(i => {
-                return(
-                    <ul style = {{listStyleType : "none"}}>
-                        <li>
-                            
-                                <CompanyCard company = {i} key = {i.company_id} />
-                            
-                        </li>
-                    </ul>
-                   
-                )
-            })
+            console.log(this.state.elements);
             temp = <div style = {{
                 marginLeft : "16.5%",
                 marginTop :"2%",
-            }}>
+                }}>
                 <Row>
                     <Col>
                         <CompanyCard company = {this.state.elements[0]}/>
@@ -104,6 +92,10 @@ class ViewAllCompanies extends Component {
                 </Row>
             </div>
         }
+        else
+        {
+            this.props.get_all_companies()
+        }
         let paginationElement;
         if(this.props.companies)
         {
@@ -123,7 +115,7 @@ class ViewAllCompanies extends Component {
         return (
             <div>
                 <div>
-                    <CompanyHeaderBar />
+                    <CompanyHeaderBar  type='student'/>
                 </div>
                 <div>
                     {/* <div>{this.showCatalogicData()}</div> */}

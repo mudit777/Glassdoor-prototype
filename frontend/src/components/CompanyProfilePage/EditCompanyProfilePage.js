@@ -182,7 +182,7 @@ class EditCompanyProfilePage extends Component {
         return (
             <div >
                 {redirectVar}
-                <CompanyHeaderBar/>
+                <CompanyHeaderBar type='company'/>
                 {/* <CompanyBar company = {this.state.company}/> */}
                 <div style={{display:'flex',justifyContent:'center'}}>
                     {/* <Company company = {this.state.company}/> */}

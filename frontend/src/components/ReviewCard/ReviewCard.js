@@ -109,7 +109,7 @@ class ReviewCard extends Component {
 
         return (
             <div>
-                <Card title = "" style={{width:676}}>
+                <Card title = "" style={{width:'72rem'}}>
                     <div className="column-left-reviews">
                         <img style ={{height:50,width:50}} src={this.props.photo} alt=""></img>
                     </div>

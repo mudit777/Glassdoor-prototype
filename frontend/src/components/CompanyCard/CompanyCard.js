@@ -16,26 +16,24 @@ class CompanyCard extends Component {
             reviewLength : 0,
             salaryLength : 0
         }
-        this.getCompanyReviews();
-        this.getCompanyInterview();
-        this.getCompanySalary();
+        
     }
     getCompanyReviews = () => {
         var company = {
             company_id:this.props.company.company_id
         }
         Axios.post(`${BACKEND}/getCompanyReviews`,company).then(response => {
-            console.log("Status Code in Getting Reviews : ",response.status);
+            // console.log("Status Code in Getting Reviews : ",response.status);
             if(response.status === 200){
-                console.log("HERE IN ACTIONS - GETTING REVIEWS!")
-                console.log(response.data);
+                // console.log("HERE IN ACTIONS - GETTING REVIEWS!")
+                // console.log(response.data);
                 var average_ratings=0;
                 for(var i=0;i<response.data.length;i++)
                 {
                     average_ratings+=response.data[i].review_rating; 
                 }
                 average_ratings/=response.data.length
-                console.log("Average rating is -------------", average_ratings);
+                // console.log("Average rating is -------------", average_ratings);
                 this.setState(
                 {
                     average_ratings : average_ratings,
@@ -74,8 +72,15 @@ class CompanyCard extends Component {
             }
         })
     }
+    componentDidMount(){
+        if(this.props.company){
+            this.getCompanyReviews();
+            this.getCompanyInterview();
+            this.getCompanySalary();
+        }
+    }
     render() {
-        console.log("Average rating for", this.props.company.company_name, "is: ", this.state.average_ratings)
+        // console.log("Average rating for", this.props.company.company_name, "is: ", this.state.average_ratings)
         var temp = null;
         if(this.props.company && this.state.average_ratings > 0)
         {

@@ -161,7 +161,7 @@ class StudentReviews extends Component {
         ]
         return (
             <div>
-                <CompanyHeaderBarForm/>
+                <CompanyHeaderBarForm type='student' />
                 <CompanyBar student='true' total_reviews = {this.state.reviews.length} company_id={this.props.location.state.company_id} total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} company = {this.state.company}/>
                 <div style={{display:'flex',backgroundColor:'#f2f2f2'}} >
                     <div className="column-left-add-reviews" style={{backgroundColor:"#f2f2f2"}}> 

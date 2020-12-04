@@ -233,6 +233,8 @@ app.get("/getAllIndustries", requireAuth, industriesRouter.getAllIndustries);
 app.post("/updateStudentDetails", requireAuth, studentDetailsRouter.updateStudentDetails);
 app.post("/getStudentJobPreferences", requireAuth, studentDetailsRouter.getStudentJobPreferences);
 app.post("/getCompanyDetails", requireAuth, companyDetailsRouter.getCompanyDetails);
+app.post("/addCount", companyDetailsRouter.addCount);
+
 app.post("/searchCompanies", requireAuth, searchRouter.searchCompanies);
 app.post("/addSalary", addSalary.addSalary);
 app.post("/getCompanySalary", addSalary.getCompanySalary);

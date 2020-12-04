@@ -87,7 +87,7 @@ class CompanyProfilePage extends Component {
         // console.log("The state is ==============", this.state)
         return (
             <div>
-                <CompanyHeaderBar/>
+                <CompanyHeaderBar type='company'/>
                 <CompanyBar total_reviews = {this.state.reviews.length} company_id={sessionStorage.getItem("company_id")} total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} company = {this.state.company}/>
                 <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#f2f2f2',margin:'0 0'}}>
                     <Company user='false' company = {this.state.company} />

@@ -69,7 +69,7 @@ class SearchedInterviews extends Component {
         return (
             <div>
                 <div>
-                    <CompanyHeaderBarForm />
+                    <CompanyHeaderBarForm  type='student'/>
                 </div>
                 <div>
                     {this.showCatalogicData()}

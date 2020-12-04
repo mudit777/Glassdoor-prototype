@@ -244,7 +244,7 @@ class UpdateStudentProfile extends Component {
             <div>
                 {redirectVar}
                 <div>
-                    <CompanyHeaderBar />
+                    <CompanyHeaderBar type='student' />
                 </div>
                 <div>
                     <Row style = {{marginTop : "5%", marginLeft : "10%"}}> 

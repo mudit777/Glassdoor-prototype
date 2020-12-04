@@ -81,7 +81,7 @@ class InterviewCard extends Component {
             <div>
                 <Card title = "" style={{width:676}}>
                     <div className="column-left-reviews">
-                        <img style ={{height:50,width:50}}src="https://media.glassdoor.com/sql/6036/amazon-squarelogo-1552847650117.png" alt=""></img>
+                        <img style ={{height:50,width:50}} src={this.props.photo} alt=""></img>
                     </div>
                     <div className="column-right-reviews">
                         <p style={{fontSize:20, fontWeight:"bold", color:"#0048b9"}}>{this.props.interview.job_title} Interview</p>

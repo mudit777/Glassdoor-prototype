@@ -278,7 +278,7 @@ class StudentProfile extends Component {
             <div>
                 {redirectVar}
                 <div>
-                    <CompanyHeaderBar />
+                    <CompanyHeaderBar type='student' />
                 </div>
                 <div>
                     <Row style = {{marginLeft : "5%", marginTop : "3%"}}>
@@ -322,10 +322,10 @@ class StudentProfile extends Component {
                                 <div style = {{borderTop : "1px solid lightgrey"}}>
                                     <br />
                                     <Row>
-                                        <Col>
-                                            <h4 style = {{fontWeight : "bolder"}}><Link to = "">Primary resume</Link></h4>
+                                        <Col style={{marginRight:'2rem'}} >
+                                            <Link to='/studentApplications' style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder",padding:'.5rem 0.7rem'}}>Manage Application</Link>
                                         </Col>
-                                        <Col style = {{marginLeft : "37%"}}>
+                                        <Col>
                                             <Button style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder"}} onClick = {this.resumeShow}>Manage resumes</Button>
                                         </Col>
                                     </Row>

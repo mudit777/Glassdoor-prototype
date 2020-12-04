@@ -54,7 +54,7 @@ class ViewJobs extends Component {
             }
             else{
                 console.log("No jobs in recieve")
-                this.props.get_all_jobs();
+                // this.props.get_all_jobs();
             }
             
         }, );
@@ -106,7 +106,7 @@ class ViewJobs extends Component {
     render() {
         var temp = null;
         
-        if(this.props.studentJobs)
+        if(this.state.elements.length > 0)
         {
             console.log("The state is", this.state);
            temp = this.state.elements.map(i => {
@@ -157,7 +157,7 @@ class ViewJobs extends Component {
         return (
             <div>
                 <div>
-                    <CompanyHeaderBarForm />
+                    <CompanyHeaderBarForm type='student' />
                 </div>
                 <div>
                     <JobsFilter />

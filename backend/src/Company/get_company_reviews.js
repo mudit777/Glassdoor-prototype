@@ -1,7 +1,7 @@
 var kafka = require('../../kafka/client');
 
 exports.getCompanyReviews = (req, res) => {
-    kafka.make_request("get_individual_company_review", req.body, (err, result) => {
+    kafka.make_request("get_individual_company_reviews", req.body, (err, result) => {
         if(result.code === 500)
         {
             res.writeHead(500, {

@@ -30,7 +30,7 @@ class SearchedSalaries extends Component {
         return (
             <div>
                 <div>
-                    <CompanyHeaderBarForm />
+                    <CompanyHeaderBarForm type='student' />
                 </div>
                 <div>
                     {temp}

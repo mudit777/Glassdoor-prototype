@@ -43,7 +43,7 @@ class CompanyJobDetails extends Component {
                         </Col>
                     </Col>
                 </Row>
-                <Card title = "Job Description" style = {{width : "880px", marginTop: "3%"}}>
+                <Card title = "Job Description" style = {{width : "47.5rem", marginTop: "3%"}}>
                     <ul>
                         {description.map(i => {
                             return(
@@ -54,7 +54,7 @@ class CompanyJobDetails extends Component {
                         })}
                     </ul>
                 </Card>   
-                <Card title = "Job Qualifications" style = {{width : "880px", marginTop: "3%"}}>
+                <Card title = "Job Qualifications" style = {{width : "47rem", marginTop: "3%"}}>
                     <ul>
                         {qualifications.map(i => {
                             return(
@@ -65,7 +65,7 @@ class CompanyJobDetails extends Component {
                         })}
                     </ul>
                 </Card>     
-                <Card title = "Job Responsibilities" style = {{width : "880px", marginTop: "3%"}}>
+                <Card title = "Job Responsibilities" style = {{width : "47rem", marginTop: "3%"}}>
                     <ul>
                         {responsibilities.map(i => {
                             return(
@@ -78,7 +78,7 @@ class CompanyJobDetails extends Component {
                 </Card>  
                 </div>   
 
-            temp = <Card style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", marginTop : "3%", marginLeft : "4%", marginRight : "4%", width : "930px"}}>
+            temp = <Card style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", marginTop : "3%", marginLeft : "4%", marginRight : "4%", width : "50.5rem"}}>
             <Row style = {{borderBottom : "1px solid lightGrey"}}>
                 <Col>
                     <ul style = {{listStyleType : "none"}}>
@@ -99,7 +99,7 @@ class CompanyJobDetails extends Component {
                         </li>
                     </ul>
                 </Col>
-                <Col style = {{marginTop : "2%", marginLeft : "5%", width: "59%"}}>
+                <Col style = {{marginTop : "1rem", marginBottom:'2rem' , marginLeft : "5%", width: "59%"}}>
                     <Link to={{pathname:'/showApplicants',state:{job:job}}} style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder",padding:'1rem 1rem'}} >Show Applicants</Link>
                 </Col>
             </Row>

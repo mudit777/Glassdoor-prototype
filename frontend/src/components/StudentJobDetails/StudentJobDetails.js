@@ -218,7 +218,7 @@ class StudentJobDetails extends Component {
             description = this.props.job.job_desc.split('. ')
             var qualifications = this.props.job.job_qual.split('. ');
             var responsibilities = this.props.job.job_res.split('. ');
-            temp = <Card style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", marginTop : "3%", marginLeft : "4%", marginRight : "4%", width : "930px"}}>
+            temp = <Card style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", marginTop : "3%", marginLeft : "4%", marginRight : "4%", width : "50.5rem"}}>
             <Row style = {{borderBottom : "1px solid lightGrey"}}>
                 <Col>
                     <ul style = {{listStyleType : "none"}}>
@@ -262,7 +262,7 @@ class StudentJobDetails extends Component {
                                 </li>
                             </ul>
                         </Col> 
-                        <Col style = {{marginLeft : "10%"}}>
+                        <Col style = {{marginLeft : "10%",marginBottom:'1.5rem'}}>
                             <Button onClick = {this.applyToJob} style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder"}} >Apply</Button>
                         </Col>
                     </Row>
@@ -316,7 +316,7 @@ class StudentJobDetails extends Component {
                         </Col>
                     </Col>
                 </Row>
-                <Card title = "Job Description" style = {{width : "880px", marginTop: "3%"}}>
+                <Card title = "Job Description" style = {{width : "47rem", marginTop: "3%"}}>
                     <ul>
                         {description.map(i => {
                             return(
@@ -327,7 +327,7 @@ class StudentJobDetails extends Component {
                         })}
                     </ul>
                 </Card>   
-                <Card title = "Job Qualifications" style = {{width : "880px", marginTop: "3%"}}>
+                <Card title = "Job Qualifications" style = {{width : "47rem", marginTop: "3%"}}>
                     <ul>
                         {qualifications.map(i => {
                             return(
@@ -338,7 +338,7 @@ class StudentJobDetails extends Component {
                         })}
                     </ul>
                 </Card>     
-                <Card title = "Job Responsibilities" style = {{width : "880px", marginTop: "3%"}}>
+                <Card title = "Job Responsibilities" style = {{width : "47rem", marginTop: "3%"}}>
                     <ul>
                         {responsibilities.map(i => {
                             return(

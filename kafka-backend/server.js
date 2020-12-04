@@ -31,6 +31,8 @@ var get_company_interview = require('./services/Student/get_company_interview');
 var get_student_applications = require('./services/Student/get_student_applications');
 var withdraw_applications = require('./services/Student/withdraw_application');
 var get_company_jobs = require('./services/company/get_company_jobs');
+var addCount = require('./services/company/addCount');
+
 var getCompanySalary = require('./services/Salary/getCompanySalary');
 var getApplicants = require('./services/Application/getApplicants');
 var updateStatus = require('./services/Application/updateStatus');
@@ -119,6 +121,8 @@ handleTopicRequest("get_company_interview", get_company_interview);
 handleTopicRequest("get_student_applications", get_student_applications);
 handleTopicRequest("withdraw_applications", withdraw_applications);
 handleTopicRequest("get_company_jobs", get_company_jobs);
+handleTopicRequest("search_interviews", search_interviews)
+handleTopicRequest("addCount", addCount)
 handleTopicRequest("search_interviews", search_interviews);
 handleTopicRequest("get_all_reviews", get_all_reviews);
 handleTopicRequest("get_all_interviews", get_all_interviews);

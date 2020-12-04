@@ -44,7 +44,7 @@ export default class StudentActivity extends Component {
       render() {
             return (
                   <div>
-                        <CompanyHeaderBarForm/>
+                        <CompanyHeaderBarForm type='student'/>
                         <div style={{display:'flex',justifyContent:'flex-start',alignContent:'flex-start',backgroundColor:'#f2f2f2'}}>
                               <div>
                                     <Student/>
