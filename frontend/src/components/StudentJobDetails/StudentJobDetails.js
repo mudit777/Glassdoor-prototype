@@ -27,9 +27,9 @@ class StudentJobDetails extends Component {
         this.getStudentFiles();
         this.getStudentDetails();
     }
-    // componentDidMount(){
-    //     this.getCompanyDetails();
-    // }
+    componentDidMount(){
+        this.getCompanyDetails();
+    }
     UNSAFE_componentWillReceiveProps(){
         setTimeout(() => {
             if(this.props.job.job_title)
@@ -93,6 +93,7 @@ class StudentJobDetails extends Component {
         Axios.post(`${BACKEND}/getCompanyDetails`, company).then(response => {
             if(response.status === 200)
             {
+                console.log(response.data)
                 this.setState({
                     company : response.data
                 })
