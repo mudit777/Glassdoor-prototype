@@ -3,26 +3,68 @@ import { search_interviews } from '../../js/actions';
 import CompanyHeaderBarForm from '../CompanyHeaderBar/CompanyHeaderBar';
 import InterviewCard from '../InterviewCard/InterviewCard';
 import { connect } from 'react-redux';
+import { Pagination } from 'antd';
 
 class SearchedInterviews extends Component {
     constructor(props)
     {
         super(props);
         this.state = {
-
+            interviews: [],
+            offset: 0,
+            elements: [],
+            perPage: 2,
+            currentPage: 1,
+            pageCount: 1
         }
     }
+    componentWillReceiveProps(){
+        setTimeout(() => {
+            this.setState({
+                interviews : this.props.interviews
+            })
+            this.setElementsForCurrentPage();
+        }, );
+    }
+    setElementsForCurrentPage = () => {
+        console.log("State are ---------", this.state.interviews)
+        let elements = this.state.interviews.slice(this.state.offset, this.state.offset + this.state.perPage);
+        console.log("Elements are ---------", elements)
+        this.setState({ 
+            elements : elements
+        });
+    }
+    showCatalogicData = () => {
+        console.log("Inside show catolgocal data function", this.state.elements);
+        return this.state.elements.map(i => {
+            return(
+                <InterviewCard interview = {i} key = {i._id} />
+            )
+        })
+    }
+    handlePageClick = (pageNo) => {
+        const selectedPage = pageNo - 1; 
+        const offset = selectedPage * this.state.perPage;
+        this.setState({ currentPage: selectedPage, offset: offset }, 
+            () => this.setElementsForCurrentPage()
+        );
+    }
     render() {
-        
-        var temp = null
+        let paginationElement;
         if(this.props.interviews)
         {
-            console.log("The props are ", this.props.interviews)
-            temp = this.props.interviews.map(i => {
-                return(
-                    <InterviewCard interview = {i} key = {i._id} />
-                )
-            })
+            if(this.state.pageCount > 0)
+            {
+                paginationElement = (<Pagination
+                    defaultCurrent={1} 
+                    onChange={this.handlePageClick}       
+                    size="small" 
+                    total={this.props.interviews.length}
+                    showTotal={(total, range) => 
+                    `${range[0]}-${range[1]} of ${total} items`}   
+                    defaultPageSize={this.state.perPage}
+                />)
+            }
         }
         return (
             <div>
@@ -30,7 +72,10 @@ class SearchedInterviews extends Component {
                     <CompanyHeaderBarForm />
                 </div>
                 <div>
-                    {temp}
+                    {this.showCatalogicData()}
+                </div>
+                <div>
+                    {paginationElement}
                 </div>
             </div>
         )

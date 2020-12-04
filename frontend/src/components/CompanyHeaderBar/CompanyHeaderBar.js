@@ -9,6 +9,7 @@ import { Redirect } from 'react-router-dom';
 import { search_companies, search_jobs, search_interviews } from '../../js/actions';
 import { connect } from 'react-redux';
 import { Select } from 'antd';
+import Avatar from 'antd/lib/avatar/avatar';
 
 class CompanyHeaderBar extends Component {
     constructor(props)
@@ -76,6 +77,7 @@ class CompanyHeaderBar extends Component {
                 {redirectVar}
                 <div style={{height:72, borderBottomWidth:1, borderBottomStyle:"solid", borderColor:"#cfcfcf"}}>
                     <div style={{marginLeft:100, paddingTop:10}}>
+                    
                         <div>
                             <Input value = {this.state.searchValue} onChange = {this.updateSearch} icon='search' iconPosition='left' placeholder="Job Title, Keywords, or Company" style={{width:350, color:"#00a422"}}/>
                             <Input>
