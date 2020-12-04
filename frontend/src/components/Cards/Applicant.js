@@ -12,7 +12,8 @@ const options = [
                   { key: 3, text: 'Reviewed', value: 3 },
                   { key: 4, text: 'Initial Screening', value: 4},
                   { key: 5, text: 'Interviewing', value: 5},
-                  { key: 6, text: 'Hired', value: 6}
+                  { key: 6, text: 'Hired', value: 6},
+                  { key: 7, text: 'Rejected', value: 7}
               ]
 
 

@@ -7,12 +7,21 @@ import { BACKEND } from '../../Config';
 import { get_all_companies } from '../../js/actions';
 import CompanyCard from '../CompanyCard/CompanyCard';
 import CompanyHeaderBar from '../CompanyHeaderBar/CompanyHeaderBar';
+import Footer from '../Footer/Footer';
 import './ViewAllCompanies.css'
 
 class ViewAllCompanies extends Component {
     constructor(props)
     {
         super(props);
+        if(!sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = {
             companies : [],
             offset: 0,
@@ -124,7 +133,7 @@ class ViewAllCompanies extends Component {
                 <div style = {{marginTop : "2%", marginLeft : "70%"}}>
                     {paginationElement}
                 </div>
-
+            <Footer/>
             </div>
         )
     }

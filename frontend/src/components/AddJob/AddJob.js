@@ -3,11 +3,20 @@ import CompanyHeaderBar from '../CompanyHeaderBar/CompanyHeaderBar'
 import {Button} from 'antd'
 import { Dropdown } from 'semantic-ui-react'
 import axios from 'axios'
+import Footer from '../Footer/Footer'
 
 class AddJob extends Component {
 
     constructor(){
         super();
+        if(!sessionStorage.getItem('company_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = {  
             job_title : "",
             industry_type: "",
@@ -198,6 +207,7 @@ class AddJob extends Component {
                     <Button onClick={this.addNewJobHandler} style={{width:680, backgroundColor:"#00a422", fontWeight:"bold", color:"white", marginTop:15, borderRadius:5}}>Post Job</Button>
                     </div>
                 </div>
+                <Footer/>
             </div>
         )
     }

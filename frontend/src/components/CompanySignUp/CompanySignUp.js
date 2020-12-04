@@ -5,11 +5,20 @@ import './CompanySignUp.css'
 import 'antd/dist/antd.css';
 import { BACKEND } from '../../Config';
 import { Redirect } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 
 class CompanySignUp extends Component {
     constructor(props)
     {
         super(props);
+        if(sessionStorage.getItem('company_id'))
+        {
+            window.location.replace('/companyProfile')
+        }
+        else
+        {
+            
+        }
         this.state = {
             first_name : "",
             last_name : "",
@@ -180,6 +189,7 @@ class CompanySignUp extends Component {
                         </ul>
                     </Card>
                 </div>
+                <Footer/>
             </div>
         )
     }

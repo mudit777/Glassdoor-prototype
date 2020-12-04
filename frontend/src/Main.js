@@ -41,7 +41,7 @@ class Main extends Component {
                     <Route path='/companyProfile' component={CompanyProfilePage}/>
                     <Route path='/companyProfileForUser' component={CompanyProfilePageForUser}/>
                     <Route path='/updateCompanyProfile' component={EditCompanyProfilePage}/>
-                    <Route path='/companyHeaderBar' component={CompanyHeaderBar}/>
+                    {/* <Route path='/companyHeaderBar' component={CompanyHeaderBar}/> */}
                     <Route path = "/companySignUp" component = {CompanySignUp} />
                     <Route path = "/studentSignUp" component = {StudentSignUp} />
                     <Route path = "/login" component = {Login} />

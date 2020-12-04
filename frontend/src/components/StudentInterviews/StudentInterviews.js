@@ -10,6 +10,7 @@ import { Dropdown } from 'semantic-ui-react';
 import InterviewCard from '../InterviewCard/InterviewCard';
 const { Search } = Input;
 import CompanyBar from '../CompanyHeaderBar/CompanyBar'
+import Footer from '../Footer/Footer'
 
 
 const dataPie = [
@@ -24,6 +25,14 @@ class StudentInterviews extends Component {
 
     constructor(props){
         super(props);
+        if(!sessionStorage.getItem('student_id') && !sessionStorage.getItem('company_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = {
             visible: false,
             reply: "",
@@ -485,6 +494,7 @@ class StudentInterviews extends Component {
                         </div>
                     </div>
                 </div> 
+                <Footer/>
             </div>
         )
     }

@@ -14,6 +14,14 @@ class PostNewJob extends Component {
 
     constructor(props){
         super(props);
+        if(!sessionStorage.getItem('company_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = { 
             visible:false,
             reviews: [],
@@ -173,6 +181,7 @@ class PostNewJob extends Component {
                 <div style = {{marginLeft : "50%"}}>
                     {paginationElement}
                 </div>
+                <Footer/>
             </div>
         )
     }

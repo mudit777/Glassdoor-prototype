@@ -48,6 +48,8 @@ var get_student_reviews = require('./services/Student/get_student_reviews');
 var get_student_interviews = require('./services/Student/get_student_interviews');
 var get_student_salaries = require('./services/Student/get_student_salaries');
 var get_individual_company_reviews = require('./services/company/get_individual_company_reviews');
+var get_company_applications = require('./services/company/get_company_applications');
+
 var post_job = require('./services/company/post_job');
 var get_job = require('./services/company/get_job');
 
@@ -133,3 +135,4 @@ handleTopicRequest("get_student_salaries", get_student_salaries);
 handleTopicRequest("get_individual_company_reviews", get_individual_company_reviews);
 handleTopicRequest("post_job", post_job);
 handleTopicRequest("get_job", get_job)
+handleTopicRequest("get_company_applications", get_company_applications)

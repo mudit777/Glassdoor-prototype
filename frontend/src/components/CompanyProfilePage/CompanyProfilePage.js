@@ -8,11 +8,20 @@ import CompanyBar from '../CompanyHeaderBar/CompanyBar'
 import { BACKEND } from '../../Config';
 import { Link } from 'react-router-dom'
 import { Card } from 'antd';
+import Footer from '../Footer/Footer';
 
 
 class CompanyProfilePage extends Component {
     constructor(){
         super();
+        if(!sessionStorage.getItem('company_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = {  
             firstname : "",
             open: false,
@@ -85,6 +94,7 @@ class CompanyProfilePage extends Component {
     
     render() {
         // console.log("The state is ==============", this.state)
+        
         return (
             <div>
                 <CompanyHeaderBar type='company'/>
@@ -105,7 +115,7 @@ class CompanyProfilePage extends Component {
 
                     </div>
                 </div>
-                
+                <Footer/>
             </div>
         )
     }

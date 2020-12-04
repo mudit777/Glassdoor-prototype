@@ -3,7 +3,7 @@ import { ButtonGroup, Input } from 'semantic-ui-react'
 import { Dropdown } from 'semantic-ui-react'
 import { Button } from 'semantic-ui-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faBuilding, faCommentDots, faEnvelopeSquare, faMoneyBillWave, faNewspaper, faNotesMedical, faShoppingCart, faSuitcase, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faBuilding, faChartBar, faCommentDots, faEnvelopeSquare, faMoneyBillWave, faNewspaper, faNotesMedical, faReceipt, faShoppingCart, faSignOutAlt, faSuitcase, faUser } from '@fortawesome/free-solid-svg-icons';
 import 'semantic-ui-css/semantic.min.css';
 import { Redirect } from 'react-router-dom';
 import { search_companies, search_jobs, search_interviews, search_salaries } from '../../js/actions';
@@ -39,6 +39,17 @@ class CompanyHeaderBar extends Component {
         this.setState({
             location : e.target.value
         })
+    }
+    handleLogout = (e) =>{
+        sessionStorage.removeItem('student_id')
+        window.location.replace('/login')
+    }
+    handleCompanyLogout = (e) =>{
+        sessionStorage.removeItem('company_id')
+        window.location.replace('/login')
+    }
+    handleActivity = (e) =>{
+        window.location.replace('/studentActivity')
     }
     search = () => {
         var myJson = {
@@ -92,7 +103,10 @@ class CompanyHeaderBar extends Component {
             b=<div>
             {redirectVar}
             <div style={{height:72, borderBottomWidth:1, borderBottomStyle:"solid", borderColor:"#cfcfcf"}}>
-                <div style={{marginLeft:100, paddingTop:10}}>
+                <div style={{marginLeft:30, paddingTop:10,display:'flex'}}>
+                    <div style={{marginRight:'1rem'}}>
+                        <img style={{width:'10rem',height:'2rem',marginTop:'.5rem'}} src = "https://gohire-website.s3.amazonaws.com/img/integration-logos/full/glassdoor-logo-full.png" alt = "home for employers"/>
+                    </div>
                     <div>
                         <Input value = {this.state.searchValue} onChange = {this.updateSearch} icon='search' iconPosition='left' placeholder="Job Title, Keywords, or Company" style={{width:350, color:"#00a422"}}/>
                         <Input>
@@ -105,8 +119,8 @@ class CompanyHeaderBar extends Component {
                         </Input>
                         <Input onChange={this.updateLocation} value = {this.state.location} type="text" icon="" placeholder='Location' style={{width:350,marginLeft:16}}/>
                         <Button style={{backgroundColor:"#00a422", height:40, width:88, color:"white" }} onClick = {this.search} >Search</Button>
-                        <FontAwesomeIcon onClick={this.handleCart} icon={faEnvelopeSquare} size="2x" style={{marginLeft:30, paddingTop:5}}/>
-                        <FontAwesomeIcon onClick={this.handleCart} icon={faUser} size="2x" style={{marginLeft:30, paddingTop:5}}/>
+                        <FontAwesomeIcon onClick={this.handleActivity} icon={faUser} size="2x" style={{marginLeft:30, paddingTop:5}}/>
+                        <FontAwesomeIcon onClick={this.handleLogout} icon={faSignOutAlt} size="2x" style={{marginLeft:30, paddingTop:5}}/>
                     </div>
                 </div>
             </div>
@@ -164,7 +178,8 @@ class CompanyHeaderBar extends Component {
                     </div>
                     <Link to='/companyProfile' style={{marginRight:30,color:'black'}}>
                         <FontAwesomeIcon onClick={this.handleCart} icon={faUser} size="2x" style={{marginLeft:30, paddingTop:5}}/>
-                        <span>Home</span>
+                        <Link to='/report' style={{color:'black'}}><FontAwesomeIcon onClick={this.handleCart} icon={faChartBar} size="2x" style={{marginLeft:30, paddingTop:5}}/></Link>
+                        <FontAwesomeIcon onClick={this.handleCompanyLogout} icon={faSignOutAlt} size="2x" style={{marginLeft:30, paddingTop:5}}/>
                     </Link>
                 </div>
             </div>

@@ -3,11 +3,21 @@ import axios from 'axios'
 import MiniReviewCard from '../MiniCards/MiniReviewCard';
 import { BACKEND } from '../../Config';
 import {Pagination} from 'antd'
+import CompanyHeaderBarForm from '../CompanyHeaderBar/CompanyHeaderBar';
+import Footer from '../Footer/Footer'
 
 class GetAllReviews extends Component {
 
     constructor(props){
         super(props);
+        if(!sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = {
             reviews: [],
             offset: 0,
@@ -86,11 +96,12 @@ class GetAllReviews extends Component {
 
         return (
             <div>
-                <div>
-
+                <CompanyHeaderBarForm type='student' />
+                <div style={{backgroundColor:'#f2f2f2',display:'flex',flexDirection:'column',paddingLeft:'24rem',paddingTop:'2rem'}}>
                     {this.showCatalogicData()}
                     {paginationElement}
                 </div>
+                <Footer/>
             </div>
         )
     }

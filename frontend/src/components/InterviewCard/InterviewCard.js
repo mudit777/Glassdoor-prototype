@@ -78,11 +78,11 @@ class InterviewCard extends Component {
         }
 
         return (
-            <div>
+            <div style={{backgroundColor:'#f2f2f2',padding:'1rem 0'}}>
                 <Card title = "" style={{width:676}}>
-                    <div className="column-left-reviews">
+                    {/* <div className="column-left-reviews">
                         <img style ={{height:50,width:50}} src={this.props.photo} alt=""></img>
-                    </div>
+                    </div> */}
                     <div className="column-right-reviews">
                         <p style={{fontSize:20, fontWeight:"bold", color:"#0048b9"}}>{this.props.interview.job_title} Interview</p>
                         <div>

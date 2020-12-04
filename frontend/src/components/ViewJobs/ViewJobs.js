@@ -8,11 +8,20 @@ import Axios from 'axios';
 import { BACKEND } from '../../Config';
 import StudentJobDetails from '../StudentJobDetails/StudentJobDetails';
 import JobsFilter from '../JobsFilter/JobsFilter';
+import Footer from '../Footer/Footer'
 
 class ViewJobs extends Component {
     constructor(props)
     {
         super(props);
+        if(!sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = {
             favourites : [],
             selectedJob : {},
@@ -105,7 +114,10 @@ class ViewJobs extends Component {
     } 
     render() {
         var temp = null;
-        
+        var temp1 = null;
+        if(this.state.selectedJob.job_id>0){
+            temp1=<StudentJobDetails job = {this.state.selectedJob} />
+        }
         if(this.state.elements.length > 0)
         {
             console.log("The state is", this.state);
@@ -171,10 +183,11 @@ class ViewJobs extends Component {
                             </div>
                         </Col>
                         <Col style = {{maxHeight : 600, overflowY : "scroll", width : "70%"}}>
-                            <StudentJobDetails job = {this.state.selectedJob} />
+                            {temp1}
                         </Col>
                     </Row>
                 </div>
+                <Footer/>
             </div>
         )
     }

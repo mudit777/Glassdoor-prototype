@@ -9,6 +9,14 @@ class StudentApplications extends Component {
 
     constructor(props){
         super(props);
+        if(!sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = { 
             visible:false,
             applications: [],
@@ -58,7 +66,7 @@ class StudentApplications extends Component {
                         })}
                     </div>
                 </div>
-                
+                <Footer/>
             </div>
         )
     }

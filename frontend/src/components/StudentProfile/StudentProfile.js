@@ -9,10 +9,20 @@ import { BACKEND } from '../../Config';
 import CompanyCard from '../CompanyCard/CompanyCard';
 import CompanyHeaderBar from '../CompanyHeaderBar/CompanyHeaderBar';
 import './StudentProfile.css';
+import Footer from '../Footer/Footer'
+
 class StudentProfile extends Component {
     constructor(props)
     {
         super(props);
+        if(!sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = {
             comapnies : [],
             updateProfile : false,
@@ -354,6 +364,7 @@ class StudentProfile extends Component {
                             
                         </div>
                     </Modal>
+                <Footer/>
             </div>
         )
     }

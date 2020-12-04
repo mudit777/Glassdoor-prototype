@@ -6,11 +6,19 @@ import { BACKEND } from '../../Config'
 import CompanyBar from '../CompanyHeaderBar/CompanyBar'
 import { Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-
+import Footer from '../Footer/Footer'
 
 export default class Salary extends Component {
       constructor(props){
             super(props);
+            if(!sessionStorage.getItem('company_id') && !sessionStorage.getItem('student_id'))
+            {
+                window.location.replace('/login')
+            }
+            else
+            {
+                
+            }
             this.state = { 
                 positive_review: [],
                 negative_review: [],
@@ -136,6 +144,7 @@ export default class Salary extends Component {
                                 })}
                                 
                         </div>
+                        <Footer/>
                   </div>
             )
       }

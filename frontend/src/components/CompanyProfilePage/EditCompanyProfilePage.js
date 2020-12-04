@@ -7,12 +7,21 @@ import axios from 'axios'
 import { BACKEND } from '../../Config';
 import { Button, Card, Col, DatePicker, Input, notification, Row, Select } from 'antd';
 import { Redirect } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 
 
 
 class EditCompanyProfilePage extends Component {
     constructor(props){
         super(props)
+        if(!sessionStorage.getItem('company_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state={
             website:'',
             companysize:'',
@@ -251,6 +260,7 @@ class EditCompanyProfilePage extends Component {
                         </div>
                     </div>
                 </div>
+                <Footer/>
             </div>
         )
     }

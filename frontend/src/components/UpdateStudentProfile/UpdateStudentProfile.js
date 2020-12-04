@@ -7,11 +7,20 @@ import Avatar from 'antd/lib/avatar/avatar';
 import Axios from 'axios';
 import { BACKEND } from '../../Config';
 import { Redirect } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 
 class UpdateStudentProfile extends Component {
     constructor(props)
     {
         super(props);
+        if(!sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.getStudentDetails();
             this.state = {
                 first_name : "" ,
@@ -403,6 +412,7 @@ class UpdateStudentProfile extends Component {
                     </Row>
                     
                 </div>
+                <Footer/>
             </div>
         )
     }

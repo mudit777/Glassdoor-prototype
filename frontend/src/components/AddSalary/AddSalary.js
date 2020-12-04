@@ -7,8 +7,20 @@ import Axios from 'axios';
 import { BACKEND } from '../../Config';
 import { Redirect } from 'react-router-dom';
 // import { Radio } from 'semantic-ui-react';
+import Footer from '../Footer/Footer'
 
 class AddSalary extends Component {
+    constructor(props){
+        super(props)
+        if(!sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
+    }
       BaseSalary = (e) => {
             this.setState({
                 BaseSalary : e.target.value
@@ -58,6 +70,7 @@ class AddSalary extends Component {
             // console.log('clicked',this.state)
             var salary = {
                 company_id : this.props.location.state.company_id,
+                student_id : sessionStorage.getItem('student_id'),
                   BaseSalary : this.state.BaseSalary,
                   Bonus : this.state.Bonus,
                   JobTitle  : this.state.JobTitle,
@@ -281,6 +294,7 @@ class AddSalary extends Component {
                         </Col>
                     </Row>
                 </div>
+                <Footer/>
             </div>
             );
       }

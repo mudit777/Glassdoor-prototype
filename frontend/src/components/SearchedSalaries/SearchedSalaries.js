@@ -9,6 +9,14 @@ class SearchedSalaries extends Component {
     constructor(props)
     {
         super(props);
+        if(!sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = {
 
         }
@@ -35,6 +43,7 @@ class SearchedSalaries extends Component {
                 <div>
                     {temp}
                 </div>
+                <Footer/>
             </div>
         )
     }

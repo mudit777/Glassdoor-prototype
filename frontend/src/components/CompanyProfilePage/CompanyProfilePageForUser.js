@@ -11,6 +11,7 @@ import { Card } from 'antd';
 import ReviewCard from '../ReviewCard/ReviewCard';
 import StudentReviewCard from '../StudentReviewCard/StudentReviewCard';
 import DonutChart from "react-svg-donut-chart"
+import Footer from '../Footer/Footer'
 
 const dataPie = [
       {value: 60, stroke: "#dcee95", strokeWidth: 5},
@@ -19,6 +20,14 @@ const dataPie = [
 class CompanyProfilePageForUser extends Component {
     constructor(){
         super();
+        if(!sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = {  
             firstname : "",
             open: false,
@@ -84,50 +93,7 @@ class CompanyProfilePageForUser extends Component {
         .catch(err => {
             
     })
-      axios.post(`${BACKEND}/getPositiveReview`)
-      axios.post(`${BACKEND}/getCompanyReviews`,company)
-      .then(response => {
-          console.log("Status Code in Getting Reviews : ",response.status);
-          if(response.status === 200){
-              console.log("HERE IN ACTIONS - GETTING REVIEWS!")
-              console.log(response.data);
-              var average_ratings=0;
-              var recommend_to_friend=0;
-              var ceo_approval=0;
-              for(var i=0;i<response.data.length;i++)
-              {
-                  average_ratings+=response.data[i].review_rating;
-                  if(response.data[i].recommend_to_friend === '1')
-                  {
-                        recommend_to_friend++;
-                  }
-                  if(response.data[i].ceo_approval === '1')
-                  {
-                        ceo_approval++;
-                  }
-                  
-              }
-              average_ratings/=response.data.length
-              recommend_to_friend = (recommend_to_friend*100)/response.data.length
-                  ceo_approval = (ceo_approval*100)/response.data.length
-            //   console.log('this is itttttttttttttt',average_ratings,recommend_to_friend,ceo_approval)
-              this.setState(
-              {
-                  reviews : response.data,
-                  average_ratings : average_ratings,
-                  recommend_to_friend : recommend_to_friend,
-                  ceo_approval : ceo_approval,
-                  
-              })
-              // Object.keys(this.state.reviews).map(i=>{
-              //     console.log("REVIEW IS",this.state.reviews[i].review_cons)
-              // })
-          }else{
-          }
-      })
-      .catch(err => {
-          
-  })
+      
       axios.post(`${BACKEND}/getPositiveReview`,company)
       .then(response => {
           console.log("Status Code in Getting Reviews : ",response.status);
@@ -283,7 +249,7 @@ class CompanyProfilePageForUser extends Component {
                         </div>
                   </Card>
                 </div>
-                
+               <Footer/> 
             </div>
         )
     }

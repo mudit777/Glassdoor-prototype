@@ -9,7 +9,7 @@ import StudentReviewCard from '../StudentReviewCard/StudentReviewCard';
 import DonutChart from "react-svg-donut-chart"
 import CompanyBar from '../CompanyHeaderBar/CompanyBar'
 import { Link } from 'react-router-dom'
-
+import Footer from '../Footer/Footer'
 
 
 const { Search } = Input;
@@ -18,6 +18,14 @@ class StudentReviews extends Component {
 
     constructor(props){
         super(props);
+        if(!sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = { 
             positive_review: [],
             negative_review: [],
@@ -224,6 +232,7 @@ class StudentReviews extends Component {
                         </div>
                     </div>
                 </div>
+                <Footer/>
             </div>
         )
     }

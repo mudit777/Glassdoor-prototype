@@ -8,6 +8,18 @@ class Login extends Component {
     constructor(props)
     {
         super(props);
+        if(sessionStorage.getItem('company_id'))
+        {
+            window.location.replace('/companyProfile')
+        }
+        else if(sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/studentProfile')
+        }
+        else
+        {
+            
+        }
         this.state = {
             email : "",
             password : "",

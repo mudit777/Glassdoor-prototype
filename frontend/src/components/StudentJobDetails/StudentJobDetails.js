@@ -14,9 +14,18 @@ class StudentJobDetails extends Component {
             resumes: [],
             coverLetters: [],
             resume: "",
-            coverLetter: ""
+            coverLetter: "",
+            first_name : "" ,
+            last_name : "",
+            race: "",
+            gender: "",
+            photo: "",
+            disability: "",
+            veteran : "",
+            email : "",
         }
         this.getStudentFiles();
+        this.getStudentDetails();
     }
     // componentDidMount(){
     //     this.getCompanyDetails();
@@ -30,9 +39,55 @@ class StudentJobDetails extends Component {
             }
         })
     }
+    getStudentDetails = () => {
+        var myJson = {
+            student_id: window.sessionStorage.getItem("student_id")
+        }
+        Axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+        Axios.post(`${BACKEND}/getStudentDetails`, myJson).then(response => {
+            if(response.status === 200)
+            {
+                var race = response.data.student_race
+                if(response.data.student_race === null)
+                {
+                    race = ""
+                }
+                var photo = response.data.student_profile_photo
+                if(response.data.student_profile_photo === null)
+                {
+                    photo = "https://www.cnam.ca/wp-content/uploads/2018/06/default-profile.gif"
+                }
+                var gender = "Male";
+                var disability = "I have disabilty";
+                var veteran = "I am a veteran";
+                if(response.data.student_gender === 0)
+                {
+                    gender = "Female"
+                }
+                if(response.data.student_disability === 0)
+                {
+                    disability = "I dont have disability"
+                }
+                if(response.data.student_veteran === 0)
+                {
+                    veteran = "I am not a veteran"
+                }
+                this.setState({
+                    first_name : response.data.student_first_name,
+                    last_name : response.data.student_last_name,
+                    race: race,
+                    gender: gender,
+                    photo: photo,
+                    disability: disability,
+                    veteran : veteran,
+                    email : response.data.student_email
+                })
+            }
+        })
+    }
     getCompanyDetails = () => {
         var company = {
-            company_id : this.props.job.company_id
+            company_id : this.props.company.company_id
         }
         Axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
         Axios.post(`${BACKEND}/getCompanyDetails`, company).then(response => {
@@ -175,7 +230,12 @@ class StudentJobDetails extends Component {
                 job_id : this.props.job.job_id,
                 resume : resume,
                 cover_letter : coverLetter,
-                application_status: "Submitted"
+                application_status: "Submitted",
+                gender:this.state.gender,
+                disability:this.state.disability,
+                veteran:this.state.veteran,
+                race:this.state.race,
+                company_id:this.props.company.company_id
             }
             console.log(application);
             Axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');

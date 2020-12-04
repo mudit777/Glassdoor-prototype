@@ -4,11 +4,20 @@ import CompanyHeaderBarForm from '../CompanyHeaderBar/CompanyHeaderBar';
 import InterviewCard from '../InterviewCard/InterviewCard';
 import { connect } from 'react-redux';
 import { Pagination } from 'antd';
+import Footer from '../Footer/Footer'
 
 class SearchedInterviews extends Component {
     constructor(props)
     {
         super(props);
+        if(!sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = {
             interviews: [],
             offset: 0,
@@ -77,6 +86,7 @@ class SearchedInterviews extends Component {
                 <div>
                     {paginationElement}
                 </div>
+                <Footer/>
             </div>
         )
     }

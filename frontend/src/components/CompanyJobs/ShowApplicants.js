@@ -10,12 +10,21 @@ import { Button } from 'semantic-ui-react';
 import Student from '../Cards/Student';
 import Applicant from '../Cards/Applicant';
 import CompanyBar from '../CompanyHeaderBar/CompanyBar';
+import Footer from '../Footer/Footer'
 
 
 export default class ShowApplicants extends Component {
       constructor(props)
     {
         super(props);
+        if(!sessionStorage.getItem('company_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = {
             jobs : [],
             company : {},
@@ -289,6 +298,7 @@ export default class ShowApplicants extends Component {
                                           </div>
                                     </Card>
                         </div>
+                        <Footer/>
                   </div>
             )
       }

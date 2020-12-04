@@ -4,6 +4,7 @@ import { StarOutlined } from '@ant-design/icons';
 import { Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
 import { BACKEND } from '../../Config';
+import Footer from '../Footer/Footer'
 
 const customIcons = {
     1: <StarOutlined/>,
@@ -18,6 +19,14 @@ class AddReview extends Component {
 
     constructor(){
         super();
+        if(!sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = {  
             company_name : "",
             rating: "",
@@ -164,8 +173,8 @@ class AddReview extends Component {
             { key: 2, text: 'Yes', value: 2}
         ]
         return (
-            <div>
-                <div style={{height:42}}>
+            <div style={{display:'flex',backgroundColor:'#f2f2f2',flexDirection:'column'}}>
+                <div style={{height:42,backgroundColor:'white'}}>
                     <img src="https://gohire-website.s3.amazonaws.com/img/integration-logos/full/glassdoor-logo-full.png" style={{height:25, width:125, marginTop: 10, marginLeft: 15}}/>
                 </div>
                 <div style={{backgroundColor: "#f2f2f2"}}>
@@ -227,6 +236,10 @@ class AddReview extends Component {
                             <p>Thankyou for doing your part to keep Glassdoor he most trusted place to find a job and company you love. See the Community Guidelines for more details.</p>
                         </div>
                     </div>
+                </div>
+                <div style={{backgroundColor:'white'}}>
+                <Footer/>
+
                 </div>
             </div>
         )

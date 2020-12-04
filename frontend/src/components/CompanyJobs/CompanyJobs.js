@@ -7,11 +7,20 @@ import { Col, Row ,Button, Pagination} from 'antd';
 import CompanyJobDetails from '../CompanyJobDetails/CompanyJobDetails';
 import StudentJobDetails from '../StudentJobDetails/StudentJobDetails'
 import CompanyBar from '../CompanyHeaderBar/CompanyBar';
+import Footer from '../Footer/Footer';
 
 class CompanyJobs extends Component {
     constructor(props)
     {
         super(props);
+        if(!sessionStorage.getItem('company_id') && !sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
         this.state = {
             jobs : [],
             company : {},
@@ -263,6 +272,7 @@ class CompanyJobs extends Component {
                         </Col>
                     </Row>
                 </div>
+                <Footer/>
             </div>
         )
     }

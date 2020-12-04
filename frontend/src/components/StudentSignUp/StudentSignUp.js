@@ -9,6 +9,14 @@ class StudentSignUp extends Component {
     constructor(props)
     {
         super(props);
+        if(sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/studentProfile')
+        }
+        else
+        {
+            
+        }
         this.state = {
             email : "",
             password : "",
@@ -141,6 +149,7 @@ class StudentSignUp extends Component {
                         </ul>
                     </Card>
                 </div>
+                <Footer/>
             </div>
         )
     }

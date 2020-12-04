@@ -3,10 +3,19 @@ import CompanyHeaderBarForm from '../CompanyHeaderBar/CompanyHeaderBar'
 import SalaryCard from '../SalaryCard/SalaryCard'
 import axios from 'axios'
 import { BACKEND } from '../../Config';
+import Footer from '../Footer/Footer';
 
 export default class AllSalary extends Component {
       constructor(props){
             super(props)
+            if(!sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/login')
+        }
+        else
+        {
+            
+        }
             this.state={
                   salary:[],
             }
@@ -32,6 +41,7 @@ export default class AllSalary extends Component {
                                 return (<SalaryCard salary = {a}/>)
                             })}
                         </div>
+                        <Footer/>
                   </div>
             )
       }
