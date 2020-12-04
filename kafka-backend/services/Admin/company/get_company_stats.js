@@ -2,6 +2,9 @@ const conn = require('../../../mysql_database');
 const util = require('util');
 const query = util.promisify(conn.query).bind(conn);
 let applications = require('../../../Models/applications');
+const client = require('../../../redis_config');
+const get = util.promisify(client.get).bind(client);
+const set = util.promisify(client.set).bind(client);
 
 const get_stats = async (company_id) => {
     // Get job ids by the company
@@ -82,10 +85,23 @@ const handle_request = async (message, callback) => {
     // Job: # of ['Submitted', 'Withdraw', 'Reviewed', 'Initial Screening', 'Interviewing', 'Hired']
     let response = {};
     try {
-        let stats_result = await get_stats(message.company_id);
-        response.code = 200;
-        response.data = stats_result;
-        callback(null, response);
+        const redis_key = "get_company_stats_" + message.company_id;
+        let redis_result = await get(redis_key);
+
+        if (redis_result == null) {
+            console.log("SQL result");
+            let stats_result = await get_stats(message.company_id);
+            let stringed_result = JSON.stringify(stats_result);
+            set(redis_key, JSON.stringify(stringed_result));
+            response.code = 200;
+            response.data = JSON.stringify(stringed_result);
+            callback(null, response);
+        } else {
+            console.log("Redis result");
+            response.code = 200;
+            response.data = redis_result;
+            callback(null, response);
+        }
     } catch (e) {
         response.code = 500;
         response.data = e;
