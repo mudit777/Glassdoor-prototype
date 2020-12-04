@@ -235,7 +235,7 @@ class StudentJobDetails extends Component {
                 disability:this.state.disability,
                 veteran:this.state.veteran,
                 race:this.state.race,
-                company_id:this.props.company.company_id
+                company_id:this.props.job.company_id
             }
             console.log(application);
             Axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
