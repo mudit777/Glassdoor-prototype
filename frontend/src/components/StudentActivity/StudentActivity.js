@@ -142,12 +142,7 @@ export default class StudentActivity extends Component {
                                           })}
                                     </Card>
                               </div>
-                              <div>
-                                    <Card title = 'User photos' style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '30rem',margin:'2rem 1rem'}} actions = {[
-                                    ]}>
-                                          All user photos
-                                    </Card>
-                              </div>
+                              
                         </div> 
                         <Footer/>
                   </div>

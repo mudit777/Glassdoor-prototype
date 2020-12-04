@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Card,  Grid} from 'semantic-ui-react';
+import {Card,  Grid, Pagination} from 'semantic-ui-react';
 import Footer from '../Placeholders/Footer';
 import AdminHeader from './AdminHeader';
 import './approve.css';
@@ -16,8 +16,11 @@ const ApproveReviews = () => {
 
   const[reviews, setReviews] = useState([])
   const[cards, setCards] = useState([])
+  const[current, setCurrent] = useState([]);
+  const[totalPages, setTotalPages] = useState(1);
 
   useEffect(()=>{
+    axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
     axios.get(`${BACKEND}/getUndecidedReviews`)
     .then(response=>{
       setReviews(response.data);
@@ -32,6 +35,7 @@ const ApproveReviews = () => {
   }
 
   const reviewApproved = review_id => {
+    axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
     axios.post(`${BACKEND}/approveReview`, {review_id})
     .then(response => {      
       if(response.status === 200){
@@ -45,6 +49,7 @@ const ApproveReviews = () => {
   }
 
   const reviewRejected = review_id => {
+    axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
     axios.post(`${BACKEND}/rejectReview`, {review_id})
     .then(response => {      
       if(response.status === 200){
@@ -57,14 +62,32 @@ const ApproveReviews = () => {
     })
   }
 
+  useEffect(()=>{
+    var pages = Math.ceil(reviews.length/6);
+    setTotalPages(pages);
+    setCurrent(reviews.slice(0,6))
+  }, [reviews])
+
   useEffect(() => {
-    let rcards = reviews.map(review => {
+    let rcards = current.map(review => {
       return (
         <ReviewCard review={review} key={review.review_id} handleApprove={() => {reviewApproved(review.review_id)}} handleReject={() => {reviewRejected(review.review_id)}} />
       )
     })
     setCards(rcards);
-  }, [reviews])
+  }, [current])
+
+
+  const selectPage = (e, pageInfo) => {
+    console.log(pageInfo.activePage)
+    var startIdx;
+    var endIdx;
+
+    startIdx = (pageInfo.activePage-1)*6;
+    endIdx = pageInfo.activePage*6;
+
+    setCurrent(reviews.slice(startIdx, endIdx));
+  }
 
   return (
     <div>
@@ -80,6 +103,12 @@ const ApproveReviews = () => {
           </Grid.Column>
           <Grid.Column width={1}></Grid.Column>
         </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={1}></Grid.Column>
+            <Grid.Column>
+              <Pagination defaultActivePage={1} totalPages={totalPages} onPageChange={selectPage}/>
+            </Grid.Column>
+          </Grid.Row>
       </Grid>
       <Footer/>
     </div>

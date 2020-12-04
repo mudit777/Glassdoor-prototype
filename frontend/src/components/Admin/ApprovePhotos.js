@@ -4,7 +4,7 @@ import {NotificationManager, NotificationContainer} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import PhotoCard from './PhotoCard';
 import Footer from '../Placeholders/Footer';
-import {Card, Grid} from 'semantic-ui-react';
+import {Card, Grid, Pagination} from 'semantic-ui-react';
 import './Placeholders.css';
 import {BACKEND} from '../../Config';
 import axios from 'axios';
@@ -16,9 +16,12 @@ const ApprovePhotos = () => {
 
   const[photos, setPhotos] = useState([]);
   const[cards, setCards] = useState([])
+  const[current, setCurrent] = useState([]);
+  const[totalPages, setTotalPages] = useState(1);
 
   useEffect(()=>{
     console.log("Fetching undecided photos")
+    axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
     axios.get(`${BACKEND}/getUndecidedPhotos`)
     .then(response=>{
       setPhotos(response.data);
@@ -28,20 +31,38 @@ const ApprovePhotos = () => {
     })
   }, [])
 
+  useEffect(()=>{
+    var pages = Math.ceil(photos.length/6);
+    setTotalPages(pages);
+    setCurrent(photos.slice(0,6))
+  }, [photos])
+
   useEffect(() => {
-    let rcards = photos.map(photo => {
+    let rcards = current.map(photo => {
       return (
         <PhotoCard photo={photo} key={photo._id} handleApprove={() => {photoApproved(photo._id)}} handleReject={() => {photoRejected(photo._id)}} />
       )
     })
     setCards(rcards);
-  }, [photos])
+  }, [current])
 
   const removePhoto = photo_id => {
     setPhotos(photos.filter((photo)=>(photo._id !== photo_id)))
   }
 
+  const selectPage = (e, pageInfo) => {
+    console.log(pageInfo.activePage)
+    var startIdx;
+    var endIdx;
+
+    startIdx = (pageInfo.activePage-1)*6;
+    endIdx = pageInfo.activePage*6;
+
+    setCurrent(photos.slice(startIdx, endIdx));
+  }
+
   const photoApproved = photo_id => {
+    axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
     axios.post(`${BACKEND}/approvePhoto`, {_id:photo_id})
     .then(response => {      
       if(response.status === 200){
@@ -55,6 +76,7 @@ const ApprovePhotos = () => {
   }
 
   const photoRejected = photo_id => {
+    axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
     axios.post(`${BACKEND}/rejectPhoto`, {_id:photo_id})
     .then(response => {      
       if(response.status === 200){
@@ -80,6 +102,12 @@ const ApprovePhotos = () => {
             </Card.Group>
           </Grid.Column>
           <Grid.Column width={1}></Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={1}></Grid.Column>
+          <Grid.Column>
+            {cards.length>0?<Pagination defaultActivePage={1} totalPages={totalPages} onPageChange={selectPage}/>:""}
+          </Grid.Column>
         </Grid.Row>
       </Grid>
       <Footer/>

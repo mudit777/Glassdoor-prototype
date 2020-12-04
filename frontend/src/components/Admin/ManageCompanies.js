@@ -6,8 +6,7 @@ import { BACKEND } from '../../Config';
 import './Placeholders.css';
 import {Link} from 'react-router-dom';
 import './ManageCompanies.css';
-import {Grid, Segment, Button, Input} from 'semantic-ui-react';
-import {Pagination} from 'antd';
+import {Grid, Segment, Button, Input, Pagination} from 'semantic-ui-react';
 import 'antd/dist/antd.css';
 import {Pie, Bar} from 'react-chartjs-2';
 import _ from 'lodash';
@@ -16,19 +15,16 @@ const ManageCompanies = () => {
   const[companies, setCompanies] = useState([]);
   const[cards, setCards] = useState([]);
   const[term, setTerm] = useState('');
-  const[offset, setOffset] = useState(0);
-  const[elements, setElements] = useState([]);
-  const[perPage, setPerPage] = useState(5);
-  const[currentPage, setCurrentPage] = useState(1);
-  const[pageCount, setPageCount] = useState(1);
-  const[paginationElement, setPaginationElement] = useState(null);
   const[g1_data, setG1_data] = useState({});
   const[g2_data, setG2_data] = useState({});
   const[g1, setG1] = useState('');
   const[buttonText, setButtonText] = useState('View Demographics');
+  const[current, setCurrent] = useState([]);
+  const[totalPages, setTotalPages] = useState(1);
 
   //this effect fetches data on mount
   useEffect(()=>{
+    axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
     axios.get(`${BACKEND}/getAllCompaniesAdmin`)
     .then(response => {  
       if(response.status === 200){
@@ -43,26 +39,11 @@ const ManageCompanies = () => {
     })
   }, [])
 
-  const setElementsForCurrentPage = () => {
-    let elements1 = companies.slice(offset, offset + perPage);
-    setElements(elements1)
-  }
-
-  //this effect adds elements
-  useEffect(()=>{
-    setElementsForCurrentPage()  
-  }, [companies])
   
-  const handlePageClick = (pageNo) => {
-    const selectedPage = pageNo - 1; 
-    const offset1 = selectedPage * perPage;
-    setCurrentPage(selectedPage);
-    setOffset(offset1);
-    setElementsForCurrentPage();
-  }
 
   const showCompanyStats = company_id => {
     console.log("Company clicked with id = "+company_id);
+    axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
     axios.get(`${BACKEND}/getCompanyStats/`+company_id)
     .then(response => {
       console.log(response.data);
@@ -143,9 +124,16 @@ const ManageCompanies = () => {
     })
   }
 
+  useEffect(()=>{
+    var pages = Math.ceil(companies.length/5);
+    setTotalPages(pages);
+    setCurrent(companies.slice(0,5))
+  }, [companies])
+
   //this effect displays cards
   useEffect( () => {
-    let rcards = elements.map(company => {
+    console.log(current);
+    let rcards = current.map(company => {
       return (
         <Segment key={company.company_id} raised className="segment_div">
           <div className="link_div">
@@ -156,22 +144,20 @@ const ManageCompanies = () => {
       )
     })
 
-    if(pageCount>0){
-      let paginationElement1 = (<Pagination
-        defaultCurrent={1}
-        onChange={handlePageClick}
-        size="small"
-        total={companies.length}
-        showTotal={(total, range) => 
-        `${range[0]}-${range[1]} of ${total} items`}
-          defaultPageSize={perPage}
-      />)
-      setPaginationElement(paginationElement1);
-    }
     setCards(rcards);
 
-  }, [elements])
+  }, [current])
 
+  const selectPage = (e, pageInfo) => {
+    console.log(pageInfo.activePage)
+    var startIdx;
+    var endIdx;
+
+    startIdx = (pageInfo.activePage-1)*5;
+    endIdx = pageInfo.activePage*5;
+
+    setCurrent(companies.slice(startIdx, endIdx));
+  }
 
   const onType = e => {
     setTerm(e.target.value)
@@ -179,6 +165,7 @@ const ManageCompanies = () => {
 
   const search = e => {
     e.preventDefault();
+    axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
     axios.post(`${BACKEND}/searchCompany/`, {searchTerm:term})
     .then(response => {
       setCompanies(response.data);
@@ -218,8 +205,8 @@ const ManageCompanies = () => {
             <div style={{marginLeft:"10rem"}}>
               {cards.length>0?cards:<div className="no_more">No companies to show</div>}
             </div>
-            <div style={{marginLeft:"10rem"}}>
-              {paginationElement}
+            <div style={{marginLeft:"10rem", marginTop:"1rem"}}>
+              <Pagination defaultActivePage={1} totalPages={totalPages} onPageChange={selectPage}/>
             </div>
           </Grid.Column>
           <Grid.Column width={8}>
@@ -268,7 +255,7 @@ const ManageCompanies = () => {
               <Button content={buttonText} onClick={changeGraphs} style={{backgroundColor:"#0CAA41", color:"white", marginTop:"1rem", marginLeft:"40%"}}/>
             </div>
           </Grid.Column>
-        </Grid.Row>
+        </Grid.Row>        
       </Grid>
       <Footer/>
     </div>

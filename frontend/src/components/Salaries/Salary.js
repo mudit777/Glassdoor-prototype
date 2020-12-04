@@ -7,6 +7,7 @@ import CompanyBar from '../CompanyHeaderBar/CompanyBar'
 import { Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import Footer from '../Footer/Footer'
+import {Pagination} from 'antd'
 
 export default class Salary extends Component {
       constructor(props){
@@ -27,8 +28,32 @@ export default class Salary extends Component {
                 jobs:[],
                 top_jobs:[],
                 reviews : [],
+                offset: 0,
+                  elements: [],
+                  perPage: 3,
+                  currentPage: 1,
+                  pageCount: 1
             }
             // console.log(props)
+        }
+        setElementsForCurrentPage = () => {
+            console.log("Student jobs are ", this.state.salary)
+            let elements = this.state.salary.slice(this.state.offset, this.state.offset + this.state.perPage);
+            console.log("The elements are -----------", elements);
+            this.setState({ 
+                elements : elements
+            });
+        }
+        showCatalogicData = () => {
+            console.log("Inside show catolgocal data function", this.state.elements);
+            return <CompanyCard company = {this.state.elements[0]} />
+        }
+        handlePageClick = (pageNo) => {
+            const selectedPage = pageNo - 1; 
+            const offset = selectedPage * this.state.perPage;
+            this.setState({ currentPage: selectedPage, offset: offset }, 
+                () => this.setElementsForCurrentPage()
+            );
         }
       componentDidMount(){
             console.log(this.props)
@@ -54,6 +79,7 @@ export default class Salary extends Component {
                       this.setState({
                           salary : response.data
                       })
+                      this.setElementsForCurrentPage();
                   }
               })
               axios.post(`${BACKEND}/getJob`, company).then(response => {
@@ -129,6 +155,22 @@ export default class Salary extends Component {
                   com_bar=<CompanyBar student='false' total_reviews = {this.state.reviews.length} company_id={this.props.location.state.company_id} total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} company = {this.state.company}/>
 
             }
+            let paginationElement;
+            if(this.state.salary.length > 0)
+            {
+                if(this.state.pageCount > 0)
+                {
+                    paginationElement = (<Pagination
+                        defaultCurrent={1} 
+                        onChange={this.handlePageClick}       
+                        size="small" 
+                        total={this.state.salary.length}
+                        showTotal={(total, range) => 
+                        `${range[0]}-${range[1]} of ${total} items`}   
+                        defaultPageSize={this.state.perPage}
+                    />)
+                }
+            }
             return (
                   <div>
                         <CompanyHeaderBarForm type={this.props.location.state.type} />
@@ -137,11 +179,14 @@ export default class Salary extends Component {
                               <div style={{backgroundColor:'#f2f2f2',margin:'0 0',padding:'2rem 0'}}>
                                     {b}
                               </div>
-                              {this.state.salary.map(i=>{
+                              {this.state.elements.map(i=>{
                                     return(
                                         <SalaryCard salary={i} />
                                     )
                                 })}
+                                <div>
+                                {paginationElement}
+                            </div>
                                 
                         </div>
                         <Footer/>

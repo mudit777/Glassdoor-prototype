@@ -1,1 +1,1 @@
-export const BACKEND = "http://localhost:8080";
+export const BACKEND = "http://glassdoor-lb-916353609.us-west-1.elb.amazonaws.com";
