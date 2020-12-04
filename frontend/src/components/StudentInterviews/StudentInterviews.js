@@ -69,8 +69,8 @@ class StudentInterviews extends Component {
             qAndA.push(temp);
         }
         var data1 = {
-            student_id : "1",
-            company_id: "1",
+            student_id : sessionStorage.getItem('student_id'),
+            company_id: this.props.location.state.company_id,
             process_rating: this.state.process_rating,
             job_title: this.state.job_title,
             description: this.state.description,
@@ -175,7 +175,12 @@ class StudentInterviews extends Component {
     }
 
     componentDidMount(){
-        axios.post(`${BACKEND}/getCompanyInterview`)
+        console.log(this.props)
+        var data1 = {
+            student_id : sessionStorage.getItem('student_id'),
+            company_id: this.props.location.state.company_id,
+        }
+        axios.post(`${BACKEND}/getCompanyInterview`,data1)
             .then(response => {
                 console.log("Status Code in Getting Reviews : ",response.status);
                 if(response.status === 200){
@@ -194,7 +199,17 @@ class StudentInterviews extends Component {
     }
 
     render() {
+        var b=null;
+        if(this.props.location.state.type !== 'student')
+            {
+                  //compmauy
+            }
+            else
+            {
+                //student
+                b=<Button onClick={this.showModal} style={{height: 40, backgroundColor:"#004fb4", color:"white", borderRadius:5, fontWeight:"bold", marginLeft:10}}>Add Interview</Button>
 
+            }
         var icon1 = <FontAwesomeIcon icon={faSmile} size="2x" style={{marginLeft:50, color:"#cfcfcf"}} onClick = {this.processRatingHandler}/>
         if(this.state.iconValue1)
         {
@@ -244,19 +259,19 @@ class StudentInterviews extends Component {
         return (  
             <div>
                <CompanyHeaderBarForm/>
-               <div style={{backgroundColor: "#f2f2f2"}}>
+               <div style={{display:'flex',backgroundColor:'#f2f2f2'}}>
                     <div className="column-left-add-reviews" style={{backgroundColor:"#f2f2f2"}}> 
                         <div style={{marginLeft: 208, width:676, backgroundColor:"white", marginTop: 7, padding: 15}}>
-                            <p style={{fontSize: 20}}>Amazon Interview Questions</p>
+                            <p style={{fontSize: 20}}> Interview Questions</p>
                             <Search placeholder="Search Job Titles" allowClear size="large" style={{width:497}}/>
-                            <Button onClick={this.showModal} style={{height: 40, backgroundColor:"#004fb4", color:"white", borderRadius:5, fontWeight:"bold", marginLeft:10}}>Add Interview</Button>
+                            {/* Button */}
+                            {b}
                             <Modal
                             title="Reply to the Review"
                             visible={this.state.visible}
                             onOk={ () =>this.handleOk()}
                             onCancel={this.handleCancel}
                             >
-                                <Input onChange={this.companyNameChangeHandler} defaultValue="Amazon" disabled></Input>
                                 <p style={{marginTop:10, fontSize:15}}>Rate Overall Process</p>
                                 {icon1}
                                 <span>{icon2}</span>
@@ -272,7 +287,7 @@ class StudentInterviews extends Component {
                                 {questionsAnswers}
                                 <Button style={{marginTop:5, fontWeight:"bold"}} onClick={this.addQuestion}>Add Question</Button>
                             </Modal>
-                            <p style={{fontSize: 18, marginTop: 20}}>Interviews at Amazon</p>
+                            <p style={{fontSize: 18, marginTop: 20}}>Interviews</p>
                             <p style={{fontSize: 17, marginTop: 20}}>Experience</p>
                             <div style={{height:90, borderBottomStyle:"solid", borderWidth:1, borderColor:"#cfcfcf"}}>
                                 <div className="column-left-intervies" style={{marginLeft: 100}}>
@@ -289,7 +304,7 @@ class StudentInterviews extends Component {
                                     <div className="column-right-reviews" style={{marginTop: -30}}><p style={{fontSize: 12, marginTop:-5, marginLeft:-50}}> - Negative (20)</p></div>
                                 </div>
                             </div>
-                            <p style={{fontSize: 18, marginTop: 20}}>Interviews for Top Job at Amazon</p>
+                            <p style={{fontSize: 18, marginTop: 20}}>Interviews for Top Jobs</p>
                             <div style={{marginLeft:-15}}>
                                 {this.state.interviews.map(i => {
                                     return(
@@ -315,7 +330,7 @@ class StudentInterviews extends Component {
                     </div>
                     <div className="column-right-add-reviews" style={{backgroundColor:"#f2f2f2"}}>
                         <div style={{backgroundColor:"white", width: 300, padding: 10, marginLeft: -15, marginTop: 7}}>
-                            <p style={{fontSize:18, fontWeight:500}}>Amazon Careers</p>
+                            <p style={{fontSize:18, fontWeight:500}}>Careers</p>
                             <img src="https://media.glassdoor.com/banner/bh/6036/amazon-banner-1578695809222.jpg" style={{width:300, height:55, marginLeft:-10}}></img>
                             <div style={{borderBottomWidth:1, borderBottomStyle:"solid", borderColor:"#cfcfcf", padding: 5}}>
                                 <p style={{marginTop:10}}>Our mission: To be Earth's most customer-centric company.</p>

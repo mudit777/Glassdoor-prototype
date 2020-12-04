@@ -88,7 +88,7 @@ app.use(function(req, res, next) {
 app.post("/getCompanyReviews", (req,res) =>{
     console.log("GATHERING ALL DATA!")
     console.log(req.boy)
-    var user= "SELECT * from reviews WHERE company_id = 1";
+    var user= "SELECT * from reviews WHERE company_id = "+ req.body.company_id +" ";
     connection.query(user,(err,result) => {
         if (err) throw err;
         if(result.length > 0)
@@ -221,6 +221,8 @@ app.post("/getStudentJobPreferences", requireAuth, studentDetailsRouter.getStude
 app.post("/getCompanyDetails", requireAuth, companyDetailsRouter.getCompanyDetails);
 app.post("/searchCompanies", requireAuth, searchRouter.searchCompanies);
 app.post("/addSalary", addSalary.addSalary);
+app.post("/getCompanySalary", addSalary.getCompanySalary);
+
 app.post("/getAllJobs", requireAuth, studentJobsRouter.get_all_jobs);
 app.post("/updateJobFavourites", requireAuth, studentJobsRouter.updateFavouriteJobs);
 app.post("/getFavouriteJobs", requireAuth, studentJobsRouter.getFavouriteJobs);
@@ -229,6 +231,8 @@ app.post("/getStudentFiles", requireAuth, studentDetailsRouter.getStudentFiles);
 app.post("/uploadCoverLetters", requireAuth, uploadsRouter.uploadCoverLetter);
 app.post("/applyToJob", requireAuth, studentApplicationsRouter.applyToAJob);
 app.post("/getCompanyJobs", requireAuth, companyJobsRouter.getCompanyJobs);
+app.post("/getApplicants",companyJobsRouter.getApplicants);
+app.post("/updateStatus",companyJobsRouter.updateStatus);
 app.post("/searchJobs", searchRouter.searchJobs);
 app.post("/searchInterviews", searchRouter.searchInterviews);
 app.post("/searchSalaries", searchRouter.searchSalaries);

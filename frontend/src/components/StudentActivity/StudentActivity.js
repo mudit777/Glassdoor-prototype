@@ -6,6 +6,7 @@ import ReviewCard from '../ReviewCard/ReviewCard'
 import Axios from 'axios'
 import { BACKEND } from '../../Config';
 import { Card, Button } from 'antd';
+import StudentReviewCard from '../StudentReviewCard/StudentReviewCard'
 
 
 
@@ -44,7 +45,7 @@ export default class StudentActivity extends Component {
             return (
                   <div>
                         <CompanyHeaderBarForm/>
-                        <div style={{display:'flex',justifyContent:'flex-start',alignContent:'flex-start',backgroundColor:'#EAEAEA'}}>
+                        <div style={{display:'flex',justifyContent:'flex-start',alignContent:'flex-start',backgroundColor:'#f2f2f2'}}>
                               <div>
                                     <Student/>
                                     <Card title = 'User reviews' style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '52rem',marginTop:'2rem',marginLeft:'6rem'}} actions = {[
@@ -52,7 +53,7 @@ export default class StudentActivity extends Component {
                                           {this.state.reviews.map(i=>{
                                           return(
                                                 <div>
-                                                      <ReviewCard review = {i} key={i.review_id}/>
+                                                      <StudentReviewCard review = {i} key={i.review_id}/>
                                                 </div>
                                           )
                                           })}

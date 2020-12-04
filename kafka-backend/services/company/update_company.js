@@ -5,6 +5,7 @@ function handle_request(message, callback)
 {
       var company_id = message.company_id;
       delete message.company_id;
+      console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
       var query = "UPDATE companies SET" + mysql.escape(message) + "WHERE company_id = '"+ company_id +"'";
       connection.query(query, (err, result) => {
             var response = {};

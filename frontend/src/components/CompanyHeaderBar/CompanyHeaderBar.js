@@ -17,6 +17,7 @@ class CompanyHeaderBar extends Component {
         this.state = {
             searchType : "Companies",
             searchValue : "",
+            location : "",
             companiesRedirect : false,
             jobsRedirect : false
         }
@@ -31,6 +32,11 @@ class CompanyHeaderBar extends Component {
             searchValue : e.target.value
         })
     }
+    updateLocation = (e) => {
+        this.setState({
+            location : e.target.value
+        })
+    }
     search = () => {
         var myJson = {
             searchValue  : this.state.searchValue,
@@ -41,6 +47,7 @@ class CompanyHeaderBar extends Component {
         }
         else if(this.state.searchType === "Jobs")
         {
+            myJson.location = this.state.location;
             this.props.search_jobs(myJson);
         }
         else if(this.state.searchType === "Interviews")
@@ -87,7 +94,7 @@ class CompanyHeaderBar extends Component {
                                     <Select.Option value = "Salaries">Salaries</Select.Option>
                                 </Select>
                             </Input>
-                            <Input onChange={this.searchLocChangeHandler} type="text" icon="" placeholder='Location' style={{width:350,marginLeft:16}}/>
+                            <Input onChange={this.updateLocation} value = {this.state.location} type="text" icon="" placeholder='Location' style={{width:350,marginLeft:16}}/>
                             <Button style={{backgroundColor:"#00a422", height:40, width:88, color:"white" }} onClick = {this.search} >Search</Button>
                             <FontAwesomeIcon onClick={this.handleCart} icon={faEnvelopeSquare} size="2x" style={{marginLeft:30, paddingTop:5}}/>
                             <FontAwesomeIcon onClick={this.handleCart} icon={faUser} size="2x" style={{marginLeft:30, paddingTop:5}}/>

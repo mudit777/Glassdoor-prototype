@@ -16,7 +16,11 @@ class CompanyCard extends Component {
         var temp = null;
         if(this.props.company)
         {
-            temp =  <Card style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : 300}}>
+            temp =  <Link to={{
+                pathname:'/companyProfileForUser',
+                state:{company_id:this.props.company.company_id}
+            }}>
+            <Card style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : 300}}>
             <div>
                 <Row>
                     <Col>
@@ -56,6 +60,7 @@ class CompanyCard extends Component {
                 </Row>
             </div>
         </Card>
+        </Link>
         }
         return (
             <div style = {{marginTop : "5%"}}>

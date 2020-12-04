@@ -57,6 +57,7 @@ class AddSalary extends Component {
       Submit = e =>{
             // console.log('clicked',this.state)
             var salary = {
+                company_id : sessionStorage.getItem("company_id"),
                   BaseSalary : this.state.BaseSalary,
                   Bonus : this.state.Bonus,
                   JobTitle  : this.state.JobTitle,

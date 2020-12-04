@@ -31,7 +31,9 @@ class AddReview extends Component {
             recommend_to_friend: ""
         }
     }
-
+    componentDidMount(){
+        console.log(this.props)
+    }
     ratingChangeHandler = (e) => {
         this.setState({
             rating: e
@@ -114,7 +116,7 @@ class AddReview extends Component {
 
     submitButtonHandler = (e) => {
         const data = {
-            company_name : "Amazon",
+            company_name : this.props.location.state.company.company_name,
             rating: this.state.rating,
             employment_status: this.state.employment_status,
             job_title: this.state.job_title,
@@ -125,7 +127,7 @@ class AddReview extends Component {
             review_helpful: "1",
             review_status: "Undecided",
             review_marked_by_company: "1",
-            company_id: "1",
+            company_id: this.props.location.state.company.company_id,
             student_id: window.sessionStorage.getItem("student_id"),
             ceo_approval: this.state.ceo_approval,
             recommend_to_friend: this.state.recommend_to_friend
@@ -146,6 +148,7 @@ class AddReview extends Component {
 
             })
         console.log(data)
+        window.location.replace('/studentProfile')
     }
 
     render() {
@@ -175,7 +178,6 @@ class AddReview extends Component {
                             </div>
                             <div className="column-right-reviews">
                                 <p style={{fontWeight:"bold",marginTop: 20}}>Company</p>
-                                <Input defaultValue="Amazon" disabled style={{height:40, width:238, borderRadius:3}}></Input>
                                 <p style={{fontWeight:"bold",marginTop: 20}}>Overall Rating<sup>*</sup></p>
                                 <Rate onChange={this.ratingChangeHandler} style={{color:"#00a422"}} character={({ index }) => { return customIcons[index+1]}}></Rate>
                                 <p style={{fontWeight:"bold",marginTop: 20}}>CEO Approval<sup>*</sup></p>
@@ -184,15 +186,15 @@ class AddReview extends Component {
                                 <Dropdown style={{width:238}} onChange={this.recoToFriendStatusHandler} id = 'dropdown' options={options1} fluid selection />
                                 <p style={{fontWeight:"bold",marginTop: 20}}>Employment Status<sup>*</sup></p>
                                 <Dropdown style={{width:238}} onChange={this.changeStatusHandler} id = 'dropdown' options={options} fluid selection />
-                                <p style={{fontWeight:"bold",marginTop: 20}}>Your Title at Amazon</p>
+                                <p style={{fontWeight:"bold",marginTop: 20}}>Your Title</p>
                                 <Input onChange={this.jobTitleChangeHandler} placeholder="Title" style={{height:40, width:576, borderRadius:3}}></Input>
                                 <p style={{fontWeight:"bold",marginTop: 20}}>Review Headline<sup>*</sup></p>
                                 <Input onChange={this.reviewHeadlineChangeHandler} placeholder="" style={{height:40, width:576, borderRadius:3}}></Input>
                                 <p style={{fontWeight:"bold",marginTop: 20}}>Pros<sup>*</sup></p>
-                                <TextArea onChange={this.jobProsChangeHandler} rows={2} placeholder="Share some of the best reasons to work at Amazon" style={{height:52.5, width:576, borderRadius:3}}></TextArea>
+                                <TextArea onChange={this.jobProsChangeHandler} rows={2} placeholder="Share some of the best reasons to work" style={{height:52.5, width:576, borderRadius:3}}></TextArea>
                                 <p style={{fontSize:10, marginLeft:20, marginTop:5, color:"#525252"}}>5 words minimum</p>
                                 <p style={{fontWeight:"bold",marginTop: 20}}>Cons<sup>*</sup></p>
-                                <TextArea onChange={this.jobConsChangeHandler} rows={2} placeholder="Share some of the downsides of working at Amazon" style={{height:52.5, width:576, borderRadius:3}}></TextArea>
+                                <TextArea onChange={this.jobConsChangeHandler} rows={2} placeholder="Share some of the downsides of work" style={{height:52.5, width:576, borderRadius:3}}></TextArea>
                                 <p style={{fontSize:10, marginLeft:20, marginTop:5, color:"#525252"}}>5 words minimum</p>
                                 <p style={{fontWeight:"bold",marginTop: 20}}>Review Description<sup>*</sup></p>
                                 <TextArea onChange={this.jobDescriptionChangeHandler} rows={2} placeholder="Describe the review in depth" style={{height:52.5, width:576, borderRadius:3}}></TextArea>

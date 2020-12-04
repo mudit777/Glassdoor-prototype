@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const salariesschema = new Schema({
+      company_id : Number,
       BaseSalary : String,
       Bonus : String,
       JobTitle  : String,

@@ -19,6 +19,11 @@ import StudentSignUp from './components/StudentSignUp/StudentSignUp';
 import UpdateStudentProfile from './components/UpdateStudentProfile/UpdateStudentProfile';
 import ViewAllCompanies from './components/ViewAllCompanies/ViewAllCompanies';
 import ViewJobs from './components/ViewJobs/ViewJobs';
+import CompanyProfilePageForUser from './components/CompanyProfilePage/CompanyProfilePageForUser';
+import Report from './components/Report/Report';
+import ShowApplicants from './components/CompanyJobs/ShowApplicants';
+import ViewResume from './components/Cards/ViewResume';
+import ViewCoverLetter from './components/Cards/ViewCoverLetter';
 import Pdf from './components/Pdf/Pdf';
 import SearchedInterviews from './components/SearchInterviews/SearchedInterviews';
 import SearchedSalaries from './components/SearchedSalaries/SearchedSalaries';
@@ -30,12 +35,13 @@ class Main extends Component {
             <div>
                 <BrowserRouter>
                     <Route path='/companyProfile' component={CompanyProfilePage}/>
+                    <Route path='/companyProfileForUser' component={CompanyProfilePageForUser}/>
                     <Route path='/updateCompanyProfile' component={EditCompanyProfilePage}/>
                     <Route path='/companyHeaderBar' component={CompanyHeaderBar}/>
                     <Route path = "/companySignUp" component = {CompanySignUp} />
                     <Route path = "/studentSignUp" component = {StudentSignUp} />
                     <Route path = "/login" component = {Login} />
-                    <Route path = "/postNewJob" component = {PostNewJob}/>
+                    <Route path = "/companyReviews" component = {PostNewJob}/>
                     <Route path = "/addJob" component={AddJob}/>
                     <Route path = "/addSalary" component={AddSalary}/>
                     <Route path = "/studentProfile" component = {StudentProfile} />
@@ -48,6 +54,10 @@ class Main extends Component {
                     <Route path = "/allJobs" component = {ViewJobs} />
                     <Route path = "/studentApplications" component = {StudentApplications}/>
                     <Route path = "/companyJobs" component = {CompanyJobs} />
+                    <Route path = "/report" component = {Report} />
+                    <Route path = "/showApplicants" component = {ShowApplicants} />
+                    <Route path = "/viewResume/:resume:resume2" component = {ViewResume} />
+                    <Route path = "/viewCoverLetter" component = {ViewCoverLetter} />
                     <Route path = "/pdf" component = {Pdf} />
                     <Route path = "/searchedInterviews" component = {SearchedInterviews} />
                     <Route path = "/searchedSalaries" component = {SearchedSalaries} />
