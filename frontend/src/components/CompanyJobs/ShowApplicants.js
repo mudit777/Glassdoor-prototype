@@ -256,13 +256,6 @@ export default class ShowApplicants extends Component {
                         </div>
                         <div style={{backgroundColor:'#f2f2f2',padding:'2rem 0'}}>
                                     <Card style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", marginLeft : "15rem",  width : "73rem"}}>
-                              <Row style = {{marginLeft : "2%"}}>
-                                    <Col style = {{width : "30%"}}>
-                                    {temp}
-                                    {paginationElement}
-                                    </Col>
-                                    <Col style = {{height : "600px", overflowY : "scroll"}}>
-                                    <Card style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", marginTop : "3%", marginLeft : "4%", marginRight : "4%", width : "930px"}}>
                                           <Row style = {{borderBottom : "1px solid lightGrey"}}>
                                           <Col>
                                                 <ul style = {{listStyleType : "none"}}>
@@ -294,9 +287,6 @@ export default class ShowApplicants extends Component {
                                                 )
                                                 })}
                                           </div>
-                                    </Card>
-                                    </Col>
-                                    </Row>
                                     </Card>
                         </div>
                   </div>

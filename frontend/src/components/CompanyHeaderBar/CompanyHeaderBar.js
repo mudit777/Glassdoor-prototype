@@ -143,7 +143,7 @@ class CompanyHeaderBar extends Component {
                             </span>
                             <span style={{marginLeft:50, color:"#00a422"}}><FontAwesomeIcon onClick={this.handleCart} size="2x" icon={faNewspaper}/></span>
                             <span style={{fontSize:18, fontWeight:"bold", marginLeft:10}}>
-                                <Link text='Interviews' style={{ paddingTop:10, marginBottom:10,color:'black'}} icon="angle down">
+                                <Link to='/allReviews' text='Interviews' style={{ paddingTop:10, marginBottom:10,color:'black'}} icon="angle down">
                                 Reviews
                                 </Link>
                             </span>

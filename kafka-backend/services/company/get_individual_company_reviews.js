@@ -2,7 +2,8 @@ var connection = require('../../mysql_database');
 
 function handle_request(message, callback)
 {
-    var query = "SELECT * FROM reviews where company_id = "+ message.company_id+"";
+    console.log('==========================',message)
+    var query = "SELECT * FROM glassdoor.reviews where company_id = "+ message.company_id+"";
     connection.query(query, (err, jobs) => {
         var response = {};
         if(err)
