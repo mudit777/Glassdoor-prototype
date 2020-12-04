@@ -1,6 +1,9 @@
 const conn = require('../../../mysql_database');
 const util = require('util');
 const query = util.promisify(conn.query).bind(conn);
+const client = require('../../../redis_config');
+const get = util.promisify(client.get).bind(client);
+const set = util.promisify(client.set).bind(client);
 
 const handle_request = async (message, callback) => {
     let response = {}
@@ -13,11 +16,22 @@ const handle_request = async (message, callback) => {
                         ORDER BY num_of_approved_reviews DESC
                         LIMIT 5;`
 
-        let rows = await query(the_query);
+        let redis_result = await get('get_top_students');
 
-        response.code = 200;
-        response.data = rows;
-        callback(null, response);
+        if(redis_result == null){
+            let rows = await query(the_query);
+            console.log("SQL result")
+            set('get_top_students', JSON.stringify(rows));
+            response.code = 200;
+            response.data = JSON.stringify(rows);
+            callback(null, response)
+        }
+        else{
+            console.log("Fetching from redis");
+            response.code = 200;
+            response.data = redis_result;
+            callback(null, response)
+        }
     } catch (e) {
         response.code = 500;
         response.data = e;

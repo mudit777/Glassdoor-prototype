@@ -94,8 +94,6 @@ const admin_dashboard_router = require('./src/Admin/dashboard_controller');
 var company_authentication_router = require('./src/Company/company_authentication');
 var student_authentication_router = require('./src/Student/student_authentication');
 var loginRouter = require("./src/Login/login");
-// var review_controllers = require('./src/Reviews/review_controllers');
-var admin_get_controllers = require('./src/Admin/get_controllers');
 var photo_controllers = require('./src/Photos/photo_controllers');
 
 //post paths
@@ -111,14 +109,12 @@ app.post("/rejectPhoto", admin_photo_router.reject_photo);
 app.post("/approveReview", admin_review_router.approve_review);
 app.post("/rejectReview", admin_review_router.reject_review);
 //get paths
-app.get("/getAllCompaniesAdmin", admin_get_controllers.getAllCompaniesAdmin);
-// app.get("/getCompanyReviewsAdmin/:company_id", review_controllers.getCompanyReviewsAdmin);
-app.get("/getCompanyPhotos/:company_id", photo_controllers.getCompanyPhotos);
-app.get("/getUndecidedReviews", admin_review_router.get_undecided_reviews);
-app.get("/getUndecidedPhotos", admin_photo_router.get_undecided_photos);
-app.get("/getAllCompanies", admin_company_router.get_all_companies);
-app.get("/getCompanyReviews/:company_id", admin_company_router.get_company_reviews);
-app.get("/getCompanyStats/:company_id", admin_company_router.get_company_stats);
+app.get("/getCompanyPhotos/:company_id", photo_controllers.getCompanyPhotos); //done
+app.get("/getUndecidedReviews", admin_review_router.get_undecided_reviews); //done
+app.get("/getUndecidedPhotos", admin_photo_router.get_undecided_photos); //done
+app.get("/getAllCompanies", admin_company_router.get_all_companies); //done
+app.get("/getCompanyReviews/:company_id", admin_company_router.get_company_reviews); //done
+app.get("/getCompanyStats/:company_id", admin_company_router.get_company_stats); 
 app.get("/getReviewCounts/:query_date", admin_dashboard_router.get_review_counts);
 app.get("/getMostReviewedCompanies", admin_dashboard_router.get_most_reviewed_companies);
 app.get("/getMostRatedCompanies", admin_dashboard_router.get_most_rated_companies);

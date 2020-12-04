@@ -17,7 +17,7 @@ const ShowCompanyReviews = ({location}) => {
     if(location.state.company_id !== undefined){
       axios.get(`${BACKEND}/getCompanyReviews/`+location.state.company_id)
       .then(response => {
-        setReviews(JSON.parse(response.data))
+        setReviews(response.data)
       })
       .catch(err => {
         console.log("Axios err", err);

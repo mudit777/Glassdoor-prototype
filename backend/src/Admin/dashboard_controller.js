@@ -44,6 +44,7 @@ exports.get_most_reviewed_companies = (req, res) => {
 }
 
 exports.get_most_rated_companies = (req, res) => {
+    console.log("Get most rated companies")
     kafka.make_request("get_most_rated_companies", req.body, (err, result) => {
         if(result.code === 500)
         {
@@ -57,12 +58,13 @@ exports.get_most_rated_companies = (req, res) => {
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
-            res.end(JSON.stringify(result.data))
+            res.end(result.data)
         }
     })
 }
 
 exports.get_top_ceos = (req, res) => {
+    console.log("Get top ceos")
     kafka.make_request("get_top_ceos", req.body, (err, result) => {
         if(result.code === 500)
         {
@@ -76,12 +78,13 @@ exports.get_top_ceos = (req, res) => {
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
-            res.end(JSON.stringify(result.data))
+            res.end(result.data)
         }
     })
 }
 
 exports.get_top_students = (req, res) => {
+    console.log("Get most rated students")
     kafka.make_request("get_top_students", req.body, (err, result) => {
         if(result.code === 500)
         {
@@ -95,7 +98,7 @@ exports.get_top_students = (req, res) => {
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
-            res.end(JSON.stringify(result.data))
+            res.end(result.data)
         }
     })
 }
