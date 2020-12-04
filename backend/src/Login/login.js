@@ -32,6 +32,7 @@ exports.login = (req, res) => {
             }
             else if(result.code === 200)
             {
+                console.log("Result ------------", result);
                 var id = 0;
                 switch(req.body.type)
                 {
@@ -40,6 +41,9 @@ exports.login = (req, res) => {
                         break;
                     case "company":
                         id = result.data.company_id;
+                        break;
+                    case "Admin":
+                        id = "admin@gmail.com";
                         break;
                 }
                 const payload = { id: id, source : req.body.type};
@@ -52,6 +56,7 @@ exports.login = (req, res) => {
                 res.writeHead(200,{
                     'Content-Type' : 'applicaton/json'
                 })
+                console.log("~~~~~~~~~~~~~~~~~~~~ result ~~~~~~~~~~~~~~`", result.data)
                 res.end(JSON.stringify(result.data));
             }
         }

@@ -17,6 +17,7 @@ export function login(payload)
                 });
                 window.sessionStorage.setItem("isLoggedIn", true)
                 window.sessionStorage.setItem("jwtToken", response.data.token);
+                console.log(payload, response.data)
                 delete response.data.token;
                 if(payload.type === "student")
                 {
@@ -36,6 +37,10 @@ export function login(payload)
                         company : response.data,
                         type : payload.type
                     }
+                }
+                else if(payload.type === "Admin")
+                {
+                    console.log("ADmin",  window.sessionStorage.getItem("jwtToken"))
                 }
                 dispatch({type : LOGIN, data});
             }
