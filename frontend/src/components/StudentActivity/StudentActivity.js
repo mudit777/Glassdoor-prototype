@@ -100,7 +100,7 @@ export default class StudentActivity extends Component {
                         <CompanyHeaderBarForm type='student'/>
                         <div style={{display:'flex',justifyContent:'flex-start',alignContent:'flex-start',backgroundColor:'#f2f2f2'}}>
                               <div>
-                                    <Student/>
+                                    <Student totalreviews={this.state.reviews.length} />
                                     <Card title = 'Reviews' style={{height : '20rem', overflowY : "scroll",boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '52rem',marginTop:'2rem',marginLeft:'6rem'}} actions = {[
                                     ]}>
                                           {this.state.reviews.map(i=>{

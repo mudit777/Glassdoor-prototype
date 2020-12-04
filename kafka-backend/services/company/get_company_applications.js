@@ -13,7 +13,7 @@ function handle_request(message, callback)
         }
         else
         {
-            
+            // console.log('[[[[[[[[[[[]]]]]]]]]]]',result)
             response.code = 200;
             response.data = result;
             callback(null, response);

@@ -13,6 +13,8 @@ class SalaryCard extends Component {
     }
     
     render() {
+        console.log(this.props)
+
         return (
             <div style={{backgroundColor:'#f2f2f2',padding:'1rem 0'}}>
                     <Card style={{width:'73rem',margin:'1rem 14.9rem'}}>

@@ -26,7 +26,7 @@ class UpdateStudentProfile extends Component {
                 first_name : "" ,
                 last_name : "",
                 race: "",
-                gender: "",
+                gender: null,
                 photo: "",
                 disability: "",
                 veteran : "",
@@ -138,6 +138,7 @@ class UpdateStudentProfile extends Component {
         })
     }
     updateGender = (e) => {
+        console.log(e)
         this.setState({
             gender : e
         })
@@ -158,16 +159,38 @@ class UpdateStudentProfile extends Component {
         })
     }
     updateStudentProfile = () => {
+        var gender =this.state.gender
+        if(this.state.gender==='Male'){
+            gender=1
+        }
+        else if(this.state.gender==='Female'){
+            gender=0
+        }
+        var dis =this.state.disability
+        if(this.state.disability==='I dont have disability'){
+            dis=0
+        }
+        else if(this.state.disability==='I have disability'){
+            dis=1
+        }
+        var vet =this.state.veteran
+        if(this.state.veteran==='I am not a veteran'){
+            vet=0
+        }
+        else if(this.state.veteran==='I am a veteran'){
+            vet=1
+        }
         var student = {
-            student_id : window.sessionStorage.getItem("student_id"),
+            student_id : parseInt(window.sessionStorage.getItem("student_id")),
             student_first_name : this.state.first_name,
             student_last_name  : this.state.last_name,
             student_race : this.state.race,
-            student_gender : this.state.gender,
-            student_veteran : this.state.veteran,
-            student_disability : this.state.disability,
+            student_gender : gender,
+            student_veteran : vet,
+            student_disability : dis,
             student_profile_photo : this.state.photo
         }
+        console.log(student)
         var titles = this.state.positions.split(",");
         var jobPreference = {
             student_id : window.sessionStorage.getItem("student_id"),

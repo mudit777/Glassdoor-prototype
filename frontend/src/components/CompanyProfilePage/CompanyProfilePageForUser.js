@@ -176,14 +176,16 @@ class CompanyProfilePageForUser extends Component {
         axios.post(`${BACKEND}/getJob`, company).then(response => {
             if(response.status === 200)
             {
-                console.log(response.data)
+                console.log(typeof(response.data),response.data)
                 this.setState({
                     jobs : response.data
-                })
-                var temp = this.state.jobs.slice(0,5)
+                },()=>{
+                    var temp = response.data.slice(0,5)
                 this.setState({
                     top_jobs : temp
                 })
+                })
+                
             }
         })
     }

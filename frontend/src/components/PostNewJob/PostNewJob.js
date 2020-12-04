@@ -8,6 +8,7 @@ import ReviewCard from '../ReviewCard/ReviewCard';
 import { BACKEND } from '../../Config';
 import CompanyBar from '../CompanyHeaderBar/CompanyBar'
 import { Label } from 'semantic-ui-react';
+import Footer from '../Footer/Footer'
 
 
 class PostNewJob extends Component {

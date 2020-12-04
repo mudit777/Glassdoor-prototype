@@ -135,7 +135,7 @@ export default class Student extends Component {
 
                               <div  style={{display:'flex',margin:'0.5rem 1rem'}}>
                                     <div style={{marginRight:'1.2rem',fontWeight:'bold',fontSize:'1.5rem',color:'#0049B9'}}>Total reviews:</div>
-                                    <div style={{fontSize:'1.5rem'}}> {this.state.totalreviews} </div>
+                                    <div style={{fontSize:'1.5rem'}}> {this.props.totalreviews} </div>
                               </div>
                         </Card>
                   </div>
