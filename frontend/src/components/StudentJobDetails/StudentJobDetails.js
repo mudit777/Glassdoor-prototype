@@ -87,7 +87,7 @@ class StudentJobDetails extends Component {
     }
     getCompanyDetails = () => {
         var company = {
-            company_id : this.props.company.company_id
+            company_id : this.props.job.company_id
         }
         Axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
         Axios.post(`${BACKEND}/getCompanyDetails`, company).then(response => {
