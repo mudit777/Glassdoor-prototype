@@ -26,6 +26,12 @@ function rootReducer(state = initialState, action)
         type : action.data.type,
       })
     }
+    else if(action.data.type === 'Admin')
+    {
+      return Object.assign({},state,{
+        type : action.data.type,
+      })
+    }
   }
   else if(action.type === GETALLCOMPANIES)
   {

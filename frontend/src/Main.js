@@ -31,6 +31,14 @@ import GetAllReviews from './components/GetAllReviews/GetAllReviews';
 import Salary from './components/Salaries/Salary';
 import AllSalary from './components/Salaries/AllSalary';
 import AllInterviews from './components/SearchInterviews/AllInterviews';
+import AddPhotosByCompany from './components/Photos/AddPhotosByCompany';
+import AddPhotosByUserForCompany from './components/Photos/AddPhotosByUserForCompany';
+import Approve from './components/Admin/approve';
+import ApprovePhotos from './components/Admin/ApprovePhotos';
+import ApproveReviews from './components/Admin/ApproveReviews';
+import ManageCompanies from './components/Admin/ManageCompanies';
+import ShowCompanyReviews from './components/Admin/ShowCompanyReviews';
+import stats from './components/Admin/stats';
 
 
 class Main extends Component {
@@ -69,6 +77,18 @@ class Main extends Component {
                     <Route path = "/salary" component = {Salary} />
                     <Route path = "/allSalary" component = {AllSalary} />
                     <Route path = "/allInterviews" component = {AllInterviews} />
+
+
+
+
+                    <Route path = "/approve" component = {Approve} />
+                    <Route path = "/approvePhotos" component = {ApprovePhotos} />
+                    <Route path = "/approveReviews" component = {ApproveReviews} />
+                    <Route path = "/manageCompanies" component = {ManageCompanies} />
+                    <Route path = "/showCompanyReviews" component = {ShowCompanyReviews} />
+                    <Route path = "/showStats" component = {stats} />
+                    <Route path = "/addPhotosC" component={AddPhotosByCompany}/>
+                    <Route path = "/addPhotosU" component={AddPhotosByUserForCompany}/>
                 </BrowserRouter>
             </div>
         )

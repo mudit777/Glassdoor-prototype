@@ -50,6 +50,12 @@ var get_student_salaries = require('./services/Student/get_student_salaries');
 var get_individual_company_reviews = require('./services/company/get_individual_company_reviews');
 var get_company_applications = require('./services/company/get_company_applications');
 
+var get_company_photos_service = require('./services/Photos/get_company_photos_service');//done
+var upload_company_photos_service = require('./services/Photos/upload_company_photos_service');//done
+var upload_company_photos_by_user_service = require('./services/Photos/upload_company_photos_by_user_service');//done
+const admin_service = require('./services/Admin');//done
+
+
 var post_job = require('./services/company/post_job');
 var get_job = require('./services/company/get_job');
 var get_company_applications = require('./services/company/get_company_applications');
@@ -138,3 +144,25 @@ handleTopicRequest("get_individual_company_reviews", get_individual_company_revi
 handleTopicRequest("post_job", post_job);
 handleTopicRequest("get_job", get_job)
 handleTopicRequest("get_company_applications", get_company_applications)
+
+handleTopicRequest("get_company_photos", get_company_photos_service);//done
+handleTopicRequest("upload_company_photos", upload_company_photos_service);//done
+handleTopicRequest("upload_company_photos_by_user", upload_company_photos_by_user_service);//done
+
+//done
+handleTopicRequest("get_undecided_reviews", admin_service.get_undecided_reviews);
+handleTopicRequest("approve_review", admin_service.approve_review);
+handleTopicRequest("reject_review", admin_service.reject_review);
+handleTopicRequest("get_undecided_photos", admin_service.get_undecided_photos);
+handleTopicRequest("approve_photo", admin_service.approve_photo);
+handleTopicRequest("reject_photo", admin_service.reject_photo);
+handleTopicRequest("get_all_companies_admin", admin_service.get_all_companies);
+handleTopicRequest("search_company", admin_service.search_company);
+handleTopicRequest("get_company_reviews", admin_service.get_company_reviews);
+handleTopicRequest("get_company_stats", admin_service.get_company_stats);
+handleTopicRequest("get_review_counts", admin_service.get_review_counts);
+handleTopicRequest("get_most_reviewed_companies", admin_service.get_most_reviewed_companies);
+handleTopicRequest("get_most_rated_companies", admin_service.get_most_rated_companies);
+handleTopicRequest("get_top_ceos", admin_service.get_top_ceos);
+handleTopicRequest("get_top_students", admin_service.get_top_students);
+handleTopicRequest("get_most_viewed_companies", admin_service.get_most_viewed_companies);

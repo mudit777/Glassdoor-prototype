@@ -79,6 +79,8 @@ class Login extends Component {
         var redirectVar = null;
         if(this.props.type)
         {
+            console.log(this.props.type)
+
             if(this.props.type === 'student')
             {
                 redirectVar = <Redirect to = "/studentProfile" />
@@ -87,7 +89,13 @@ class Login extends Component {
             {
                 redirectVar = <Redirect to = '/companyProfile' />
             }
-            
+            else if(this.props.type === 'Admin')
+            {
+                console.log('here')
+                redirectVar = <Redirect to = '/approve' />
+            }
+            console.log('here 2')
+
         }
         return (
             <div>
@@ -137,6 +145,7 @@ function mapDispatchToProps(dispatch) {
   }
   
 function mapStateToProps(store) {
+    console.log('Store is ',store)
     if(store.type === 'student')
     {
         return {
@@ -150,6 +159,12 @@ function mapStateToProps(store) {
         return {
             message : store.message,
             company : store.company,
+            type : store.type
+        }
+    }
+    else if(store.type === 'Admin')
+    {
+        return {
             type : store.type
         }
     }

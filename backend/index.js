@@ -220,7 +220,14 @@ var getStudentReviewsRouter = require('./src/Student/get_student_reviews');
 var getStudentInterviewsRouter = require('./src/Student/get_student_interviews');
 var getStudentSalairesRouter = require('./src/Student/get_student_salaries');
 
+var photo_controllers = require('./src/Photos/photo_controllers');//done
+
 app.post("/getCompanyApplications", get_company_applications_router.get_company_applications);
+
+app.get("/getCompanyPhotos/:company_id", photo_controllers.getCompanyPhotos); //done
+app.post("/uploadImageCompany", photo_controllers.uploadImageCompany);//done
+app.post("/uploadImageByUserForCompany", photo_controllers.uploadImageByUserForCompany);//done
+
 
 app.post("/getAllReviews", collectionRouter.allReviews);
 app.post("/getAllInterviews", collectionRouter.allInterviews);
@@ -261,6 +268,37 @@ app.post("/updateStatus",companyJobsRouter.updateStatus);
 app.post("/searchJobs", searchRouter.searchJobs);
 app.post("/searchInterviews", searchRouter.searchInterviews);
 app.post("/searchSalaries", searchRouter.searchSalaries);
+
+
+//done
+
+
+
+//imports
+const admin_review_router = require('./src/Admin/review_controller');
+const admin_photo_router = require('./src/Admin/photo_controller');
+const admin_company_router = require('./src/Admin/company_controller');
+const admin_dashboard_router = require('./src/Admin/dashboard_controller');
+
+
+app.post("/searchCompany", admin_company_router.search_company);
+app.post("/approvePhoto", admin_photo_router.approve_photo);
+app.post("/rejectPhoto", admin_photo_router.reject_photo);
+app.post("/approveReview", admin_review_router.approve_review);
+app.post("/rejectReview", admin_review_router.reject_review);
+//get paths
+// app.get("/getCompanyPhotos/:company_id", photo_controllers.getCompanyPhotos); //done
+app.get("/getUndecidedReviews", admin_review_router.get_undecided_reviews); //done
+app.get("/getUndecidedPhotos", admin_photo_router.get_undecided_photos); //done
+app.get("/getAllCompaniesAdmin", admin_company_router.get_all_companies); //done
+app.get("/getCompanyReviews/:company_id", admin_company_router.get_company_reviews); //done
+app.get("/getCompanyStats/:company_id", admin_company_router.get_company_stats); 
+app.get("/getReviewCounts", admin_dashboard_router.get_review_counts);
+app.get("/getMostReviewedCompanies", admin_dashboard_router.get_most_reviewed_companies);
+app.get("/getMostRatedCompanies", admin_dashboard_router.get_most_rated_companies);
+app.get("/getTopCEOs", admin_dashboard_router.get_top_ceos);
+app.get("/getTopStudents", admin_dashboard_router.get_top_students);
+app.get("/getMostViewedCompanies", admin_dashboard_router.get_most_viewed_companies);
 
 app.listen(8080)
 console.log("Server Listening on port 8080");

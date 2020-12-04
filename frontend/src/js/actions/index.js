@@ -41,7 +41,11 @@ export function login(payload)
                 else if(payload.type === "Admin")
                 {
                     console.log("ADmin",  window.sessionStorage.getItem("jwtToken"))
+                    data = {
+                        type : payload.type
+                    }
                 }
+                // console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',data)
                 dispatch({type : LOGIN, data});
             }
             else if(response.status === 209)
