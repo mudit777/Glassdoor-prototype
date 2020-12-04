@@ -7,6 +7,7 @@ import axios from 'axios'
 import ReviewCard from '../ReviewCard/ReviewCard';
 import { BACKEND } from '../../Config';
 import CompanyBar from '../CompanyHeaderBar/CompanyBar'
+import { Label } from 'semantic-ui-react';
 
 
 class PostNewJob extends Component {
@@ -149,19 +150,24 @@ class PostNewJob extends Component {
         // {console.log("STATE REVIEWS IS:", this.state.reviews)}
         return (
             <div>
-                <CompanyHeaderBar/>
+                <CompanyHeaderBar type='company'/>
                 <CompanyBar student='false' total_reviews = {this.state.reviews.length} company_id={this.props.location.state.company_id} total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} company = {this.state.company}/>
 
-                <div style={{backgroundColor:"#f2f2f2"}}>
+                <div  style={{backgroundColor:"#f2f2f2"}}>
                     <div style={{marginLeft:224}}>
-                        <Card title = "Reviews" style={{width:676}}>
-                        </Card>
+                        {/* <Card title = "Reviews" style={{width:676}}>
+                        </Card> */}
                         {/* {this.state.reviews.map(i=>{
                             return(
                                 <ReviewCard review = {i} key={i.review_id}/>
                             )
                         })} */}
-                        {temp}
+                        <Label style={{fontSize:'2rem',fontWeight:'bold',backgroundColor:'#f2f2f2',color:'black' }} >
+                            Company Reviews
+                        </Label>
+                        <div>
+                            {temp}
+                        </div>
                     </div>
                 </div>
                 <div>

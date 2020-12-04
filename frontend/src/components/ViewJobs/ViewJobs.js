@@ -114,7 +114,7 @@ class ViewJobs extends Component {
         return (
             <div>
                 <div>
-                    <CompanyHeaderBarForm />
+                    <CompanyHeaderBarForm type='student' />
                 </div>
                 <div>
                     <JobsFilter />

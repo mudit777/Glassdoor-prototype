@@ -123,7 +123,7 @@ class ViewAllCompanies extends Component {
         return (
             <div>
                 <div>
-                    <CompanyHeaderBar />
+                    <CompanyHeaderBar  type='student'/>
                 </div>
                 <div>
                     {/* <div>{this.showCatalogicData()}</div> */}

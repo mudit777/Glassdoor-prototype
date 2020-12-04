@@ -9,6 +9,8 @@ import { faSmile, faFrown, faMeh } from '@fortawesome/free-regular-svg-icons';
 import { Dropdown } from 'semantic-ui-react';
 import InterviewCard from '../InterviewCard/InterviewCard';
 const { Search } = Input;
+import CompanyBar from '../CompanyHeaderBar/CompanyBar'
+
 
 const dataPie = [
     {value: 60, stroke: "#dcee95", strokeWidth: 5},
@@ -37,7 +39,12 @@ class StudentInterviews extends Component {
             interviews: [],
             iconValue1: false,
             iconValue2: false,
-            iconValue3: false
+            iconValue3: false,
+            company: {},
+            salary : [],
+            jobs:[],
+            top_jobs:[],
+            reviews : [],
         }
     }
 
@@ -180,6 +187,86 @@ class StudentInterviews extends Component {
             student_id : sessionStorage.getItem('student_id'),
             company_id: this.props.location.state.company_id,
         }
+        var company = {
+            company_id : this.props.location.state.company_id
+        }
+        // console.log(this.props)
+        axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+        axios.post(`${BACKEND}/getCompanyDetails`, company).then(response => {
+            if(response.status === 200)
+            {
+                console.log(response.data)
+                this.setState({
+                    company : response.data
+                })
+            }
+        })
+        axios.post(`${BACKEND}/getCompanySalary`, company).then(response => {
+            console.log('salary')
+            if(response.status === 200)
+            {
+                console.log(response.data,'salary')
+                this.setState({
+                    salary : response.data
+                })
+            }
+        })
+        axios.post(`${BACKEND}/getJob`, company).then(response => {
+            if(response.status === 200)
+            {
+                console.log(response.data)
+                this.setState({
+                    jobs : response.data
+                })
+                var temp = this.state.jobs.slice(0,5)
+                this.setState({
+                    top_jobs : temp
+                })
+            }
+        })
+        axios.post(`${BACKEND}/getCompanyReviews`,company)
+      .then(response => {
+          console.log("Status Code in Getting Reviews : ",response.status);
+          if(response.status === 200){
+              console.log("HERE IN ACTIONS - GETTING REVIEWS!")
+              console.log(response.data);
+              var average_ratings=0;
+              var recommend_to_friend=0;
+              var ceo_approval=0;
+              for(var i=0;i<response.data.length;i++)
+              {
+                  average_ratings+=response.data[i].review_rating;
+                  if(response.data[i].recommend_to_friend === '1')
+                  {
+                        recommend_to_friend++;
+                  }
+                  if(response.data[i].ceo_approval === '1')
+                  {
+                        ceo_approval++;
+                  }
+                  
+              }
+              average_ratings/=response.data.length
+              recommend_to_friend = (recommend_to_friend*100)/response.data.length
+                  ceo_approval = (ceo_approval*100)/response.data.length
+            //   console.log('this is itttttttttttttt',average_ratings,recommend_to_friend,ceo_approval)
+              this.setState(
+              {
+                  reviews : response.data,
+                  average_ratings : average_ratings,
+                  recommend_to_friend : recommend_to_friend,
+                  ceo_approval : ceo_approval,
+                  
+              })
+              // Object.keys(this.state.reviews).map(i=>{
+              //     console.log("REVIEW IS",this.state.reviews[i].review_cons)
+              // })
+          }else{
+          }
+      })
+      .catch(err => {
+          
+  })
         axios.post(`${BACKEND}/getCompanyInterview`,data1)
             .then(response => {
                 console.log("Status Code in Getting Reviews : ",response.status);
@@ -200,13 +287,16 @@ class StudentInterviews extends Component {
 
     render() {
         var b=null;
-        if(this.props.location.state.type !== 'student')
+        var v=null;
+            if(this.props.location.state.type !== 'student')
             {
                   //compmauy
+                    v='false'
             }
             else
             {
                 //student
+                v='true'
                 b=<Button onClick={this.showModal} style={{height: 40, backgroundColor:"#004fb4", color:"white", borderRadius:5, fontWeight:"bold", marginLeft:10}}>Add Interview</Button>
 
             }
@@ -258,7 +348,10 @@ class StudentInterviews extends Component {
     
         return (  
             <div>
-               <CompanyHeaderBarForm/>
+               <CompanyHeaderBarForm type={this.props.location.state.type} />
+               <div>
+                <CompanyBar student={v} total_reviews = {this.state.reviews.length} company_id={this.props.location.state.company_id} total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} company = {this.state.company}/>
+               </div>
                <div style={{display:'flex',backgroundColor:'#f2f2f2'}}>
                     <div className="column-left-add-reviews" style={{backgroundColor:"#f2f2f2"}}> 
                         <div style={{marginLeft: 208, width:676, backgroundColor:"white", marginTop: 7, padding: 15}}>
@@ -308,7 +401,7 @@ class StudentInterviews extends Component {
                             <div style={{marginLeft:-15}}>
                                 {this.state.interviews.map(i => {
                                     return(
-                                        <InterviewCard interview = {i} key = {i._id} />
+                                        <InterviewCard photo={this.state.company.company_profile_photo} interview = {i} key = {i._id} />
                                     )
                                 })}
                             </div>

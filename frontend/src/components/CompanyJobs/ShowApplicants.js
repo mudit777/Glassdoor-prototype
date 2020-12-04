@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import { Button } from 'semantic-ui-react';
 import Student from '../Cards/Student';
 import Applicant from '../Cards/Applicant';
+import CompanyBar from '../CompanyHeaderBar/CompanyBar';
 
 
 export default class ShowApplicants extends Component {
@@ -19,7 +20,10 @@ export default class ShowApplicants extends Component {
             jobs : [],
             company : {},
             currentJob : {},
-            applicants : []
+            applicants : [],
+            salary : [],
+            top_jobs:[],
+            reviews : [],
         }
         
     }
@@ -45,6 +49,85 @@ export default class ShowApplicants extends Component {
                     })
                 
             })
+            var company = {
+                company_id : sessionStorage.getItem('company_id')
+            }
+            axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+            axios.post(`${BACKEND}/getCompanyDetails`, company).then(response => {
+                if(response.status === 200)
+                {
+                    console.log(response.data)
+                    this.setState({
+                        company : response.data
+                    })
+                }
+            })
+            axios.post(`${BACKEND}/getCompanySalary`, company).then(response => {
+                console.log('salary')
+                if(response.status === 200)
+                {
+                    console.log(response.data,'salary')
+                    this.setState({
+                        salary : response.data
+                    })
+                }
+            })
+            axios.post(`${BACKEND}/getJob`, company).then(response => {
+                if(response.status === 200)
+                {
+                    console.log(response.data)
+                    this.setState({
+                        jobs : response.data
+                    })
+                    var temp = this.state.jobs.slice(0,5)
+                    this.setState({
+                        top_jobs : temp
+                    })
+                }
+            })
+            axios.post(`${BACKEND}/getCompanyReviews`,company)
+            .then(response => {
+                console.log("Status Code in Getting Reviews : ",response.status);
+                if(response.status === 200){
+                    console.log("HERE IN ACTIONS - GETTING REVIEWS!")
+                    console.log(response.data);
+                    var average_ratings=0;
+                    var recommend_to_friend=0;
+                    var ceo_approval=0;
+                    for(var i=0;i<response.data.length;i++)
+                    {
+                        average_ratings+=response.data[i].review_rating;
+                        if(response.data[i].recommend_to_friend === '1')
+                        {
+                              recommend_to_friend++;
+                        }
+                        if(response.data[i].ceo_approval === '1')
+                        {
+                              ceo_approval++;
+                        }
+                        
+                    }
+                    average_ratings/=response.data.length
+                    recommend_to_friend = (recommend_to_friend*100)/response.data.length
+                        ceo_approval = (ceo_approval*100)/response.data.length
+                  //   console.log('this is itttttttttttttt',average_ratings,recommend_to_friend,ceo_approval)
+                    this.setState(
+                    {
+                        reviews : response.data,
+                        average_ratings : average_ratings,
+                        recommend_to_friend : recommend_to_friend,
+                        ceo_approval : ceo_approval,
+                        
+                    })
+                    // Object.keys(this.state.reviews).map(i=>{
+                    //     console.log("REVIEW IS",this.state.reviews[i].review_cons)
+                    // })
+                }else{
+                }
+            })
+            .catch(err => {
+                
+        })
             
     }
     getCompanyJobs = () => {
@@ -106,32 +189,18 @@ export default class ShowApplicants extends Component {
           
     }
       render() {
-            var temp = null;
-            if(this.state.jobs.length > 0)
-            {
-                  temp = this.state.jobs.map(i => {
-                  return(
-                        <CompanyJobCard updateSelectedJob = {this.updateSelectedJob} job = {i} key = {i.job_id} company = {this.state.company} />
-                  )
-                  })
-            }
-            var jobDetails = null;
-            if(this.state.currentJob.job_id > 0)
-            {
-                  jobDetails = <CompanyJobDetails job = {this.state.currentJob} company = {this.state.company} key = {this.state.currentJob.job_id}  />
-            }
+            
+            
             return (
                   <div>
                        <div>
-                              <CompanyHeaderBarForm /> 
+                              <CompanyHeaderBarForm type='company' /> 
                         </div>
                         <div>
-                              <Row style = {{marginLeft : "2%"}}>
-                                    <Col style = {{width : "30%"}}>
-                                    {temp}
-                                    </Col>
-                                    <Col style = {{height : "600px", overflowY : "scroll"}}>
-                                    <Card style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", marginTop : "3%", marginLeft : "4%", marginRight : "4%", width : "930px"}}>
+                            <CompanyBar student='false' total_reviews = {this.state.reviews.length} company_id={sessionStorage.getItem('company_id')} total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} company = {this.state.company}/>
+                        </div>
+                        <div style={{backgroundColor:'#f2f2f2',padding:'2rem 0'}}>
+                                    <Card style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", marginLeft : "15rem",  width : "73rem"}}>
                                           <Row style = {{borderBottom : "1px solid lightGrey"}}>
                                           <Col>
                                                 <ul style = {{listStyleType : "none"}}>
@@ -153,7 +222,7 @@ export default class ShowApplicants extends Component {
                                                 </ul>
                                           </Col>
                                           <Col style = {{marginTop : "2%", marginLeft : "5%", width: "59%"}}>
-                                                <Link to='/companyJobs' style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder",padding:'1rem 1rem'}} >Show Job Description</Link>
+                                            <Link to={{pathname:'/companyJobs',state:{company_id:window.sessionStorage.getItem("company_id"),type:'company'}}} style={{fontWeight:'bold',color:'#5185CE'}}>View all Jobs</Link>
                                           </Col>
                                           </Row>
                                           <div>
@@ -164,8 +233,6 @@ export default class ShowApplicants extends Component {
                                                 })}
                                           </div>
                                     </Card>
-                                    </Col>
-                              </Row>
                         </div>
                   </div>
             )

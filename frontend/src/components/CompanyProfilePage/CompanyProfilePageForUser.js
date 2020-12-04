@@ -104,6 +104,21 @@ class CompanyProfilePageForUser extends Component {
       .catch(err => {
           
   })
+      axios.post(`${BACKEND}/addCount`,company)
+      .then(response => {
+          console.log("Status Code in Getting Reviews : ",response.status);
+          if(response.status === 200){
+              console.log("HERE IN ACTIONS - GETTING REVIEWS!")
+              console.log(response.data);
+              // Object.keys(this.state.reviews).map(i=>{
+              //     console.log("REVIEW IS",this.state.reviews[i].review_cons)
+              // })
+          }else{
+          }
+      })
+      .catch(err => {
+          
+  })
       axios.post(`${BACKEND}/getNegativeReview`,company)
       .then(response => {
           console.log("Status Code in Getting Reviews : ",response.status);
@@ -179,7 +194,7 @@ class CompanyProfilePageForUser extends Component {
         ]
         return (
             <div>
-                <CompanyHeaderBar/>
+                <CompanyHeaderBar type='student'/>
                 <CompanyBar student='true' company_id={this.props.location.state.company_id}  total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} total_reviews = {this.state.reviews.length} company = {this.state.company}/>
                 <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#f2f2f2',margin:'0 0'}}>
                     <Company user='true' company = {this.state.company} />

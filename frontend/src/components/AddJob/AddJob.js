@@ -155,7 +155,7 @@ class AddJob extends Component {
         ]
         return (
             <div>
-                <CompanyHeaderBar/>
+                <CompanyHeaderBar type='company' />
                 <div style={{backgroundColor:"#f2f2f2", paddingTop:15}}>
                     <div style={{marginLeft:370, backgroundColor:"white", width:700, borderStyle:"solid", borderWidth:1, borderRadius:5, padding: 10, paddingTop:10}}>
                     <h2 style={{marginLeft:270, fontWeight:"bold"}}>Add New Job</h2>

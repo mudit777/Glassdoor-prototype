@@ -124,7 +124,7 @@ export default class Report extends Component {
       render() {
             return (
                   <div >
-                        <CompanyHeaderBarForm/>
+                        <CompanyHeaderBarForm type='company'/>
                         <div style={{display:'flex'}}>
                               <div style={{width:'50rem',marginLeft:'3rem',marginRight:'3rem',marginTop:'2rem',marginBottom:'3rem'}}>
                                     <Chart chartData={this.state.jobChartData} title='Job Analysis' legendPosition="bottom"/>

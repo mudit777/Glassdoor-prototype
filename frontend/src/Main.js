@@ -27,6 +27,9 @@ import ViewCoverLetter from './components/Cards/ViewCoverLetter';
 import Pdf from './components/Pdf/Pdf';
 import SearchedInterviews from './components/SearchInterviews/SearchedInterviews';
 import SearchedSalaries from './components/SearchedSalaries/SearchedSalaries';
+import Salary from './components/Salaries/Salary';
+import AllSalary from './components/Salaries/AllSalary';
+import AllInterviews from './components/SearchInterviews/AllInterviews';
 
 
 class Main extends Component {
@@ -56,11 +59,14 @@ class Main extends Component {
                     <Route path = "/companyJobs" component = {CompanyJobs} />
                     <Route path = "/report" component = {Report} />
                     <Route path = "/showApplicants" component = {ShowApplicants} />
-                    <Route path = "/viewResume/:resume:resume2" component = {ViewResume} />
-                    <Route path = "/viewCoverLetter" component = {ViewCoverLetter} />
+                    <Route path = "/viewResume/:resume" component = {ViewResume} />
+                    <Route path = "/viewCoverLetter/:cover" component = {ViewCoverLetter} />
                     <Route path = "/pdf" component = {Pdf} />
                     <Route path = "/searchedInterviews" component = {SearchedInterviews} />
                     <Route path = "/searchedSalaries" component = {SearchedSalaries} />
+                    <Route path = "/salary" component = {Salary} />
+                    <Route path = "/allSalary" component = {AllSalary} />
+                    <Route path = "/allInterviews" component = {AllInterviews} />
                 </BrowserRouter>
             </div>
         )
