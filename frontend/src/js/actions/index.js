@@ -157,6 +157,29 @@ export function search_interviews(payload)
         })
     }
 }
+export function search_salaries(payload)
+{
+    console.log("Searching salaries")
+    let data = {};
+    return(dispatch) => {
+        axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+        axios.post(`${BACKEND}/searchSalaries`, payload).then(response => {
+            if(response.status === 200)
+            {
+                data = {
+                    salaries : response.data,
+                    message : "Salaries searched"
+                }
+                dispatch({
+                    type : SEARCHINTERVIEWS,
+                    data
+                })
+            }
+            console.log(data);
+           
+        })
+    }
+}
 export function get_all_jobs(payload)
 {
     let data = {};

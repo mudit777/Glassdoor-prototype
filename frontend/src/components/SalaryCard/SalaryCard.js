@@ -25,7 +25,6 @@ class SalaryCard extends Component {
                             <p style={{marginTop:-10}}>{this.props.applications.application_status}</p>
                         </div>
                         <div>
-                            <Button onClick = { () =>this.withdrawSubmitHandler(this.props.applications._id)} style={{backgroundColor:"#00a422", borderRadius:3, color:"white", fontWeight:"bold", marginLeft: -100}}>Withdraw</Button> 
                         </div>
                     </Card>
                 </div>

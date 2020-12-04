@@ -21,6 +21,7 @@ import ViewAllCompanies from './components/ViewAllCompanies/ViewAllCompanies';
 import ViewJobs from './components/ViewJobs/ViewJobs';
 import Pdf from './components/Pdf/Pdf';
 import SearchedInterviews from './components/SearchInterviews/SearchedInterviews';
+import SearchedSalaries from './components/SearchedSalaries/SearchedSalaries';
 
 
 class Main extends Component {
@@ -49,6 +50,7 @@ class Main extends Component {
                     <Route path = "/companyJobs" component = {CompanyJobs} />
                     <Route path = "/pdf" component = {Pdf} />
                     <Route path = "/searchedInterviews" component = {SearchedInterviews} />
+                    <Route path = "/searchedSalaries" component = {SearchedSalaries} />
                 </BrowserRouter>
             </div>
         )

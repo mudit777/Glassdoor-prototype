@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faBuilding, faCommentDots, faEnvelopeSquare, faMoneyBillWave, faShoppingCart, faSuitcase, faUser } from '@fortawesome/free-solid-svg-icons';
 import 'semantic-ui-css/semantic.min.css';
 import { Redirect } from 'react-router-dom';
-import { search_companies, search_jobs, search_interviews } from '../../js/actions';
+import { search_companies, search_jobs, search_interviews, search_salaries } from '../../js/actions';
 import { connect } from 'react-redux';
 import { Select } from 'antd';
 
@@ -48,21 +48,29 @@ class CompanyHeaderBar extends Component {
             console.log("Hiiii searchin")
             this.props.search_interviews(myJson)
         }
+        else if(this.state.searchType === "Salaries")
+        {
+            this.props.search_salaries(myJson);
+        }
         
     }
     render() {
         var redirectVar = null;
         if(this.props.message === "Companies searched")
         {
-            redirectVar = <Redirect to = "/allCompanies" />
+            redirectVar = <Redirect to = "/allCompanies"/>
         }
         else if(this.props.message === "Jobs searched")
         {
-            redirectVar = <Redirect to = '/allJobs' />
+            redirectVar = <Redirect to = '/allJobs'/>
         }
         else if(this.props.message === "Interviews searched")
         {
-            redirectVar = <Redirect to = "/searchedInterviews" />
+            redirectVar = <Redirect to = "/searchedInterviews"/>
+        }
+        else if(this.props.message === "Salaries searched")
+        {
+            redirectVar = <Redirect to ="/searchedSalaries"/>
         }
         return (
             <div>
@@ -151,7 +159,8 @@ function mapDispatchToProps(dispatch) {
     return {
         search_companies: user => dispatch(search_companies(user)),
         search_jobs: user => dispatch(search_jobs(user)),
-        search_interviews: user => dispatch(search_interviews(user))
+        search_interviews: user => dispatch(search_interviews(user)),
+        search_salaries: user => dispatch(search_salaries(user))
     };
   }
   
