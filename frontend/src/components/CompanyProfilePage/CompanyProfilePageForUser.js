@@ -85,6 +85,50 @@ class CompanyProfilePageForUser extends Component {
             
     })
       axios.post(`${BACKEND}/getPositiveReview`)
+      axios.post(`${BACKEND}/getCompanyReviews`,company)
+      .then(response => {
+          console.log("Status Code in Getting Reviews : ",response.status);
+          if(response.status === 200){
+              console.log("HERE IN ACTIONS - GETTING REVIEWS!")
+              console.log(response.data);
+              var average_ratings=0;
+              var recommend_to_friend=0;
+              var ceo_approval=0;
+              for(var i=0;i<response.data.length;i++)
+              {
+                  average_ratings+=response.data[i].review_rating;
+                  if(response.data[i].recommend_to_friend === '1')
+                  {
+                        recommend_to_friend++;
+                  }
+                  if(response.data[i].ceo_approval === '1')
+                  {
+                        ceo_approval++;
+                  }
+                  
+              }
+              average_ratings/=response.data.length
+              recommend_to_friend = (recommend_to_friend*100)/response.data.length
+                  ceo_approval = (ceo_approval*100)/response.data.length
+            //   console.log('this is itttttttttttttt',average_ratings,recommend_to_friend,ceo_approval)
+              this.setState(
+              {
+                  reviews : response.data,
+                  average_ratings : average_ratings,
+                  recommend_to_friend : recommend_to_friend,
+                  ceo_approval : ceo_approval,
+                  
+              })
+              // Object.keys(this.state.reviews).map(i=>{
+              //     console.log("REVIEW IS",this.state.reviews[i].review_cons)
+              // })
+          }else{
+          }
+      })
+      .catch(err => {
+          
+  })
+      axios.post(`${BACKEND}/getPositiveReview`,company)
       .then(response => {
           console.log("Status Code in Getting Reviews : ",response.status);
           if(response.status === 200){
@@ -103,7 +147,7 @@ class CompanyProfilePageForUser extends Component {
       .catch(err => {
           
   })
-      axios.post(`${BACKEND}/getNegativeReview`)
+      axios.post(`${BACKEND}/getNegativeReview`,company)
       .then(response => {
           console.log("Status Code in Getting Reviews : ",response.status);
           if(response.status === 200){
@@ -179,20 +223,21 @@ class CompanyProfilePageForUser extends Component {
         return (
             <div>
                 <CompanyHeaderBar/>
-                <CompanyBar photo = {this.state.company.company_profile_photo} total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} total_reviews = {this.state.reviews.length} company = {this.state.company}/>
-                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#EAEAEA',margin:'0 0'}}>
+                <CompanyBar student='true' company_id={this.props.location.state.company_id}  total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} total_reviews = {this.state.reviews.length} company = {this.state.company}/>
+                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#f2f2f2',margin:'0 0'}}>
                     <Company user='true' company = {this.state.company} />
                     {/* loop the jobs */}
                     <div style={{display:'flex',flexDirection:'column',justifyContent:'flex-start',alignContent:'flex-start'}}>
                         <Card title = 'All Jobs Posted' style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '20rem',marginTop:'2.5rem',marginLeft:'3rem'}}>
                             {this.state.top_jobs.map(a =>{
-                                return (<Link to='#' style={{color:"black"}} ><Job job = {a}/></Link>)
+                                return (<Job job = {a}/>)
                             })}
+                            <Link to={{pathname:'/companyJobs',state:{company_id:this.props.location.state.company_id,type:'student'}}} >View all jobs</Link>
                         </Card>
                     </div>
                 </div>
                 
-                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#EAEAEA',margin:'0 0'}}>
+                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#f2f2f2',margin:'0 0'}}>
                   <Card title = 'Average reviews' style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '52rem',marginBottom:'2rem',marginLeft:'15rem'}} actions = {[
                         ]}>
                               <div style={{display:'flex',justifyContent:'flex-start'}}>
@@ -214,12 +259,12 @@ class CompanyProfilePageForUser extends Component {
 
 
                 
-                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#EAEAEA',margin:'0 0'}}>
+                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#f2f2f2',margin:'0 0'}}>
                   <Card title = 'User reviews' style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", width : '52rem',marginTop:'0rem',marginLeft:'15rem'}} actions = {[
                   ]}>
                         <div>
-                              <StudentReviewCard review = {this.state.positive_review} />
-                              <StudentReviewCard review = {this.state.negative_review} />
+                              <StudentReviewCard com photo={this.state.company.company_profile_photo} review = {this.state.positive_review} />
+                              <StudentReviewCard  photo={this.state.company.company_profile_photo} review = {this.state.negative_review} />
                         </div>
                   </Card>
                 </div>

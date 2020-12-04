@@ -1,4 +1,4 @@
-import { FILTERJOBS, GETALLCOMPANIES, GETALLSTUDENTJOBS, LOGIN, SEARCHCOMPANIES, SEARCHINTERVIEWS, SEARCHJOBS } from "../constants";
+import { FILTERJOBS, GETALLCOMPANIES, GETALLSTUDENTJOBS, LOGIN, SEARCHCOMPANIES, SEARCHINTERVIEWS, SEARCHJOBS, SEARCHSALARIES } from "../constants";
 
 
 
@@ -68,6 +68,14 @@ function rootReducer(state = initialState, action)
     console.log("~~~~~~~~~~~~~~~~~");
     return Object.assign({}, state, {
       interviews : action.data.interviews,
+      message : action.data.message
+    })
+  }
+  else if(action.type === SEARCHSALARIES)
+  {
+    console.log("~~~~~~~~~~~~~~~~~");
+    return Object.assign({}, state, {
+      salaries : action.data.salaries,
       message : action.data.message
     })
   }

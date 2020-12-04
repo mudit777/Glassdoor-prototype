@@ -65,7 +65,7 @@ class StudentReviewCard extends Component {
         if(this.props.review.review_id !== undefined){
             display=<Card title = "" style={{width:676}}>
             <div className="column-left-reviews">
-                <img style ={{height:50,width:50}}src="https://media.glassdoor.com/sql/6036/amazon-squarelogo-1552847650117.png" alt=""></img>
+                <img style ={{height:50,width:50}} src={this.props.photo} alt=""></img>
             </div>
             <div className="column-right-reviews">
                 <p style={{color:"#636363", marginTop:-15}}>{this.props.review.review_date.substring(0,10)}</p>

@@ -16,9 +16,27 @@ class CompanyBar extends Component {
             super(props);
             console.log(props);
             this.state = {
-                  photo : props.photo
+                  company:{},
+                  photo:null,
             }
             // "https://blog.nscsports.org/wp-content/uploads/2014/10/default-img.gif"
+      }
+      componentDidMount(){
+            console.log('XXXXXXXXXXXX',this.props.company_id)
+            var company = {
+                  company_id : this.props.company_id
+              }
+              Axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+              Axios.post(`${BACKEND}/getCompanyDetails`, company).then(response => {
+                  if(response.status === 200)
+                  {
+                      console.log(response.data)
+                      this.setState({
+                          company : response.data,
+                              photo: response.data.company_profile_photo
+                      })
+                  }
+              })
       }
       uploadImage = (e) => {
             var formData = new FormData();
@@ -44,12 +62,30 @@ class CompanyBar extends Component {
             document.getElementById("image").click()
       }
       render() {
+            var input=null;
+            var t = null;
+            var r = null;
+            if(this.props.student !== 'true')
+            {
+                  input=<div style={{backgroundColor:'#f2f2f2'}}><img src = {this.state.photo} style={{height:'7rem',width:'7rem',position:'relative',top:'15rem',borderRadius:'5%',border:'1px solid black'}} onClick = {this.triggerUpload}></img><img src = "https://media.glassdoor.com/banner/bh/6036/amazon-banner-1578695809222.jpg" style={{height:'15rem',width:'100%'}} ></img>
+                  <input type = 'file' id = "image" style = {{display : "none"}} onChange = {this.uploadImage}/></div>
+                  t='company'
+                  r=<Link to={{pathname:'/companyReviews',state:{company_id:this.props.company.company_id}}} style={{fontWeight:'bold',color:'#5185CE'}}>Reviews</Link>
+                  // r='hello'
+            }
+            else
+            {
+                  t='student'
+                  input=<div style={{backgroundColor:'#f2f2f2'}}><img src = {this.state.photo} style={{height:'7rem',width:'7rem',position:'relative',top:'15rem',borderRadius:'5%',border:'1px solid black'}}></img><img src = "https://media.glassdoor.com/banner/bh/6036/amazon-banner-1578695809222.jpg" style={{height:'15rem',width:'100%'}}></img>
+                  </div>
+                  r=<Link to={{pathname:'/studentReviews',state:{company_id:this.props.company.company_id}}} style={{fontWeight:'bold',color:'#5185CE'}}>Reviews</Link> 
+
+            }
             return (
-                  <div style={{backgroundColor:'#EAEAEA',margin:'-1rem 0'}}>
+                  <div style={{backgroundColor:'#f2f2f2',margin:'-1rem 0'}}>
                   <div style={{display:'flex',flexDirection:'column',justifyContent:'center',margin:'1rem 15rem',backgroundColor:'white'}}>
-                        <input type = 'file' id = "image" style = {{display : "none"}} onChange = {this.uploadImage}/>
-                        <img src = {this.props.photo} style={{height:'15rem'}} onClick = {this.triggerUpload}></img>
                         
+                        {input}
                         <div  style={{fontSize:'2rem',fontWeight:'bold',marginLeft:'1rem',background:'none',fontWeight:'bold',colo:'black'}}>{this.props.company.company_name}</div>
                         
                         <div style={{display:'flex',margin:'.5rem 1rem',justifyContent:'space-between',alignContent:'center',alignItems:'center'}}>
@@ -61,13 +97,13 @@ class CompanyBar extends Component {
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
                                     <div>{this.props.total_reviews}</div>
-                                    <Link to={{pathname:'/studentReviews',state:{company_id:this.props.company.company_id}}} style={{fontWeight:'bold',color:'#5185CE'}}>Reviews</Link>
+                                    <div>{r}</div>
                               </div>
                               <div style={{ borderLeft: '.1rem solid #777678', height: '4rem', top: '0'}} ></div>
 
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
                                     <div>{this.props.total_jobs}</div>
-                                    <Link to='/companyJobs' style={{fontWeight:'bold',color:'#5185CE'}}>Jobs</Link>
+                                    <Link to={{pathname:'/companyJobs',state:{company_id:this.props.company_id,type:t}}} style={{fontWeight:'bold',color:'#5185CE'}}>Jobs</Link>
                               </div>
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>
 
@@ -79,7 +115,7 @@ class CompanyBar extends Component {
 
                               <div style={{display:'flex',margin:'.5rem 1rem',flexDirection:'column',alignItems:'center',justifyContent:'normal',alignContent:'center'}}>
                                     <div>remaining</div>
-                                    <Link to={{pathname:'/studentInterviews',state:{company_id:this.props.company.company_id}}} style={{fontWeight:'bold',color:'#5185CE'}}>Interviews</Link>
+                                    <Link to={{pathname:'/studentInterviews',state:{company_id:this.props.company.company_id,type:t}}} style={{fontWeight:'bold',color:'#5185CE'}}>Interviews</Link>
                               </div>
                               <div style={{ borderLeft: '.1rem solid grey', height: '4rem', top: '0'}} ></div>
 

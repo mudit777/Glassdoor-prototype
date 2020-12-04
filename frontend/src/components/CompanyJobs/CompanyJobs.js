@@ -5,6 +5,7 @@ import CompanyJobCard from '../CompanyJobCard/CompanyJobCard';
 import CompanyHeaderBarForm from '../CompanyHeaderBar/CompanyHeaderBar';
 import { Col, Row ,Button} from 'antd';
 import CompanyJobDetails from '../CompanyJobDetails/CompanyJobDetails';
+import StudentJobDetails from '../StudentJobDetails/StudentJobDetails'
 
 class CompanyJobs extends Component {
     constructor(props)
@@ -21,11 +22,25 @@ class CompanyJobs extends Component {
             pageCount: 1
         }
         this.getCompanyJobs();
+    }
+    componentDidMount(){
+        // console.log(this.props)
         this.getCompanyDetails();
     }
     getCompanyJobs = () => {
-        var company = {
-            company_id : window.sessionStorage.getItem("company_id")
+        if(!window.sessionStorage.getItem('company_id'))
+        {
+            // console.log('state',this.props.location.state.company_id)
+            var company = {
+                company_id : this.props.location.state.company_id
+            }
+        }
+        else{
+            console.log('session')
+
+            var company = {
+                company_id : window.sessionStorage.getItem("company_id")
+            }
         }
         axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
         axios.post(`${BACKEND}/getCompanyJobs`, company).then(response => {
@@ -39,9 +54,21 @@ class CompanyJobs extends Component {
         })
     }
     getCompanyDetails = () => {
-        var company = {
-            company_id : window.sessionStorage.getItem("company_id")
+        if(!window.sessionStorage.getItem('company_id'))
+        {
+            // console.log('state',this.props.location.state.company_id)
+            var company = {
+                company_id : this.props.location.state.company_id
+            }
         }
+        else{
+            console.log('session')
+
+            var company = {
+                company_id : window.sessionStorage.getItem("company_id")
+            }
+        }
+        
         axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
         axios.post(`${BACKEND}/getCompanyDetails`, company).then(response => {
             if(response.status === 200)
@@ -89,7 +116,21 @@ class CompanyJobs extends Component {
         var jobDetails = null;
         if(this.state.currentJob.job_id > 0)
         {
-            jobDetails = <CompanyJobDetails job = {this.state.currentJob} company = {this.state.company} key = {this.state.currentJob.job_id}  />
+
+            if(this.props.location.state){
+                if(this.props.location.state.type === 'student')
+                {
+                    jobDetails = <StudentJobDetails job = {this.state.currentJob} company = {this.state.company} key = {this.state.currentJob.job_id}  />
+                }
+                else{
+                    jobDetails = <CompanyJobDetails job = {this.state.currentJob} company = {this.state.company} key = {this.state.currentJob.job_id}  />
+                }
+            }
+            else{
+                jobDetails = <CompanyJobDetails job = {this.state.currentJob} company = {this.state.company} key = {this.state.currentJob.job_id}  />
+
+            }
+            
         }
         return (
             <div>

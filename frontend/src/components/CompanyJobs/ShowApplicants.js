@@ -21,11 +21,12 @@ export default class ShowApplicants extends Component {
             currentJob : {},
             applicants : []
         }
-        this.getCompanyJobs();
-        this.getCompanyDetails();
+        
     }
     componentDidMount(){
-      //     console.log(this.props)
+          console.log(this.props)
+      this.getCompanyJobs();
+        this.getCompanyDetails();
             this.setState({
                   currentJob  : this.props.location.state.job
             })
@@ -47,9 +48,20 @@ export default class ShowApplicants extends Component {
             
     }
     getCompanyJobs = () => {
-        var company = {
-            company_id : window.sessionStorage.getItem("company_id")
-        }
+      if(!window.sessionStorage.getItem('company_id'))
+      {
+          console.log('state',this.props.location.state.company_id)
+          var company = {
+              company_id : this.props.location.state.job.company_id
+          }
+      }
+      else{
+          console.log('session')
+
+          var company = {
+              company_id : window.sessionStorage.getItem("company_id")
+          }
+      }
         axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
         axios.post(`${BACKEND}/getCompanyJobs`, company).then(response => {
             if(response.status === 200)
@@ -61,9 +73,20 @@ export default class ShowApplicants extends Component {
         })
     }
     getCompanyDetails = () => {
-        var company = {
-            company_id : window.sessionStorage.getItem("company_id")
-        }
+      if(!window.sessionStorage.getItem('company_id'))
+      {
+          console.log('state',this.props.location.state.company_id)
+          var company = {
+              company_id : this.props.location.state.job.company_id
+          }
+      }
+      else{
+          console.log('session')
+
+          var company = {
+              company_id : window.sessionStorage.getItem("company_id")
+          }
+      }
         axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
         axios.post(`${BACKEND}/getCompanyDetails`, company).then(response => {
             if(response.status === 200)

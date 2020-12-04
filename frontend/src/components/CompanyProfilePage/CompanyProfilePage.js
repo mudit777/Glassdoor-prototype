@@ -62,7 +62,7 @@ class CompanyProfilePage extends Component {
                 })
             }
         })
-        axios.post(`${BACKEND}/getCompanyReviews`)
+        axios.post(`${BACKEND}/getCompanyReviews`,company)
       .then(response => {
           console.log("Status Code in Getting Reviews : ",response.status);
           if(response.status === 200){
@@ -88,8 +88,8 @@ class CompanyProfilePage extends Component {
         return (
             <div>
                 <CompanyHeaderBar/>
-                <CompanyBar total_reviews = {this.state.reviews.length} photo = {this.state.company.company_profile_photo} total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} company = {this.state.company}/>
-                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#EAEAEA',margin:'0 0'}}>
+                <CompanyBar total_reviews = {this.state.reviews.length} company_id={sessionStorage.getItem("company_id")} total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} company = {this.state.company}/>
+                <div style={{display:'flex',justifyContent:'flex-start',backgroundColor:'#f2f2f2',margin:'0 0'}}>
                     <Company user='false' company = {this.state.company} />
                     {/* loop the jobs */}
                     <div style={{display:'flex',flexDirection:'column',justifyContent:'flex-start',alignContent:'flex-start'}}>
@@ -99,7 +99,7 @@ class CompanyProfilePage extends Component {
                                 return (<Link to='#' style={{color:"black"}} ><Job job = {a}/></Link>)
                             })}
                             <br/>
-                            <Link style={{backgroundColor:"#00a422",color:'white' , height:'2rem', width:'10rem', color:"white",padding:'1rem 1rem' }} to='/companyJobs'>View all jobs</Link>
+                            <Link style={{backgroundColor:"#00a422",color:'white' , height:'2rem', width:'10rem', color:"white",padding:'1rem 1rem' }} to={{pathname:'/companyJobs',state:{company_id:sessionStorage.getItem('company_id'),type:'company'}}}>View all jobs</Link>
 
                         </Card>
 

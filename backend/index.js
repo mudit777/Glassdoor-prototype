@@ -85,8 +85,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.post("/getEmployerDetails", getEmployerDetails)
-
 app.post("/getCompanyReviews", (req,res) =>{
     console.log("GATHERING ALL DATA!")
     console.log(req.boy)
@@ -237,6 +235,7 @@ app.post("/getApplicants",companyJobsRouter.getApplicants);
 app.post("/updateStatus",companyJobsRouter.updateStatus);
 app.post("/searchJobs", searchRouter.searchJobs);
 app.post("/searchInterviews", searchRouter.searchInterviews);
+app.post("/searchSalaries", searchRouter.searchSalaries);
 
 app.listen(8080)
 console.log("Server Listening on port 8080");

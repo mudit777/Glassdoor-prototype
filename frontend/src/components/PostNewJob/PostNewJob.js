@@ -6,6 +6,7 @@ import { FacebookOutlined, TwitterOutlined, MailOutlined, LinkOutlined } from '@
 import axios from 'axios'
 import ReviewCard from '../ReviewCard/ReviewCard';
 import { BACKEND } from '../../Config';
+import CompanyBar from '../CompanyHeaderBar/CompanyBar'
 
 
 class PostNewJob extends Component {
@@ -19,7 +20,11 @@ class PostNewJob extends Component {
             elements: [],
             perPage: 6,
             currentPage: 1,
-            pageCount: 1
+            pageCount: 1,
+            company:{},
+            salary : [],
+            jobs:[],
+            top_jobs:[],
         }
         console.log(props)
     }
@@ -44,7 +49,44 @@ class PostNewJob extends Component {
     });
     };
     componentDidMount(){
-        axios.post(`${BACKEND}/getCompanyReviews`)
+        var company = {
+            company_id : sessionStorage.getItem('company_id')
+        }
+        axios.defaults.headers.common['authorization'] = sessionStorage.getItem('jwtToken');
+        axios.post(`${BACKEND}/getCompanyDetails`, company).then(response => {
+            if(response.status === 200)
+            {
+                console.log(response.data)
+                this.setState({
+                    company : response.data,
+                        photo: response.data.company_profile_photo
+                })
+            }
+        })
+        axios.post(`${BACKEND}/getCompanySalary`, company).then(response => {
+            console.log('salary')
+            if(response.status === 200)
+            {
+                console.log(response.data,'salary')
+                this.setState({
+                    salary : response.data
+                })
+            }
+        })
+        axios.post(`${BACKEND}/getJob`, company).then(response => {
+            if(response.status === 200)
+            {
+                console.log(response.data)
+                this.setState({
+                    jobs : response.data
+                })
+                var temp = this.state.jobs.slice(0,5)
+                this.setState({
+                    top_jobs : temp
+                })
+            }
+        })
+        axios.post(`${BACKEND}/getCompanyReviews`,company)
             .then(response => {
                 console.log("Status Code in Getting Reviews : ",response.status);
                 if(response.status === 200){
@@ -99,7 +141,7 @@ class PostNewJob extends Component {
             temp = <div>
                 {this.state.elements.map(i => {
                     return(
-                        <ReviewCard review = {i} key = {i.review_id} />
+                        <ReviewCard photo={this.state.company.company_profile_photo} review = {i} key = {i.review_id} />
                     )
                 })}
             </div>
@@ -108,9 +150,11 @@ class PostNewJob extends Component {
         return (
             <div>
                 <CompanyHeaderBar/>
-                <div style={{backgroundColor:"#cfcfcf"}}>
+                <CompanyBar student='false' total_reviews = {this.state.reviews.length} company_id={this.props.location.state.company_id} total_salary = {this.state.salary.length} total_jobs = {this.state.jobs.length} company = {this.state.company}/>
+
+                <div style={{backgroundColor:"#f2f2f2"}}>
                     <div style={{marginLeft:224}}>
-                        <Card title = "Amazon Reviews" style={{width:676}}>
+                        <Card title = "Reviews" style={{width:676}}>
                         </Card>
                         {/* {this.state.reviews.map(i=>{
                             return(
