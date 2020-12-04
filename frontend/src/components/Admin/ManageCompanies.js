@@ -178,7 +178,7 @@ const ManageCompanies = () => {
   }
 
   const search = e => {
-    e.preventDefault();    
+    e.preventDefault();
     axios.post(`${BACKEND}/searchCompany/`, {searchTerm:term})
     .then(response => {
       setCompanies(response.data);

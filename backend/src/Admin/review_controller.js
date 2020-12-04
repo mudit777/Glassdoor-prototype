@@ -14,8 +14,7 @@ exports.get_undecided_reviews = (req, res) => {
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
-            console.log(result.data);
-            res.end(JSON.stringify(result.data))
+            res.end(result.data)
         }
     })
 }

@@ -54,7 +54,7 @@ exports.get_company_reviews = (req, res) => {
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
-            res.end(JSON.stringify(result.data))
+            res.end(result.data)
         }
     })
 }
