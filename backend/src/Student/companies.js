@@ -2,6 +2,7 @@ var kafka = require('../../kafka/client');
 
 exports.getAllCompanies = (req, res) => {
     kafka.make_request("get_all_companies", req.body, (err, result) => {
+        console.log(result.data)
         if(err)
         {
             res.writeHead(500, {

@@ -9,9 +9,10 @@ const handle_request = async (message, callback) =>
 {
     let response = {};
     try {
+        client.flushall();
         let the_query = "SELECT * FROM reviews where company_id = "+ message.company_id+"";
 
-        console.log(the_query);
+        console.log(the_query,'------------------------------');
         let redis_result = await get('get_individual_company_reviews_'+message.company_id);
         
         if(redis_result == null){
@@ -21,8 +22,8 @@ const handle_request = async (message, callback) =>
             if(rows.length > 0)
             {
                 response.code = 200;
-                response.data = JSON.stringify(rows[0]);
-                set('get_individual_company_reviews_'+message.company_id, JSON.stringify(rows[0]));
+                response.data = JSON.stringify(rows);
+                set('get_individual_company_reviews_'+message.company_id, JSON.stringify(rows));
             }
             else
             {

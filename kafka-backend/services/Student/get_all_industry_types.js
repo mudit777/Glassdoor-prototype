@@ -20,8 +20,8 @@ const handle_request = async (message, callback) =>
             if(rows.length > 0)
             {
                 response.code = 200;
-                response.data = JSON.stringify(rows[0]);
-                set('get_all_industries', JSON.stringify(rows[0]));
+                response.data = JSON.stringify(rows);
+                set('get_all_industries', JSON.stringify(rows));
             }
             else
             {

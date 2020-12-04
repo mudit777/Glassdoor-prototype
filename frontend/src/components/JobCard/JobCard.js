@@ -47,6 +47,7 @@ class JobCard extends Component {
         axios.post(`${BACKEND}/getCompanyDetails`, company).then(response => {
             if(response.status === 200)
             {
+                console.log(response.data)
                 this.setState({
                     company : response.data
                 })
@@ -97,6 +98,7 @@ class JobCard extends Component {
               Math.random() * (max-min+1)+min
             )
         }
+        console.log(this.state.company)
         return (
             <div>
                 <Card actions = {[<Button style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder"}} onClick = {this.openJob}>Open Job</Button>]}  title = {this.props.job.job_title} style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", marginTop : "3%", marginLeft : "4%", marginRight : "4%"}} extra = {date}>

@@ -22,8 +22,8 @@ const handle_request = async (message, callback) =>
             if(rows.length > 0)
             {
                 response.code = 200;
-                response.data = JSON.stringify(rows[0]);
-                set('get_negative_review_'+message.company_id, JSON.stringify(rows[0]));
+                response.data = JSON.stringify(rows);
+                set('get_negative_review_'+message.company_id, JSON.stringify(rows));
             }
             else
             {

@@ -1,7 +1,7 @@
 var kafka = require('../../kafka/client');
 
-exports.getNegativeReview = (req, res) => {
-    kafka.make_request("get_negative_review", req.body, (err, result) => {
+exports.get_company_applications = (req, res) => {
+    kafka.make_request("get_company_applications", req.body, (err, result) => {
         if(result.code === 500)
         {
             res.writeHead(500, {
@@ -14,7 +14,7 @@ exports.getNegativeReview = (req, res) => {
             res.writeHead(200,{
                 'Content-Type' : 'applicaton/json'
             })
-            res.end(result.data);
+            res.end(JSON.stringify(result.data));
         }     
     })
 }

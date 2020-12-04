@@ -17,12 +17,12 @@ const handle_request = async (message, callback) =>
         if(redis_result == null){
             let rows = await query(the_query);
             console.log("SQL result")
-            console.log(rows);
+            console.log(rows,'[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]]]]]]');
             if(rows.length > 0)
             {
                 response.code = 200;
-                response.data = JSON.stringify(rows[0]);
-                set('get_job_'+message.company_id, JSON.stringify(rows[0]));
+                response.data = JSON.stringify(rows);
+                set('get_job_'+message.company_id, JSON.stringify(rows));
             }
             else
             {

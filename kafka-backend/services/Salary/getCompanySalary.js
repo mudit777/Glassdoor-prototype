@@ -6,8 +6,12 @@ function handle_request(msg, callback){
   
       salaries.find({company_id : msg.company_id}, function(err,result, fields){
           if(err) throw err;
-          console.log(result)
-          callback(null, result)
+            console.log(result)
+        var response={
+            code:200,
+            data:result
+        }
+          callback(null, response)
           console.log("After Callback!")
       })
   }

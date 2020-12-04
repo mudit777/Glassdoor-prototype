@@ -2,7 +2,7 @@ var salaries = require('../../Models/salaries');
 
 function handle_request(message, callback)
 {
-    interviews.find({}, (err, result) => {
+    salaries.find({}, (err, result) => {
         var response = {};
         if(err)
         {

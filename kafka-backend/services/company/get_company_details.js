@@ -15,7 +15,8 @@ const handle_request = async (message, callback) => {
         if (redis_result == null) {
             console.log("SQL result");
             let rows = await query(the_query);
-            let stringed_rows = JSON.stringify(rows);
+            console.log(rows,'000000000000000000000000000000000000')
+            let stringed_rows = JSON.stringify(rows[0]);
             set(redis_key, stringed_rows);
             response.code = 200;
             response.data = stringed_rows;

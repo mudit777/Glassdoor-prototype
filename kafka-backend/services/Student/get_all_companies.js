@@ -7,6 +7,7 @@ const set = util.promisify(client.set).bind(client);
 
 const handle_request = async (message, callback) => 
 {
+    // console.log()
     let response = {};
     try {
         let the_query = "SELECT * FROM companies";
@@ -21,8 +22,8 @@ const handle_request = async (message, callback) =>
             if(rows.length > 0)
             {
                 response.code = 200;
-                response.data = JSON.stringify(rows[0]);
-                set('get_all_companies', JSON.stringify(rows[0]));
+                response.data = JSON.stringify(rows);
+                set('get_all_companies', JSON.stringify(rows));
             }
             else
             {

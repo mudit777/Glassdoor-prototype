@@ -70,6 +70,7 @@ class StudentProfile extends Component {
         Axios.get(`${BACKEND}/getAllCompanies`).then(response => {
             if(response.status === 200)
             {
+                console.log(response.data)
                 this.setState({
                     comapnies : response.data
                 })
@@ -247,6 +248,7 @@ class StudentProfile extends Component {
         var companyTemp = null;
         if(this.state.comapnies.length > 0)
         {
+            console.log(this.state.comapnies[0])
             companyTemp = <ul style = {{listStyleType : "none"}}>
                 <li>
                     <Row style = {{width : "200%"}}>

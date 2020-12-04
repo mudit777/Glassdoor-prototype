@@ -11,10 +11,11 @@ exports.getCompanyDetails = (req, res) => {
         }   
         else if(result.code === 200)
         {
+            console.log(result.data)
             res.writeHead(200,{
                 'Content-Type' : 'applicaton/json'
             })
-            res.end(JSON.stringify(result.data));
+            res.end(result.data);
         }     
     })
 }
