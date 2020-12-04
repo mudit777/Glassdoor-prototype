@@ -34,7 +34,7 @@ exports.search_company = (req, res) => {
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
-            res.end(JSON.stringify(result.data))
+            res.end(result.data);
         }
     })
 }
@@ -73,7 +73,7 @@ exports.get_company_stats = (req, res) => {
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
-            res.end(JSON.stringify(result.data))
+            res.end(result.data);
         }
     })
 }

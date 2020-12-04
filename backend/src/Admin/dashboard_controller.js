@@ -17,7 +17,7 @@ exports.get_review_counts = (req, res) => {
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
-            res.end(JSON.stringify(result.data))
+            res.end(result.data);
         }
     })
 }
@@ -38,7 +38,7 @@ exports.get_most_reviewed_companies = (req, res) => {
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
-            res.end(JSON.stringify(result.data))
+            res.end(result.data);
         }
     })
 }
@@ -117,7 +117,7 @@ exports.get_most_viewed_companies = (req, res) => {
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
-            res.end(JSON.stringify(result.data))
+            res.end(result.data);
         }
     })
 }
