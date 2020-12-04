@@ -25,6 +25,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
+    "redis": "^3.0.2",
     "uuidv4": "^1.0.0"
   }
 }
