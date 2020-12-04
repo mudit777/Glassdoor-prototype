@@ -3,7 +3,7 @@ import { ButtonGroup, Input } from 'semantic-ui-react'
 import { Dropdown } from 'semantic-ui-react'
 import { Button } from 'semantic-ui-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faBuilding, faChartBar, faCommentDots, faEnvelopeSquare, faMoneyBillWave, faNewspaper, faNotesMedical, faReceipt, faShoppingCart, faSignOutAlt, faSuitcase, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faBuilding, faChartBar, faCommentDots, faEnvelopeSquare, faMoneyBillWave, faNewspaper, faNotesMedical, faReceipt, faServer, faShoppingCart, faSignOutAlt, faSuitcase, faUser } from '@fortawesome/free-solid-svg-icons';
 import 'semantic-ui-css/semantic.min.css';
 import { Redirect } from 'react-router-dom';
 import { search_companies, search_jobs, search_interviews, search_salaries } from '../../js/actions';
@@ -120,6 +120,7 @@ class CompanyHeaderBar extends Component {
                         <Input onChange={this.updateLocation} value = {this.state.location} type="text" icon="" placeholder='Location' style={{width:350,marginLeft:16}}/>
                         <Button style={{backgroundColor:"#00a422", height:40, width:88, color:"white" }} onClick = {this.search} >Search</Button>
                         <FontAwesomeIcon onClick={this.handleActivity} icon={faUser} size="2x" style={{marginLeft:30, paddingTop:5}}/>
+                        <Link to='/studentApplications' style={{color:'black'}}><FontAwesomeIcon icon={faServer} size="2x" style={{marginLeft:30, paddingTop:5}}/></Link>
                         <FontAwesomeIcon onClick={this.handleLogout} icon={faSignOutAlt} size="2x" style={{marginLeft:30, paddingTop:5}}/>
                     </div>
                 </div>

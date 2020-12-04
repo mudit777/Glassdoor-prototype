@@ -36,6 +36,17 @@ class ApplicationCard extends Component {
     }
 
     render() {
+        var b=null;
+        if(this.props.applications.application_status === 'Submitted')
+        {
+             b=<Button  onClick = { () =>this.withdrawSubmitHandler(this.props.applications._id)} style={{backgroundColor:"#00a422", borderRadius:3, color:"white", fontWeight:"bold", marginLeft: -100}}>Withdraw</Button> 
+
+        }
+        else
+        {
+            b=<Button disabled onClick = { () =>this.withdrawSubmitHandler(this.props.applications._id)} style={{backgroundColor:"#00a422", borderRadius:3, color:"white", fontWeight:"bold", marginLeft: -100}}>Withdraw</Button> 
+
+        }
         return (
             <div >
                 <div style={{backgroundColor:'#f2f2f2',padding:'1rem 0'}}>
@@ -49,8 +60,8 @@ class ApplicationCard extends Component {
                             <p style={{marginTop:-10}}>{this.props.applications.application_status}</p>
                         </div>
                         <div>
-                            <Button onClick = { () =>this.withdrawSubmitHandler(this.props.applications._id)} style={{backgroundColor:"#00a422", borderRadius:3, color:"white", fontWeight:"bold", marginLeft: -100}}>Withdraw</Button> 
-                        </div>
+                            {b} 
+                       </div>
                     </Card>
                 </div>
             </div>

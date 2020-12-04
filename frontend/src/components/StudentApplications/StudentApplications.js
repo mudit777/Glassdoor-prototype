@@ -4,6 +4,7 @@ import CompanyHeaderBarForm from '../CompanyHeaderBar/CompanyHeaderBar'
 import axios from 'axios';
 import { BACKEND } from '../../Config';
 import ApplicationCard from '../ApplicationCard/ApplicationCard';
+import Footer from '../Footer/Footer'
 
 class StudentApplications extends Component {
 
