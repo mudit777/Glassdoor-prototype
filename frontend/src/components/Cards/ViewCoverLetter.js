@@ -1,25 +1,27 @@
 import React, { Component } from 'react'
+import Pdf from '../Pdf/Pdf'
 
 export default class ViewCoverLetter extends Component {
-      constructor(props){
-            super(props)
-            this.state={
-                  coverletterpath:'',
-                  numPages:null,
-                  pageNumber:1
+      constructor(props)
+      {
+            console.log
+            super(props);
+            this.state = {
+                  coverletterpath : ""
             }
       }
       componentDidMount(){
-            console.log(this.props)
+            console.log("props are ---------------",this.props);
             this.setState({
                   coverletterpath:this.props.location.pathname.slice(17)
             })
-            // console.log(this.props.location.pathname.slice(17))
+            // console.log(this.props.location.pathname.slice(12))
       }
       render() {
+            console.log("Path is ------------------->",this.state.coverletterpath)
             return (
                   <div>
-                        coverletter
+                        <Pdf file = {this.state.coverletterpath} />
                   </div>
             )
       }

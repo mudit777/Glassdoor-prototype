@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { Select } from 'antd';
 import { Link } from 'react-router-dom'
 
+import Avatar from 'antd/lib/avatar/avatar';
 
 class CompanyHeaderBar extends Component {
     constructor(props)

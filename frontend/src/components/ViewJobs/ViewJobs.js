@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { get_all_jobs } from '../../js/actions';
 import { connect } from 'react-redux';
 import CompanyHeaderBarForm from '../CompanyHeaderBar/CompanyHeaderBar';
-import { Col, Row } from 'antd';
+import { Col, Pagination, Row } from 'antd';
 import JobCard from '../JobCard/JobCard';
 import Axios from 'axios';
 import { BACKEND } from '../../Config';
@@ -16,7 +16,12 @@ class ViewJobs extends Component {
         this.state = {
             favourites : [],
             selectedJob : {},
-            jobs : []
+            jobs : [],
+            offset: 0,
+            elements: [],
+            perPage: 3,
+            currentPage: 1,
+            pageCount: 1
         }
         
 
@@ -25,14 +30,14 @@ class ViewJobs extends Component {
         setTimeout(() => {
             if(this.props.studentJobs)
             {
-                console.log("Hi there are jobs here")
+                // console.log("Hi there are jobs here")
             }
             else
             {
-                console.log("no jobs")
+                // console.log("no jobs")
             }
         }, );
-        console.log("STUDENT jobs `~~~~~~~~", this.props.studentJobs)
+        // console.log("STUDENT jobs `~~~~~~~~", this.props.studentJobs)
     }
     componentWillReceiveProps()
     {
@@ -42,9 +47,10 @@ class ViewJobs extends Component {
             {
                 console.log("jobs in recieve method")
                 // this.props.studentJobs.sort((a, b) => (a.event_date > b.event_date) ? 1 : (a.event_date === b.event_date) ? ((a.event_time > b.event_time) ? 1 : -1) : -1 )
-                // this.setState({
-                //     jobs : this.props.studentJobs
-                // })
+                this.setState({
+                    jobs : this.props.studentJobs
+                })
+                this.setElementsForCurrentPage();
             }
             else{
                 console.log("No jobs in recieve")
@@ -53,6 +59,25 @@ class ViewJobs extends Component {
             
         }, );
         this.getFavouriteJobs();
+    }
+    setElementsForCurrentPage = () => {
+        console.log("Student jobs are ", this.state.jobs)
+        let elements = this.state.jobs.slice(this.state.offset, this.state.offset + this.state.perPage);
+        console.log("The elements are -----------", elements);
+        this.setState({ 
+            elements : elements
+        });
+    }
+    showCatalogicData = () => {
+        console.log("Inside show catolgocal data function", this.state.elements);
+        return <CompanyCard company = {this.state.elements[0]} />
+    }
+    handlePageClick = (pageNo) => {
+        const selectedPage = pageNo - 1; 
+        const offset = selectedPage * this.state.perPage;
+        this.setState({ currentPage: selectedPage, offset: offset }, 
+            () => this.setElementsForCurrentPage()
+        );
     }
     getFavouriteJobs = () => {
         var student = {
@@ -80,9 +105,11 @@ class ViewJobs extends Component {
     } 
     render() {
         var temp = null;
+        
         if(this.props.studentJobs)
         {
-           temp = this.props.studentJobs.map(i => {
+            console.log("The state is", this.state);
+           temp = this.state.elements.map(i => {
             
                if(this.state.favourites.length > 0)
                {
@@ -111,6 +138,22 @@ class ViewJobs extends Component {
         {
             this.props.get_all_jobs();
         }
+        let paginationElement;
+        if(this.props.studentJobs)
+        {
+            if(this.state.pageCount > 0)
+            {
+                paginationElement = (<Pagination
+                    defaultCurrent={1} 
+                    onChange={this.handlePageClick}       
+                    size="small" 
+                    total={this.props.studentJobs.length}
+                    showTotal={(total, range) => 
+                    `${range[0]}-${range[1]} of ${total} items`}   
+                    defaultPageSize={this.state.perPage}
+                />)
+            }
+        }
         return (
             <div>
                 <div>
@@ -123,6 +166,9 @@ class ViewJobs extends Component {
                     <Row>
                         <Col style = {{maxHeight : 600, overflowY : "scroll", width : "30%"}}>
                             {temp}
+                            <div>
+                                {paginationElement}
+                            </div>
                         </Col>
                         <Col style = {{maxHeight : 600, overflowY : "scroll", width : "70%"}}>
                             <StudentJobDetails job = {this.state.selectedJob} />

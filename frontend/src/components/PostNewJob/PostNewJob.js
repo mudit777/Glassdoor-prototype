@@ -19,7 +19,7 @@ class PostNewJob extends Component {
             reviews: [],
             offset: 0,
             elements: [],
-            perPage: 6,
+            perPage: 5,
             currentPage: 1,
             pageCount: 1,
             company:{},
@@ -120,7 +120,7 @@ class PostNewJob extends Component {
     }
     render() {
         let paginationElement;
-        if(this.state.reviews)
+        if(this.state.reviews.length > 0)
         {
             if(this.state.pageCount > 0)
             {
@@ -170,7 +170,7 @@ class PostNewJob extends Component {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div style = {{marginLeft : "50%"}}>
                     {paginationElement}
                 </div>
             </div>

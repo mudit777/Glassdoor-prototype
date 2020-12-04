@@ -85,78 +85,80 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.post("/getCompanyReviews", (req,res) =>{
-    console.log("GATHERING ALL DATA!")
-    console.log(req.boy)
-    var user= "SELECT * from reviews WHERE company_id = "+ req.body.company_id +" ";
-    connection.query(user,(err,result) => {
-        if (err) throw err;
-        if(result.length > 0)
-        {
-            res.writeHead(200,{
-                'Content-Type' : 'application/json'
-            })
-            res.end(JSON.stringify(result))
-        }
-    })
-})
-app.post("/getStudentReviews", (req,res) =>{
-    console.log("GATHERING ALL DATA!")
-    console.log(req.boy)
-    var user= "SELECT * from reviews WHERE student_id = "+ req.body.student_id +"";
-    connection.query(user,(err,result) => {
-        if (err) throw err;
-        if(result.length > 0)
-        {
-            res.writeHead(200,{
-                'Content-Type' : 'application/json'
-            })
-            res.end(JSON.stringify(result))
-        }
-    })
-})
+// app.post("/getCompanyReviews", (req,res) =>{
+//     console.log("GATHERING ALL DATA!")
+//     console.log(req.boy)
+//     var user= "SELECT * from reviews WHERE company_id = "+ req.body.company_id +" ";
+//     connection.query(user,(err,result) => {
+//         if (err) throw err;
+//         if(result.length > 0)
+//         {
+//             res.writeHead(200,{
+//                 'Content-Type' : 'application/json'
+//             })
+//             res.end(JSON.stringify(result))
+//         }
+//     })
+// })
 
-app.post("/postJob", (req,res) =>{
-    console.log("Posting New Job!")
-    console.log(req.body)
-    var user = "INSERT INTO jobs (job_title, job_desc, job_res, job_qual, job_city, job_state, job_zip, job_street_address, job_industry, job_company_name, job_country, job_is_remote, job_expected_salary, company_id) VALUES ?";
-    var values = [[req.body.job_title,req.body.job_desc, req.body.job_roles, req.body.job_qual, req.body.city, req.body.state, req.body.zipcode, req.body.street_address, req.body.industry_type, req.body.company_name, req.body.country, req.body.remote_inperson, req.body.salary, req.body.company_id]];
-    connection.query(user,[values], function (err, result, fields) {
-        if(err) throw err;
-        console.log(result)
-        if (err) {
-            res.writeHead(400,{
-                'Content-Type' : 'text/plain'
-            })
-        }else{
-        console.log("no error")
-        res.writeHead(200,{
-            'Content-Type' : 'application/json'
-        })
-        res.end("Job Added!")
-    }
-    });
-})
-app.post("/getJob", (req,res) =>{
-    console.log("Get jobs!")
-    console.log(req.body)
-    var user = "SELECT * FROM glassdoor.jobs where company_id="+ req.body.company_id +";";
-    connection.query(user, function (err, result, fields) {
-        if(err) throw err;
-        console.log(result)
-        if (err) {
-            res.writeHead(400,{
-                'Content-Type' : 'text/plain'
-            })
-        }else{
-        console.log("no error")
-        res.writeHead(200,{
-            'Content-Type' : 'application/json'
-        })
-        res.end(JSON.stringify(result))
-    }
-    });
-})
+// app.post("/getStudentReviews", (req,res) =>{
+//     console.log("GATHERING ALL DATA!")
+//     console.log(req.boy)
+//     var user= "SELECT * from reviews WHERE student_id = "+ req.body.student_id +"";
+//     connection.query(user,(err,result) => {
+//         if (err) throw err;
+//         if(result.length > 0)
+//         {
+//             res.writeHead(200,{
+//                 'Content-Type' : 'application/json'
+//             })
+//             res.end(JSON.stringify(result))
+//         }
+//     })
+// })
+
+// app.post("/postJob", (req,res) =>{
+//     console.log("Posting New Job!")
+//     console.log(req.body)
+//     var user = "INSERT INTO jobs (job_title, job_desc, job_res, job_qual, job_city, job_state, job_zip, job_street_address, job_industry, job_company_name, job_country, job_is_remote, job_expected_salary, company_id) VALUES ?";
+//     var values = [[req.body.job_title,req.body.job_desc, req.body.job_roles, req.body.job_qual, req.body.city, req.body.state, req.body.zipcode, req.body.street_address, req.body.industry_type, req.body.company_name, req.body.country, req.body.remote_inperson, req.body.salary, req.body.company_id]];
+//     connection.query(user,[values], function (err, result, fields) {
+//         if(err) throw err;
+//         console.log(result)
+//         if (err) {
+//             res.writeHead(400,{
+//                 'Content-Type' : 'text/plain'
+//             })
+//         }else{
+//         console.log("no error")
+//         res.writeHead(200,{
+//             'Content-Type' : 'application/json'
+//         })
+//         res.end("Job Added!")
+//     }
+//     });
+// })
+
+// app.post("/getJob", (req,res) =>{
+//     console.log("Get jobs!")
+//     console.log(req.body)
+//     var user = "SELECT * FROM glassdoor.jobs where company_id="+ req.body.company_id +";";
+//     connection.query(user, function (err, result, fields) {
+//         if(err) throw err;
+//         console.log(result)
+//         if (err) {
+//             res.writeHead(400,{
+//                 'Content-Type' : 'text/plain'
+//             })
+//         }else{
+//         console.log("no error")
+//         res.writeHead(200,{
+//             'Content-Type' : 'application/json'
+//         })
+//         res.end(JSON.stringify(result))
+//     }
+//     });
+// })
 
 
   
@@ -179,6 +181,9 @@ var getStudentApplicationsRouter = require('./src/Student/get_student_applicatio
 var withdrawApplicationRouter = require('./src/Student/withdraw_application')
 var companyJobsRouter = require('./src/Company/jobs');
 var filterRouter = require('./src/Student/filter');
+var getCompanyReviewsRouter = require('./src/Company/get_company_reviews')
+var postJobRouter = require('./src/Company/post_job');
+var getJobRouter = require('./src/Student/get_job');
 
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/login", loginRouter.login);
@@ -195,6 +200,9 @@ app.post("/addInterview", addInterviewRouter.addInterview);
 app.post("/getCompanyInterview", getCompanyInterviewRouter.getCompanyInterviews)
 app.post("/getStudentApplications", getStudentApplicationsRouter.getStudentApplications)
 app.post("/withdrawApplication", withdrawApplicationRouter.withdrawApplications)
+app.post("/getCompanyReviews", getCompanyReviewsRouter.getCompanyReviews)
+app.post("/postJob", postJobRouter.postJob)
+app.post("/getJob", getJobRouter.getJob)
 
 
 
@@ -205,8 +213,14 @@ var studentDetailsRouter = require('./src/Student/student_details');
 var industriesRouter = require('./src/Student/get_all_industries');
 var companyDetailsRouter = require('./src/Company/company_details');
 var searchRouter = require('./src/Student/search');
+var collectionRouter = require('./src/Student/collection');
+var getStudentReviewsRouter = require('./src/Student/get_student_reviews');
+var getStudentInterviewsRouter = require('./src/Student/get_student_interviews');
+var getStudentSalairesRouter = require('./src/Student/get_student_salaries');
 
-
+app.post("/getAllReviews", collectionRouter.allReviews);
+app.post("/getAllInterviews", collectionRouter.allInterviews);
+app.post("/getAllSalaries", collectionRouter.allSalaries);
 app.post("/setPrimaryResume", studentDetailsRouter.setPrimaryResume)
 app.post("/registerCompany", company_authentication_router.register_company);
 app.post("/updateCompanyDetails", requireAuth, companyDetailsRouter.updateCompanyDetails);
@@ -224,6 +238,9 @@ app.post("/addCount", companyDetailsRouter.addCount);
 app.post("/searchCompanies", requireAuth, searchRouter.searchCompanies);
 app.post("/addSalary", addSalary.addSalary);
 app.post("/getCompanySalary", addSalary.getCompanySalary);
+app.post("/getStudentReviews", getStudentReviewsRouter.getStudentReviews);
+app.post("/getStudentSalaries", getStudentSalairesRouter.getStudentSalaries);
+app.post("/getStudentInterviews", getStudentInterviewsRouter.getStudentInterviews);
 
 app.post("/getAllJobs", requireAuth, studentJobsRouter.get_all_jobs);
 app.post("/updateJobFavourites", requireAuth, studentJobsRouter.updateFavouriteJobs);

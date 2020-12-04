@@ -17,13 +17,14 @@ export default class Pdf extends Component {
         this.setState({numPages});
     }
     render() {
+        console.log("Inside pdf ", this.props.file)
         const { pageNumber, numPages } = this.state;
         return (
             <div>
                 <div>
                 <Document
                    file = {{
-                       url : "https://s3.us-west-1.amazonaws.com/glassdoorcmpe273/0.542045176025933_Udit_Resume_final.pdf"
+                       url : this.props.file
                    }}
                     onLoadSuccess={this.onDocumentLoadSuccess}
                     >

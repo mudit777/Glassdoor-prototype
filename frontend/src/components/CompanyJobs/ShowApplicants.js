@@ -3,7 +3,7 @@ import CompanyHeaderBarForm from '../CompanyHeaderBar/CompanyHeaderBar'
 import axios from 'axios';
 import { BACKEND } from '../../Config';
 import CompanyJobCard from '../CompanyJobCard/CompanyJobCard';
-import { Col, Row,Card, Rate } from 'antd';
+import { Col, Row,Card, Rate, Pagination } from 'antd';
 import CompanyJobDetails from '../CompanyJobDetails/CompanyJobDetails';
 import { Link } from 'react-router-dom'
 import { Button } from 'semantic-ui-react';
@@ -24,6 +24,11 @@ export default class ShowApplicants extends Component {
             salary : [],
             top_jobs:[],
             reviews : [],
+            offset: 0,
+            elements: [],
+            perPage: 2,
+            currentPage: 1,
+            pageCount: 1
         }
         
     }
@@ -152,6 +157,7 @@ export default class ShowApplicants extends Component {
                 this.setState({
                     jobs : response.data
                 })
+                this.setElementsForCurrentPage();
             }
         })
     }
@@ -188,9 +194,58 @@ export default class ShowApplicants extends Component {
     showjob=e=>{
           
     }
+    setElementsForCurrentPage = () => {
+        let elements = this.state.jobs.slice(this.state.offset, this.state.offset + this.state.perPage);
+        this.setState({ 
+            elements : elements
+        });
+    }
+    showCatalogicData = () => {
+        console.log("Inside show catolgocal data function", this.state.elements);
+        return this.state.elements.map(i => {
+            <CompanyJobCard updateSelectedJob = {this.updateSelectedJob} job = {i} key = {i.job_id} company = {this.state.company} />
+        })
+    }
+    handlePageClick = (pageNo) => {
+        const selectedPage = pageNo - 1; 
+        const offset = selectedPage * this.state.perPage;
+        this.setState({ currentPage: selectedPage, offset: offset }, 
+            () => this.setElementsForCurrentPage()
+        );
+    }
       render() {
             
             
+            var temp = null;
+            if(this.state.jobs.length > 0)
+            {
+                  temp = this.state.elements.map(i => {
+                  return(
+                        <CompanyJobCard updateSelectedJob = {this.updateSelectedJob} job = {i} key = {i.job_id} company = {this.state.company} />
+                  )
+                  })
+            }
+            var jobDetails = null;
+            if(this.state.currentJob.job_id > 0)
+            {
+                  jobDetails = <CompanyJobDetails job = {this.state.currentJob} company = {this.state.company} key = {this.state.currentJob.job_id}  />
+            }
+            let paginationElement;
+        if(this.state.jobs.length > 0)
+        {
+            if(this.state.pageCount > 0)
+            {
+                paginationElement = (<Pagination
+                    defaultCurrent={1} 
+                    onChange={this.handlePageClick}       
+                    size="small" 
+                    total={this.state.jobs.length}
+                    showTotal={(total, range) => 
+                    `${range[0]}-${range[1]} of ${total} items`}   
+                    defaultPageSize={this.state.perPage}
+                />)
+            }
+        }
             return (
                   <div>
                        <div>
@@ -201,6 +256,13 @@ export default class ShowApplicants extends Component {
                         </div>
                         <div style={{backgroundColor:'#f2f2f2',padding:'2rem 0'}}>
                                     <Card style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", marginLeft : "15rem",  width : "73rem"}}>
+                              <Row style = {{marginLeft : "2%"}}>
+                                    <Col style = {{width : "30%"}}>
+                                    {temp}
+                                    {paginationElement}
+                                    </Col>
+                                    <Col style = {{height : "600px", overflowY : "scroll"}}>
+                                    <Card style={{boxShadow : "0 4px 8px 0 rgba(0,0,0,0.2)", marginTop : "3%", marginLeft : "4%", marginRight : "4%", width : "930px"}}>
                                           <Row style = {{borderBottom : "1px solid lightGrey"}}>
                                           <Col>
                                                 <ul style = {{listStyleType : "none"}}>
@@ -232,6 +294,9 @@ export default class ShowApplicants extends Component {
                                                 )
                                                 })}
                                           </div>
+                                    </Card>
+                                    </Col>
+                                    </Row>
                                     </Card>
                         </div>
                   </div>

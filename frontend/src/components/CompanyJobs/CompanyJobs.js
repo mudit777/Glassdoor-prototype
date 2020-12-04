@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BACKEND } from '../../Config';
 import CompanyJobCard from '../CompanyJobCard/CompanyJobCard';
 import CompanyHeaderBarForm from '../CompanyHeaderBar/CompanyHeaderBar';
-import { Col, Row ,Button} from 'antd';
+import { Col, Row ,Button, Pagination} from 'antd';
 import CompanyJobDetails from '../CompanyJobDetails/CompanyJobDetails';
 import StudentJobDetails from '../StudentJobDetails/StudentJobDetails'
 import CompanyBar from '../CompanyHeaderBar/CompanyBar';
@@ -19,6 +19,11 @@ class CompanyJobs extends Component {
             salary : [],
             top_jobs:[],
             reviews : [],
+            offset: 0,
+            elements: [],
+            perPage: 2,
+            currentPage: 1,
+            pageCount: 1
         }
         this.getCompanyJobs();
     }
@@ -128,6 +133,7 @@ class CompanyJobs extends Component {
                 this.setState({
                     jobs : response.data
                 })
+                this.setElementsForCurrentPage();
             }
         })
     }
@@ -162,11 +168,30 @@ class CompanyJobs extends Component {
             currentJob  : job
         })
     }
+    setElementsForCurrentPage = () => {
+        let elements = this.state.jobs.slice(this.state.offset, this.state.offset + this.state.perPage);
+        this.setState({ 
+            elements : elements
+        });
+    }
+    showCatalogicData = () => {
+        console.log("Inside show catolgocal data function", this.state.elements);
+        return this.state.elements.map(i => {
+            <CompanyJobCard updateSelectedJob = {this.updateSelectedJob} job = {i} key = {i.job_id} company = {this.state.company} />
+        })
+    }
+    handlePageClick = (pageNo) => {
+        const selectedPage = pageNo - 1; 
+        const offset = selectedPage * this.state.perPage;
+        this.setState({ currentPage: selectedPage, offset: offset }, 
+            () => this.setElementsForCurrentPage()
+        );
+    }
     render() {
         var temp = null;
         if(this.state.jobs.length > 0)
         {
-            temp = this.state.jobs.map(i => {
+            temp = this.state.elements.map(i => {
                 return(
                     <CompanyJobCard updateSelectedJob = {this.updateSelectedJob} job = {i} key = {i.job_id} company = {this.state.company} />
                 )
@@ -201,6 +226,22 @@ class CompanyJobs extends Component {
             }
             
         }
+        let paginationElement;
+        if(this.state.jobs.length > 0)
+        {
+            if(this.state.pageCount > 0)
+            {
+                paginationElement = (<Pagination
+                    defaultCurrent={1} 
+                    onChange={this.handlePageClick}       
+                    size="small" 
+                    total={this.state.jobs.length}
+                    showTotal={(total, range) => 
+                    `${range[0]}-${range[1]} of ${total} items`}   
+                    defaultPageSize={this.state.perPage}
+                />)
+            }
+        }
         return (
             <div>
                 <div>
@@ -213,6 +254,9 @@ class CompanyJobs extends Component {
                     <Row style = {{marginLeft : "2%",paddingTop:'3rem'}}>
                         <Col style = {{width : "20rem",paddingRight:'1rem',marginLeft:'13rem'}}>
                             {temp}
+                            <div>
+                                {paginationElement}
+                            </div>
                         </Col>
                         <Col style = {{width : "60rem",height : "600px", overflowY : "scroll"}}>
                             {jobDetails}

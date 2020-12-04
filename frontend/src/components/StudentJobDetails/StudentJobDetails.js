@@ -413,7 +413,7 @@ class StudentJobDetails extends Component {
                     >
                         {resumes}
                         <div style = {{float : "right"}}>
-                            <input id = "resumeUpload" type = "file" accept = ".pdf, .doc, .docx" style = {{display : "none"}} onChange = {this.uploadResume}/>
+                            <input id = "resumeUpload" type = "file" accept = ".pdf" style = {{display : "none"}} onChange = {this.uploadResume}/>
                             
                         </div>
                     </Modal>
@@ -426,7 +426,7 @@ class StudentJobDetails extends Component {
                     >
                         {coverLetters}
                         <div style = {{float : "right"}}>
-                            <input id = "coverLetterUpload" type = "file" accept = ".pdf, .doc, .docx" style = {{display : "none"}} onChange = {this.uploadCoverLetter}/>
+                            <input id = "coverLetterUpload" type = "file" accept = ".pdf" style = {{display : "none"}} onChange = {this.uploadCoverLetter}/>
                             
                         </div>
                     </Modal>

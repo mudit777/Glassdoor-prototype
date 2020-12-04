@@ -59,8 +59,8 @@ class Main extends Component {
                     <Route path = "/companyJobs" component = {CompanyJobs} />
                     <Route path = "/report" component = {Report} />
                     <Route path = "/showApplicants" component = {ShowApplicants} />
-                    <Route path = "/viewResume/:resume" component = {ViewResume} />
-                    <Route path = "/viewCoverLetter/:cover" component = {ViewCoverLetter} />
+                    <Route path = "/viewResume/:resume:resume2" component = {ViewResume} />
+                    <Route path = "/viewCoverLetter/:cover:cover2" component = {ViewCoverLetter} />
                     <Route path = "/pdf" component = {Pdf} />
                     <Route path = "/searchedInterviews" component = {SearchedInterviews} />
                     <Route path = "/searchedSalaries" component = {SearchedSalaries} />

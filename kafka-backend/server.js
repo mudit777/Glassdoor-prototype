@@ -41,6 +41,15 @@ var filter_jobs_via_job_type = require('./services/Student/filter_jobs_via_job_t
 var set_primary_resume = require('./services/Student/set_primary_resume');
 var search_jobs = require('./services/Student/search_jobs');
 var search_interviews = require('./services/Student/search_company_intervies');
+var get_all_reviews = require('./services/Student/get_all_reviews');
+var get_all_interviews = require('./services/Student/get_all_interviews');
+var get_all_salaries = require('./services/Student/get_all_salaries');
+var get_student_reviews = require('./services/Student/get_student_reviews');
+var get_student_interviews = require('./services/Student/get_student_interviews');
+var get_student_salaries = require('./services/Student/get_student_salaries');
+var get_individual_company_reviews = require('./services/company/get_individual_company_reviews');
+var post_job = require('./services/company/post_job');
+var get_job = require('./services/company/get_job');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -114,3 +123,13 @@ handleTopicRequest("withdraw_applications", withdraw_applications);
 handleTopicRequest("get_company_jobs", get_company_jobs);
 handleTopicRequest("search_interviews", search_interviews)
 handleTopicRequest("addCount", addCount)
+handleTopicRequest("search_interviews", search_interviews);
+handleTopicRequest("get_all_reviews", get_all_reviews);
+handleTopicRequest("get_all_interviews", get_all_interviews);
+handleTopicRequest("get_all_salaries", get_all_salaries);
+handleTopicRequest("get_student_reviews", get_student_reviews);
+handleTopicRequest("get_student_interviews", get_student_interviews);
+handleTopicRequest("get_student_salaries", get_student_salaries);
+handleTopicRequest("get_individual_company_reviews", get_individual_company_reviews);
+handleTopicRequest("post_job", post_job);
+handleTopicRequest("get_job", get_job)

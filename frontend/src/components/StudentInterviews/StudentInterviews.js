@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import CompanyHeaderBarForm from '../CompanyHeaderBar/CompanyHeaderBar'
-import { Button, Input, Rate, Checkbox, Progress, Modal, Card } from 'antd';
+import { Button, Input, Rate, Checkbox, Progress, Modal, Card, Pagination } from 'antd';
 import axios from 'axios';
 import { BACKEND } from '../../Config'
 import DonutChart from "react-svg-donut-chart"
@@ -45,6 +45,11 @@ class StudentInterviews extends Component {
             jobs:[],
             top_jobs:[],
             reviews : [],
+            offset: 0,
+            elements: [],
+            perPage: 2,
+            currentPage: 1,
+            pageCount: 1
         }
     }
 
@@ -277,6 +282,7 @@ class StudentInterviews extends Component {
                     {
                         interviews : response.data
                     })
+                    this.setElementsForCurrentPage();
                 }else{
                 }
             })
@@ -284,7 +290,25 @@ class StudentInterviews extends Component {
                 
         })
     }
-
+    setElementsForCurrentPage = () => {
+        let elements = this.state.interviews.slice(this.state.offset, this.state.offset + this.state.perPage);
+        this.setState({ 
+            elements : elements
+        });
+    }
+    showCatalogicData = () => {
+        console.log("Inside show catolgocal data function", this.state.elements);
+        return this.state.elements.map(i => {
+            <CompanyJobCard updateSelectedJob = {this.updateSelectedJob} job = {i} key = {i.job_id} company = {this.state.company} />
+        })
+    }
+    handlePageClick = (pageNo) => {
+        const selectedPage = pageNo - 1; 
+        const offset = selectedPage * this.state.perPage;
+        this.setState({ currentPage: selectedPage, offset: offset }, 
+            () => this.setElementsForCurrentPage()
+        );
+    }
     render() {
         var b=null;
         var v=null;
@@ -345,7 +369,22 @@ class StudentInterviews extends Component {
             </div> 
             questionsAnswers.push(temp);
         }
-    
+        let paginationElement;
+        if(this.state.interviews.length > 0)
+        {
+            if(this.state.pageCount > 0)
+            {
+                paginationElement = (<Pagination
+                    defaultCurrent={1} 
+                    onChange={this.handlePageClick}       
+                    size="small" 
+                    total={this.state.interviews.length}
+                    showTotal={(total, range) => 
+                    `${range[0]}-${range[1]} of ${total} items`}   
+                    defaultPageSize={this.state.perPage}
+                />)
+            }
+        }
         return (  
             <div>
                <CompanyHeaderBarForm type={this.props.location.state.type} />
@@ -399,11 +438,14 @@ class StudentInterviews extends Component {
                             </div>
                             <p style={{fontSize: 18, marginTop: 20}}>Interviews for Top Jobs</p>
                             <div style={{marginLeft:-15}}>
-                                {this.state.interviews.map(i => {
+                                {this.state.elements.map(i => {
                                     return(
                                         <InterviewCard photo={this.state.company.company_profile_photo} interview = {i} key = {i._id} />
                                     )
                                 })}
+                                <div>
+                                    {paginationElement}
+                                </div>
                             </div>
                             <div style={{marginLeft:-15}}>
                                 {/* {this.state.positive_review.map(i=>{
