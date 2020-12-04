@@ -1,0 +1,24 @@
+var connection = require('../../mysql_database');
+
+function handle_request(message, callback)
+{
+    console.log('1111111111111111',message,'11111111111111')
+    var user = "UPDATE reviews SET review_helpful = review_helpful + 1 WHERE review_id = '"+message.review_id+"'";
+    connection.query(user,(err,result) =>{
+        console.log(result)
+        var response = {};
+        if(err){
+            response.code = 500;
+            response.data = err;
+            callback(null, response)
+        }
+        else
+        {
+            response.code = 200;
+            console.log("=============", response)
+            callback(null, 200);
+        }
+    })
+}
+exports.handle_request =  handle_request;
+

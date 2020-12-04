@@ -9,9 +9,15 @@ function handle_request(message, callback){
     let photo_details = {
       photo_status: "Approved",
       photo_owner_role: "Company",
+<<<<<<< HEAD
       photo_owner_id: 1,
       photo_path: message.paths[i],
       photo_owner_name: "Amazon"
+=======
+      photo_owner_id: message.company_id,
+      photo_path: message.paths[i],
+      photo_owner_name: message.company_name
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
     }  
   
     let new_photo = photoModel(photo_details)

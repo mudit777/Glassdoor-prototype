@@ -6,12 +6,20 @@ const get = util.promisify(client.get).bind(client);
 const set = util.promisify(client.set).bind(client);
 
 const handle_request = async (message, callback) => {
+<<<<<<< HEAD
+=======
+    console.log('```````````````````````````````````````````````````````````')
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
     let response = {};
     try {
         let the_query = `SELECT
                             company_id,
                             company_name
+<<<<<<< HEAD
                         FROM companies`;
+=======
+                        FROM glassdoor.companies`;
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
 
         let redis_result = await get('get_all_companies')
         

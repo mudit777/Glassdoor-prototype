@@ -1,7 +1,11 @@
 const conn = require('../../../mysql_database');
 const util = require('util');
 const query = util.promisify(conn.query).bind(conn);
+<<<<<<< HEAD
 let applications = require('../../../Models/applications');
+=======
+let applications = require('../../../Models/applicationModel');
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
 const client = require('../../../redis_config');
 const get = util.promisify(client.get).bind(client);
 const set = util.promisify(client.set).bind(client);
@@ -92,9 +96,15 @@ const handle_request = async (message, callback) => {
             console.log("SQL result");
             let stats_result = await get_stats(message.company_id);
             let stringed_result = JSON.stringify(stats_result);
+<<<<<<< HEAD
             set(redis_key, JSON.stringify(stringed_result));
             response.code = 200;
             response.data = JSON.stringify(stringed_result);
+=======
+            set(redis_key, stringed_result);
+            response.code = 200;
+            response.data = stringed_result;
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
             callback(null, response);
         } else {
             console.log("Redis result");

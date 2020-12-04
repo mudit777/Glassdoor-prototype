@@ -1,24 +1,47 @@
 var connection = require('../../mysql_database');
+const util = require('util');
+const query = util.promisify(connection.query).bind(connection);
+const client = require('../../redis_config');
+const get = util.promisify(client.get).bind(client);
+const set = util.promisify(client.set).bind(client);
 
-function handle_request(message, callback)
+const handle_request = async (message, callback) => 
 {
-    var query = "SELECT * FROM companies"
-    connection.query(query, (err, companies) => {
-        var response = {};
-        if(err)
-        {
-            response.code = 500;
-            response.data = err;
+    // console.log()
+    let response = {};
+    try {
+        let the_query = "SELECT * FROM companies";
+
+        console.log(the_query);
+        let redis_result = await get('get_all_companies');
+        
+        if(redis_result == null){
+            let rows = await query(the_query);
+            console.log("SQL result")
+            console.log(rows);
+            if(rows.length > 0)
+            {
+                response.code = 200;
+                response.data = JSON.stringify(rows);
+                set('get_all_companies', JSON.stringify(rows));
+            }
+            else
+            {
+                response.code = 204;
+            }
+            callback(null, response)
         }
-        else if(companies.length > 0)
-        {
+        else{
+            console.log("Fetching from redis");
+            console.log(redis_result)
             response.code = 200;
-            response.data = companies;
+            response.data = redis_result;
+            callback(null, response)
         }
-        else
-        {
-            response.code = 204;
-        }
-    })
+    } catch (e) {
+        response.code = 500;
+        response.data = e;
+        callback(null, response);
+    }
 }
 exports.handle_request = handle_request;

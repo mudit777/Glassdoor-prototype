@@ -13,7 +13,11 @@ exports.get_undecided_photos = (req, res) => {
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
+<<<<<<< HEAD
             res.end(result.data);
+=======
+            res.end(JSON.stringify(result.data));
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
         }
     })
 }

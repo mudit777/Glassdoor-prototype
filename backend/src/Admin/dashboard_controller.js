@@ -17,7 +17,11 @@ exports.get_review_counts = (req, res) => {
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
+<<<<<<< HEAD
             res.end(result.data);
+=======
+            res.end(JSON.stringify(result.data));
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
         }
     })
 }
@@ -58,7 +62,11 @@ exports.get_most_rated_companies = (req, res) => {
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
+<<<<<<< HEAD
             res.end(result.data)
+=======
+            res.end(JSON.stringify(result.data))
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
         }
     })
 }
@@ -78,7 +86,11 @@ exports.get_top_ceos = (req, res) => {
             res.writeHead(200, {
                 "Content-Type" : "application/json"
             })
+<<<<<<< HEAD
             res.end(result.data)
+=======
+            res.end(JSON.stringify(result.data))
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
         }
     })
 }

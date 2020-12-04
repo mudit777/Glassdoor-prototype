@@ -45,7 +45,11 @@ exports.uploadImageCompany = (req, res) => {
         paths.push(req.files[i].location)
       }
 
+<<<<<<< HEAD
       kafka.make_request('upload_company_photos',{paths}, function(err,results){
+=======
+      kafka.make_request('upload_company_photos',{paths,company_id:req.body.company_id,company_name:req.body.name}, function(err,results){
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
         console.log('in result');
         console.log(JSON.stringify(results));
         console.log("Code : ",results.code)
@@ -105,7 +109,11 @@ exports.uploadImageByUserForCompany = (req, res) => {
         paths.push(req.files[i].location)
       }
 
+<<<<<<< HEAD
       kafka.make_request('upload_company_photos_by_user',{paths}, function(err,results){
+=======
+      kafka.make_request('upload_company_photos_by_user',{paths,student_id:req.body.student_id,company_id:req.body.company_id}, function(err,results){
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
         console.log('in result');
         console.log(JSON.stringify(results));
         console.log("Code : ",results.code)

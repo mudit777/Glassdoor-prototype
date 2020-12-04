@@ -29,7 +29,11 @@ const ManageCompanies = () => {
 
   //this effect fetches data on mount
   useEffect(()=>{
+<<<<<<< HEAD
     axios.get(`${BACKEND}/getAllCompanies`)
+=======
+    axios.get(`${BACKEND}/getAllCompaniesAdmin`)
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
     .then(response => {  
       if(response.status === 200){
         setCompanies(response.data);

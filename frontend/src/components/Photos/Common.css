@@ -26,8 +26,15 @@
 }
 
 .main_div{
+<<<<<<< HEAD
   background-color: #EAEAEA;
   margin: -1rem 0;
+=======
+  background-color: #f2f2f2;
+  margin: -1rem 0;
+  padding-bottom: 2rem;
+  padding-top:'1rem';
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
 }
 
 .divider{

@@ -3,10 +3,23 @@ import { Button, Card, Col, Input, notification, Radio, Row } from 'antd';
 import './Login.css'
 import { login } from '../../js/actions';
 import { connect } from "react-redux";
+import { Redirect } from 'react-router-dom';
 class Login extends Component {
     constructor(props)
     {
         super(props);
+        if(sessionStorage.getItem('company_id'))
+        {
+            window.location.replace('/companyProfile')
+        }
+        else if(sessionStorage.getItem('student_id'))
+        {
+            window.location.replace('/studentProfile')
+        }
+        else
+        {
+            
+        }
         this.state = {
             email : "",
             password : "",
@@ -63,8 +76,30 @@ class Login extends Component {
         }
     }
     render() {
+        var redirectVar = null;
+        if(this.props.type)
+        {
+            console.log(this.props.type)
+
+            if(this.props.type === 'student')
+            {
+                redirectVar = <Redirect to = "/studentProfile" />
+            }
+            else if(this.props.type === 'company')
+            {
+                redirectVar = <Redirect to = '/companyProfile' />
+            }
+            else if(this.props.type === 'Admin')
+            {
+                console.log('here')
+                redirectVar = <Redirect to = '/approve' />
+            }
+            console.log('here 2')
+
+        }
         return (
             <div>
+                {redirectVar}
                 <div>
                     <div className = "upper">
                         <Row>
@@ -110,23 +145,32 @@ function mapDispatchToProps(dispatch) {
   }
   
 function mapStateToProps(store) {
+    console.log('Store is ',store)
     if(store.type === 'student')
     {
         return {
             message : store.message,
-            student : store.student
+            student : store.student,
+            type : store.type
         }
     }
     else if(store.type === 'company')
     {
         return {
             message : store.message,
-            company : store.company
+            company : store.company,
+            type : store.type
+        }
+    }
+    else if(store.type === 'Admin')
+    {
+        return {
+            type : store.type
         }
     }
 return {
     message : store.message,
-    
+    type : store.type
 };
 }
 

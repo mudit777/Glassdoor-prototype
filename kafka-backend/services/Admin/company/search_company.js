@@ -8,6 +8,7 @@ const handle_request = async (message, callback) => {
         let the_query = `SELECT
                             company_id,
                             company_name,
+<<<<<<< HEAD
                             company_email,
                             company_city,
                             company_state,
@@ -30,6 +31,8 @@ const handle_request = async (message, callback) => {
                             company_last_name,
                             creater_job_title,
                             company_profile_photo
+=======
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
                         FROM companies WHERE company_name LIKE "%${message.searchTerm}%"`;
         let rows = await query(the_query);
         response.code = 200;

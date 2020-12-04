@@ -3,8 +3,13 @@ import {Card,  Grid} from 'semantic-ui-react';
 import Footer from '../Placeholders/Footer';
 import AdminHeader from './AdminHeader';
 import './approve.css';
+<<<<<<< HEAD
 const txtgen = require('txtgen');
 const faker = require('faker');
+=======
+// const txtgen = require('txtgen');
+// const faker = require('faker');
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
 import ReviewCard from './ReviewCard';
 import {NotificationManager, NotificationContainer} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';

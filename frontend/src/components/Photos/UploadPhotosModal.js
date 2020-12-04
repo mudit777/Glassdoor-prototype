@@ -3,7 +3,11 @@ import { Button, Header, Icon, Modal } from 'semantic-ui-react'
 import {BACKEND} from '../../Config';
 import axios from 'axios';
 
+<<<<<<< HEAD
 const UploadPhotosModal = ({onHide, show, onSuccess, url}) => {
+=======
+const UploadPhotosModal = ({onHide, show, onSuccess, url,name,company_id,student_id}) => {
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
   const addPhotoRef = useRef();
   const changeText = useRef();
   const [photos, setPhotos] = useState('');
@@ -20,6 +24,12 @@ const UploadPhotosModal = ({onHide, show, onSuccess, url}) => {
     for(const key of Object.keys(photos)){
       formData.append('image', photos[key])
     }
+<<<<<<< HEAD
+=======
+    formData.append('student_id',student_id)
+    formData.append('company_id',company_id)
+    formData.append('name',name)
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
 
     axios.post(`${BACKEND}/${url}`, formData)
       .then(res => {        

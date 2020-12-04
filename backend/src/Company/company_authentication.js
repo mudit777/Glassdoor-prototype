@@ -2,6 +2,7 @@ const date = require('date-and-time');
 const bcrypt = require('bcrypt');
 var kafka = require('../../kafka/client');
 exports.register_company = (req, res) => {
+    console.log("REquesting~~~~~~~~~~~~~~~~~~~~", req.body)
     kafka.make_request("register_company", req.body, (err, result) => {
         if(result.code === 500)
         {

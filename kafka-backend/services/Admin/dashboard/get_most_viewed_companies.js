@@ -8,6 +8,7 @@ const set = util.promisify(client.set).bind(client);
 const handle_request = async (message, callback) => {
     let response = {};
     try {
+<<<<<<< HEAD
         let the_query = `SELECT
                             company_id,
                             company_name,
@@ -15,6 +16,9 @@ const handle_request = async (message, callback) => {
                         FROM companies
                         ORDER BY company_views DESC
                         LIMIT 10;`;
+=======
+        let the_query = `select company_name,company_views from glassdoor.companies order by company_views desc limit 10`;
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
         let redis_key = "get_most_viewed_companies";
         let redis_result = await get(redis_key);
 

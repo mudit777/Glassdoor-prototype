@@ -1,5 +1,9 @@
 var mysql = require('mysql')
 let connection = mysql.createConnection({
+<<<<<<< HEAD
+=======
+    // host: 'yelp-rds.cmvrgbslqsml.us-west-1.rds.amazonaws.com',
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
     host : '35.230.18.97',
     port : "3306",
     user: 'root',

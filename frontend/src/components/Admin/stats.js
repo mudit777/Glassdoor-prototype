@@ -20,8 +20,41 @@ const stats = () => {
   useEffect(()=>{    
 
     //set data for graph 1
+<<<<<<< HEAD
     const d1 = {
       labels: ['11/21', '11/22', '11/23', '11/24', '11/25','11/26'],
+=======
+    // const d1 = {
+    //   labels: ['11/21', '11/22', '11/23', '11/24', '11/25','11/26'],
+    //   datasets: [
+    //     {
+    //       label: 'No of reviews',
+    //       fill: false,
+    //       lineTension: 0.5,
+    //       backgroundColor: 'rgba(75,192,192,1)',
+    //       borderColor: 'rgba(0,0,0,1)',
+    //       borderWidth: 2,
+    //       data: [65, 59, 80, 81, 56, 82]
+    //     }
+    //   ]
+    // }
+
+    // setG1_data(d1);
+
+    axios.get(`${BACKEND}/getReviewCounts`)
+    .then(response => {
+      console.log(response.data,'``````````````kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk```````````````````')
+      if(response.status === 200){
+        let l1 = []
+        let g1d = []
+
+        _.forEach(response.data, temp => {
+          g1d.push(temp.c)
+          l1.push(temp.d.toString().substring(0,10))
+        })
+    const d1 = {
+      labels: l1,
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
       datasets: [
         {
           label: 'No of reviews',
@@ -30,13 +63,25 @@ const stats = () => {
           backgroundColor: 'rgba(75,192,192,1)',
           borderColor: 'rgba(0,0,0,1)',
           borderWidth: 2,
+<<<<<<< HEAD
           data: [65, 59, 80, 81, 56, 82]
+=======
+          data: g1d
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
         }
       ]
     }
 
     setG1_data(d1);
 
+<<<<<<< HEAD
+=======
+      }
+    })
+    
+
+
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
     //set data for graph 2
     axios.get(`${BACKEND}/getMostReviewedCompanies`)
     .then(response => {
@@ -84,9 +129,15 @@ const stats = () => {
 
         let l3 = []
         let g3d = []
+<<<<<<< HEAD
         _.forEach(response.data.avg_overall_rating, company=>{
           l3.push(company.company_name)
           g3d.push(company.the_rating)
+=======
+        _.forEach(response.data, company=>{
+          l3.push(company.company_name)
+          g3d.push(company.ans)
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
         })
 
         const d3 = {
@@ -181,7 +232,11 @@ const stats = () => {
           else{
             l5.push(ceo.company_ceo_first_name+" "+ceo.company_ceo_last_name)
           }
+<<<<<<< HEAD
           g5d.push(ceo.company_avg_ceo_approval_rating)
+=======
+          g5d.push(ceo.rating)
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
         })
 
         const d5 = {
@@ -231,9 +286,22 @@ const stats = () => {
     axios.get(`${BACKEND}/getMostViewedCompanies`)
     .then(response => {
       console.log(response.data)
+<<<<<<< HEAD
     })
     const d6 = {
       labels: ['Google', 'Foogle', 'Amazon', 'Scamazon', 'Microsoft', 'Macrohard', 'Netflix', 'Letflix', 'Apple', 'Kidney'],
+=======
+      if(response.status === 200){
+        let l6 = []
+        let g6d = []
+
+        _.forEach(response.data, company => {
+          g6d.push(company.company_views)
+          l6.push(company.company_name)
+        })
+    const d6 = {
+      labels: l6,
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
       datasets: [
         {
           label: 'No of views',
@@ -263,13 +331,23 @@ const stats = () => {
             'rgba(0, 40, 10, 1)',
           ],
           borderWidth: 2,
+<<<<<<< HEAD
           data: [1120, 1022, 1005, 803, 765, 743, 555, 444, 333, 222]
+=======
+          data: g6d
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
         }
       ]
     }
 
     setG6_data(d6);
 
+<<<<<<< HEAD
+=======
+      }
+    })
+    
+>>>>>>> fb6fde92132bbb153f8e1627e3303d7d6fa28740
   }, []);
 
   return (
