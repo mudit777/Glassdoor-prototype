@@ -350,7 +350,7 @@ class StudentProfile extends Component {
                     >
                         {resumes}
                         <div style = {{float : "right"}}>
-                            <input id = "resumeUpload" type = "file" accept = ".pdf, .doc, .docx" style = {{display : "none"}} onChange = {this.uploadResume}/>
+                            <input id = "resumeUpload" type = "file" accept = ".pdf" style = {{display : "none"}} onChange = {this.uploadResume}/>
                             
                         </div>
                     </Modal>

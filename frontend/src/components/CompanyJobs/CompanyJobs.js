@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BACKEND } from '../../Config';
 import CompanyJobCard from '../CompanyJobCard/CompanyJobCard';
 import CompanyHeaderBarForm from '../CompanyHeaderBar/CompanyHeaderBar';
-import { Col, Row ,Button} from 'antd';
+import { Col, Row ,Button, Pagination} from 'antd';
 import CompanyJobDetails from '../CompanyJobDetails/CompanyJobDetails';
 import StudentJobDetails from '../StudentJobDetails/StudentJobDetails'
 
@@ -17,7 +17,7 @@ class CompanyJobs extends Component {
             currentJob : {},
             offset: 0,
             elements: [],
-            perPage: 6,
+            perPage: 2,
             currentPage: 1,
             pageCount: 1
         }
@@ -107,7 +107,7 @@ class CompanyJobs extends Component {
         var temp = null;
         if(this.state.jobs.length > 0)
         {
-            temp = this.state.jobs.map(i => {
+            temp = this.state.elements.map(i => {
                 return(
                     <CompanyJobCard updateSelectedJob = {this.updateSelectedJob} job = {i} key = {i.job_id} company = {this.state.company} />
                 )
@@ -132,6 +132,22 @@ class CompanyJobs extends Component {
             }
             
         }
+        let paginationElement;
+        if(this.state.jobs.length > 0)
+        {
+            if(this.state.pageCount > 0)
+            {
+                paginationElement = (<Pagination
+                    defaultCurrent={1} 
+                    onChange={this.handlePageClick}       
+                    size="small" 
+                    total={this.state.jobs.length}
+                    showTotal={(total, range) => 
+                    `${range[0]}-${range[1]} of ${total} items`}   
+                    defaultPageSize={this.state.perPage}
+                />)
+            }
+        }
         return (
             <div>
                 <div>
@@ -140,7 +156,10 @@ class CompanyJobs extends Component {
                 <div>
                     <Row style = {{marginLeft : "2%"}}>
                         <Col style = {{width : "30%"}}>
-                            {this.showCatalogicData()}
+                            {temp}
+                            <div>
+                                {paginationElement}
+                            </div>
                         </Col>
                         <Col style = {{height : "600px", overflowY : "scroll"}}>
                             {jobDetails}

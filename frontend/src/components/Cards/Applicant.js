@@ -163,7 +163,7 @@ export default class Applicant extends Component {
                                     <Link to={'/viewResume/'+resume} target='_blank' style={{marginRight:'4rem',fontWeight:'bold',fontSize:'1rem'}}>View Resume</Link>
                               </div>
                               <div style={{display:'flex',margin:'0.5rem 1rem'}}>
-                                    <Link to={{pathname:'/viewCoverLetter',state:{coverletter:coverletter}}} target='_blank' style={{marginRight:'4rem',fontWeight:'bold',fontSize:'1rem'}}>View Cover Letter</Link>
+                                    <Link to={'/viewResume/' + coverletter} target='_blank' style={{marginRight:'4rem',fontWeight:'bold',fontSize:'1rem'}}>View Cover Letter</Link>
                               </div>
                               <Dropdown onChange={this.changeStatusHandler} id = 'dropdown'  placeholder={this.props.status} options={options} fluid selection />
                               <Button onClick={this.updateStatus} style = {{backgroundColor : "#0caa41", color : "white", fontWeight : "bolder",margin:'1rem 0'}} >Update</Button>
