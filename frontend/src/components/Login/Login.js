@@ -87,6 +87,7 @@ class Login extends Component {
             {
                 redirectVar = <Redirect to = '/companyProfile' />
             }
+            
         }
         return (
             <div>

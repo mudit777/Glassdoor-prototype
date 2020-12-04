@@ -44,6 +44,17 @@ passport.use(new JwtStrategy(opts, function (jwt_payload, callback) {
             }
         })
     }
+    else if(jwt_payload.source === "admin")
+    {
+        if(jwt_payload.id === "admin@gmail.com")
+        {
+            return callback(null, true);
+        }
+        else
+        {
+            return callback(null, false)
+        }
+    }
     
 }));
 

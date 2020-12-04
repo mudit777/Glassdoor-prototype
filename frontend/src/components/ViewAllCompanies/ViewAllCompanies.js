@@ -36,6 +36,7 @@ class ViewAllCompanies extends Component {
         if(this.props.companies)
         {
             // console.log("Companies there")
+            this.setElementsForCurrentPage();
         }
         else
         {
@@ -72,7 +73,7 @@ class ViewAllCompanies extends Component {
         var temp = null;
         if(this.state.elements.length > 0)
         {
-            console.log(this.state.elements);
+            console.log("Inside elements condition")
             temp = <div style = {{
                 marginLeft : "16.5%",
                 marginTop :"2%",
