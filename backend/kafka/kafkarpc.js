@@ -4,7 +4,7 @@ var conn = require('./connection');
 var TIMEOUT=21000; //time to wait for response in ms
 var self;
 
-exports = module.exports =  KafkaRPC;
+module.exports =  KafkaRPC;
 
 function KafkaRPC(){
     self = this;
@@ -38,10 +38,10 @@ KafkaRPC.prototype.makeRequest = function(topic_name, content, callback){
 
     //put the entry in the hash so we can match the response later
     self.requests[correlationId]=entry;
-
     //make sure we have a response topic
     self.setupResponseQueue(self.producer,topic_name,function(){
         console.log('in response');
+        console.log(topic_name);
         //put the request on a topic
 
         var payloads = [
@@ -55,8 +55,8 @@ KafkaRPC.prototype.makeRequest = function(topic_name, content, callback){
         console.log(self.producer.ready);
         self.producer.send(payloads, function(err, data){
             console.log('in response2');
-            if(err)
-                console.log(err);
+            // if(err)
+            //     console.log(err);
             console.log(data);
         });
     });

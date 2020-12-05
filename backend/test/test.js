@@ -1,93 +1,76 @@
 'use strict';
-var assert = require('chai').assert;
-var app = require('../index');
-
+let app = require('../index');
 var chai = require('chai');
 chai.use(require('chai-http'));
 var expect = require('chai').expect;
 
 var agent = require('chai').request.agent(app);
 
-var email = "a" + Math.random() + "@gmail.com"
-describe('Yelp', function(){
 
-    describe("Customer Signup Test", () => {
+let StudentUser = {
+    email: "udit@gmail.com",
+    password: "admin",
+    type: "student"
+}
 
-        it("Customer Already Exists", () => {
-            agent.post("/registerUser")
-                .send({ first_name: "Udit",
-                        last_name: "Marolia",
-                        email: "udit@gmail.com",
-                        password: "admin",
-                        zip_code:95126,
-                        day : 14,
-                        month : "March",
-                        year : "1997",
-                        user_type : "customer"})
-                .then(function (res) {
-                    expect(res.status).to.equal(299);
+let token;
+
+
+describe('Glassdoor', function(){
+    describe("Student Login", () => {
+        it(" verifies student's Login", () => {
+            agent.post("/login")
+                .send(StudentUser)
+                .then((res) => {
+                    token = res.token;
+                    expect(res.status).to.equal(200)
                 })
-                .catch(error => {
-                    console.log(error);
+                .catch(err => {
+                    // console.log(err)
                 });
-        });
-``
-        it("Successful Customer Signup", () => {
-            agent.post("/registerUser")
-                .send({ first_name: "Udit",
-                    last_name: "Marolia",
-                    email: email,
-                    password: "admin",
-                    zip_code:95126,
-                    day : 14,
-                    month : "March",
-                    year : "1997",
-                    user_type : "customer"})
+        })
+    });
+    
+    describe("Fetching all the undecided photos and reviews", () => {
+        it(" fetches all the undecided photos", () => {
+            agent.get("/getUndecidedPhotos")
                 .then(function (res) {
                     expect(res.status).to.equal(200);
                 })
                 .catch(error => {
-                    console.log(error);
+                    // console.log(error);
+                });
+        });
+
+        it(" fetches all the undecided reviews", () => {
+            agent.post("/getUndecidedReviews")
+                .then(function (res) {
+                    expect(res.status).to.equal(200);
+                })
+                .catch(error => {
+                    // console.log(error);
                 });
         });
     });
-    describe("Get User Details", () => {
-        it("Get User Details", () => {
-            agent.post("/getUserDetails")
+    describe("Fetching Student Details", () => {
+        it(" fetches Student Details", () => {
+            agent.post("/getStudentDetails")
                 .send({
-                    UserId : 7
+                    user_id : 1
                 })
-                .then((res) => {
-                    expect(res.status).to.equal(200)
-                })
-                .set("authorization", "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmE3NTE5NGI0NTY0OTBjOGJlMmY2OGIiLCJzb3VyY2UiOiJjdXN0b21lciIsImlhdCI6MTYwNDgxMjMzMywiZXhwIjoxNjA1ODIwMzMzfQ.p6mZX0q-AJIwTe04hd5wx_ZO8TI893u-hNgcmoquEbY")
-                .catch(err => {
-                    console.log(err)
-                })
-        })
-    })
-    describe("Search dish name and restraurant name", () => {
-        it("Search", () => {
-            agent.post("/finalFilter")
-                .send({
-                    search : "chicken"
-                })
-                .set("authorization", "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmE3NTE5NGI0NTY0OTBjOGJlMmY2OGIiLCJzb3VyY2UiOiJjdXN0b21lciIsImlhdCI6MTYwNDgxMjMzMywiZXhwIjoxNjA1ODIwMzMzfQ.p6mZX0q-AJIwTe04hd5wx_ZO8TI893u-hNgcmoquEbY")
+                .set("authorization", token)
                 .then((res) => {
                     expect(res.status).to.equal(200)
                 })
                 .catch(err => {
-                    console.log(err)
+                    // console.log(err)
                 })
         })
     })
-    describe("Filter CustomerOrders", () => {
-        it("Filter customer orders", () => {
-            agent.post("/filterCustomerOrders")
-                .send({
-                    filter : "past"
-                })
-                .set("authorization", "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmE3NTE5NGI0NTY0OTBjOGJlMmY2OGIiLCJzb3VyY2UiOiJjdXN0b21lciIsImlhdCI6MTYwNDgxMjMzMywiZXhwIjoxNjA1ODIwMzMzfQ.p6mZX0q-AJIwTe04hd5wx_ZO8TI893u-hNgcmoquEbY")
+
+    describe("Fetching The Most Reviewed Companies", () => {
+        it(" fetches the most reviewed companies", () => {
+            agent.get("/getMostReviewedCompanies")
                 .then((res) => {
                     expect(res.status).to.equal(200)
                 })
@@ -96,16 +79,64 @@ describe('Yelp', function(){
                 })
         })
     })
-    describe("Get all Events", () => {
-        it("Get All Events", () => {
-            agent.post("/getEvents")
-                .set("authorization", "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmE3NTE5NGI0NTY0OTBjOGJlMmY2OGIiLCJzb3VyY2UiOiJjdXN0b21lciIsImlhdCI6MTYwNDgxMjMzMywiZXhwIjoxNjA1ODIwMzMzfQ.p6mZX0q-AJIwTe04hd5wx_ZO8TI893u-hNgcmoquEbY")
+
+    describe("Fetching The Most Rated Companies", () => {
+        it(" fetches the most Rated companies", () => {
+            agent.get("/getMostRatedCompanies")
                 .then((res) => {
                     expect(res.status).to.equal(200)
                 })
                 .catch(err => {
-                    console.log(err)
+                    // console.log(err)
                 })
         })
     })
-})
+
+    describe("Fetching The Top CEOs", () => {
+        it(" fetches The Top CEOs", () => {
+            agent.get("/getTopCEOs")
+                .then((res) => {
+                    expect(res.status).to.equal(200)
+                })
+                .catch(err => {
+                    // console.log(err)
+                })
+        })
+    })
+
+    describe("Fetching The Top Students", () => {
+        it(" fetches The Top Students", () => {
+            agent.get("/getTopStudents")
+                .then((res) => {
+                    expect(res.status).to.equal(200)
+                })
+                .catch(err => {
+                    // console.log(err)
+                })
+        })
+    })
+
+    describe("Fetching The Most Views Companies", () => {
+        it(" fetches the most viewed companies", () => {
+            agent.get("/getMostViewedCompanies")
+                .then((res) => {
+                    expect(res.status).to.equal(200)
+                })
+                .catch(err => {
+                    // console.log(err)
+                })
+        })
+    })
+
+    describe("Fetching All Companies' admin", () => {
+        it(" fetches all companies' admin", () => {
+            agent.get("/getAllCompaniesAdmin")
+                .then((res) => {
+                    expect(res.status).to.equal(200)
+                })
+                .catch(err => {
+                    // console.log(err)
+                })
+        })
+    })
+});

@@ -23,7 +23,7 @@ function ConnectionProvider() {
     this.getProducer = function() {
 
         if (!this.kafkaProducerConnection) {
-            this.client = new kafka.Client("localhost:2181");
+            // this.client = new kafka.Client("localhost:2181");
             // this.client = new kafka.Client("http://ec2-3-101-130-45.us-west-1.compute.amazonaws.com:2181");
             // this.client = new kafka.KafkaClient("http://54.215.225.151:2181"); 
             // this.client = new kafka.KafkaClient({kafkaHost : "54.215.225.151:2181"});
@@ -33,10 +33,11 @@ function ConnectionProvider() {
                 }
             });*/
             var HighLevelProducer = kafka.HighLevelProducer;
-            this.kafkaProducerConnection = new HighLevelProducer(this.client);
+            this.kafkaProducerConnection = new HighLevelProducer(new kafka.Client("localhost:2181"));
             //this.kafkaConnection = new kafka.Producer(this.client);
             console.log('producer ready');
         }
+        console.log("Kafka Producer Here!");
         return this.kafkaProducerConnection;
     };
 }

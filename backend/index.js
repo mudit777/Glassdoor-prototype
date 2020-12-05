@@ -19,7 +19,7 @@ app.set('view engine', 'ejs');
 var kafka = require('./kafka/client')
 const { Buffer } = require('buffer');
 // var mongoose = require('mongoose')
-module.exports = app
+// module.exports = app
 //use cors to allow cross origin resource sharing
 app.use(express.static('public'))
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
@@ -29,8 +29,6 @@ app.use(bodyParser.json());
 const fs = require('fs')
 const multer = require("multer");
 const DIR = './public/profile_images';
-const { response } = require('express');
-const e = require('express');
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, DIR);
@@ -302,3 +300,5 @@ app.get("/getMostViewedCompanies", admin_dashboard_router.get_most_viewed_compan
 
 app.listen(8080)
 console.log("Server Listening on port 8080");
+
+module.exports = app;

@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const { secret } = require('../../Utils/config');
 
 exports.login = (req, res) => {
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!l");
     kafka.make_request("login", req.body, (err, result) => {
         if(err)
         {
