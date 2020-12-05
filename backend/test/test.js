@@ -17,19 +17,6 @@ let token;
 
 
 describe('Glassdoor', function(){
-    describe("Student Login", () => {
-        it(" verifies student's Login", () => {
-            agent.post("/login")
-                .send(StudentUser)
-                .then((res) => {
-                    token = res.token;
-                    expect(res.status).to.equal(200)
-                })
-                .catch(err => {
-                    // console.log(err)
-                });
-        })
-    });
     
     describe("Fetching all the undecided photos and reviews", () => {
         it(" fetches all the undecided photos", () => {
@@ -38,7 +25,7 @@ describe('Glassdoor', function(){
                     expect(res.status).to.equal(200);
                 })
                 .catch(error => {
-                    // console.log(error);
+                    console.log(error);
                 });
         });
 
@@ -48,11 +35,26 @@ describe('Glassdoor', function(){
                     expect(res.status).to.equal(200);
                 })
                 .catch(error => {
-                    // console.log(error);
+                    console.log(error);
                 });
         });
     });
-    describe("Fetching Student Details", () => {
+
+    describe("Student Login", () => {
+        it(" verifies student's Login", () => {
+            agent.post("/login")
+                .send(StudentUser)
+                .then((res) => {
+                    token = res.token;
+                    console.log("!@#$WFAWET@$#^%@#$^@#$^@#$^")
+                    console.log(token);
+                    expect(res.status).to.equal(200)
+                })
+                .catch(err => {
+                    console.log(err)
+                });
+        })
+
         it(" fetches Student Details", () => {
             agent.post("/getStudentDetails")
                 .send({
@@ -63,10 +65,10 @@ describe('Glassdoor', function(){
                     expect(res.status).to.equal(200)
                 })
                 .catch(err => {
-                    // console.log(err)
+                    console.log(err)
                 })
         })
-    })
+    });
 
     describe("Fetching The Most Reviewed Companies", () => {
         it(" fetches the most reviewed companies", () => {
@@ -87,7 +89,7 @@ describe('Glassdoor', function(){
                     expect(res.status).to.equal(200)
                 })
                 .catch(err => {
-                    // console.log(err)
+                    console.log(err)
                 })
         })
     })
@@ -99,7 +101,7 @@ describe('Glassdoor', function(){
                     expect(res.status).to.equal(200)
                 })
                 .catch(err => {
-                    // console.log(err)
+                    console.log(err)
                 })
         })
     })
@@ -111,7 +113,7 @@ describe('Glassdoor', function(){
                     expect(res.status).to.equal(200)
                 })
                 .catch(err => {
-                    // console.log(err)
+                    console.log(err)
                 })
         })
     })
@@ -123,7 +125,7 @@ describe('Glassdoor', function(){
                     expect(res.status).to.equal(200)
                 })
                 .catch(err => {
-                    // console.log(err)
+                    console.log(err)
                 })
         })
     })
@@ -135,7 +137,7 @@ describe('Glassdoor', function(){
                     expect(res.status).to.equal(200)
                 })
                 .catch(err => {
-                    // console.log(err)
+                    console.log(err)
                 })
         })
     })
