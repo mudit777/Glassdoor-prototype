@@ -93,21 +93,21 @@ function handleTopicRequest(topic_name,fname){
 // Add your TOPICs here
 //first argument is topic name
 //second argument is a function that will handle this topic request
-handleTopicRequest("register_company", register_company);
-handleTopicRequest("update_company_details", update_company_details);
+// handleTopicRequest("register_company", register_company);
+// handleTopicRequest("update_company_details", update_company_details);
 handleTopicRequest("login", login);
-handleTopicRequest("add_reply", add_reply);
-handleTopicRequest("save_company_review", save_company_review);
+// handleTopicRequest("add_reply", add_reply);
+// handleTopicRequest("save_company_review", save_company_review);
 handleTopicRequest("get_all_companies", get_all_companies);
-handleTopicRequest("register_student", register_student);
-handleTopicRequest("get_student_details", get_student_details);
+// handleTopicRequest("register_student", register_student);
+// handleTopicRequest("get_student_details", get_student_details);
 handleTopicRequest("get_all_industries", get_all_industries);
-handleTopicRequest("update_student_details", update_student_details);
-handleTopicRequest("get_student_job_preferences", get_student_job_preferences);
-handleTopicRequest("get_company_details", get_company_details);
-handleTopicRequest("search_companies", search_companies);
-handleTopicRequest("addSalary", addSalary);
-handleTopicRequest("add_review", add_review);
+// handleTopicRequest("update_student_details", update_student_details);
+// handleTopicRequest("get_student_job_preferences", get_student_job_preferences);
+// handleTopicRequest("get_company_details", get_company_details);
+// handleTopicRequest("search_companies", search_companies);
+// handleTopicRequest("addSalary", addSalary);
+// handleTopicRequest("add_review", add_review);
 // handleTopicRequest("get_positive_review", get_positive_review);
 // handleTopicRequest("get_negative_review", get_negative_review);
 // handleTopicRequest("add_helpful", add_helpful);
